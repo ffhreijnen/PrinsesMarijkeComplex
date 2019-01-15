@@ -1,0 +1,64 @@
+DATA_BLOCK "SCADA"
+{ S7_Optimized_Access := 'FALSE'}
+VERSION : 0.1
+NON_RETAIN
+
+VAR
+    dvar_M_Barrier_SCADA_BarrierOpen: BOOL;
+    dvar_M_Barrier_SCADA_BarrierClose: BOOL;
+    dvar_M_Barrier_SCADA_BarrierStop: BOOL;
+    dvar_M_Barrier_SCADA_DownstreamTLRed: BOOL;
+    dvar_M_Barrier_SCADA_DownstreamTLGreen: BOOL;
+    dvar_M_Barrier_SCADA_UpstreamTLRed: BOOL;
+    dvar_M_Barrier_SCADA_UpstreamTLGreen: BOOL;
+    dvar_M_North_SCADA_DownstreamGateOpen: BOOL;
+    dvar_M_North_SCADA_DownstreamGateClose: BOOL;
+    dvar_M_North_SCADA_DownstreamGateStop: BOOL;
+    dvar_M_North_SCADA_DownstreamPaddleOpen: BOOL;
+    dvar_M_North_SCADA_DownstreamPaddleClose: BOOL;
+    dvar_M_North_SCADA_DownstreamPaddleStop: BOOL;
+    dvar_M_North_SCADA_DownstreamEnteringTLRedRed: BOOL;
+    dvar_M_North_SCADA_DownstreamEnteringTLRed: BOOL;
+    dvar_M_North_SCADA_DownstreamEnteringTLRedGreen: BOOL;
+    dvar_M_North_SCADA_DownstreamEnteringTLGreen: BOOL;
+    dvar_M_North_SCADA_DownstreamLeavingTLRed: BOOL;
+    dvar_M_North_SCADA_DownstreamLeavingTLGreen: BOOL;
+    dvar_M_North_SCADA_UpstreamGateOpen: BOOL;
+    dvar_M_North_SCADA_UpstreamGateClose: BOOL;
+    dvar_M_North_SCADA_UpstreamGateStop: BOOL;
+    dvar_M_North_SCADA_UpstreamPaddleOpen: BOOL;
+    dvar_M_North_SCADA_UpstreamPaddleClose: BOOL;
+    dvar_M_North_SCADA_UpstreamPaddleStop: BOOL;
+    dvar_M_North_SCADA_UpstreamEnteringTLRedRed: BOOL;
+    dvar_M_North_SCADA_UpstreamEnteringTLRed: BOOL;
+    dvar_M_North_SCADA_UpstreamEnteringTLRedGreen: BOOL;
+    dvar_M_North_SCADA_UpstreamEnteringTLGreen: BOOL;
+    dvar_M_North_SCADA_UpstreamLeavingTLRed: BOOL;
+    dvar_M_North_SCADA_UpstreamLeavingTLGreen: BOOL;
+    dvar_M_South_SCADA_DownstreamGateOpen: BOOL;
+    dvar_M_South_SCADA_DownstreamGateClose: BOOL;
+    dvar_M_South_SCADA_DownstreamGateStop: BOOL;
+    dvar_M_South_SCADA_DownstreamPaddleOpen: BOOL;
+    dvar_M_South_SCADA_DownstreamPaddleClose: BOOL;
+    dvar_M_South_SCADA_DownstreamPaddleStop: BOOL;
+    dvar_M_South_SCADA_DownstreamEnteringTLRedRed: BOOL;
+    dvar_M_South_SCADA_DownstreamEnteringTLRed: BOOL;
+    dvar_M_South_SCADA_DownstreamEnteringTLRedGreen: BOOL;
+    dvar_M_South_SCADA_DownstreamEnteringTLGreen: BOOL;
+    dvar_M_South_SCADA_DownstreamLeavingTLRed: BOOL;
+    dvar_M_South_SCADA_DownstreamLeavingTLGreen: BOOL;
+    dvar_M_South_SCADA_UpstreamGateOpen: BOOL;
+    dvar_M_South_SCADA_UpstreamGateClose: BOOL;
+    dvar_M_South_SCADA_UpstreamGateStop: BOOL;
+    dvar_M_South_SCADA_UpstreamPaddleOpen: BOOL;
+    dvar_M_South_SCADA_UpstreamPaddleClose: BOOL;
+    dvar_M_South_SCADA_UpstreamPaddleStop: BOOL;
+    dvar_M_South_SCADA_UpstreamEnteringTLRedRed: BOOL;
+    dvar_M_South_SCADA_UpstreamEnteringTLRed: BOOL;
+    dvar_M_South_SCADA_UpstreamEnteringTLRedGreen: BOOL;
+    dvar_M_South_SCADA_UpstreamEnteringTLGreen: BOOL;
+    dvar_M_South_SCADA_UpstreamLeavingTLRed: BOOL;
+    dvar_M_South_SCADA_UpstreamLeavingTLGreen: BOOL;
+END_VAR
+
+END_DATA_BLOCK

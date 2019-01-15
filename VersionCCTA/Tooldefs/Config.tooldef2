@@ -1,0 +1,43 @@
+// Input files
+tool string plantReq():         return "Synthesis/Requirement.cif";              end // Location of plant and requirement
+tool string simulation():       return "Simulation/Sim.cif";                     end // Location of simulation
+tool string simVisualization(): return "Simulation/Visu.cif";                    end
+tool string hardware_sup():     return "PLC_code_generation/HardwareMap.cif";    end // Location of hardware map controller
+tool string hardware_sim():     return "HIL_code_generation/HardwareMapSim.cif"; end // Location of hardware map simulation
+
+// Java compiler (only for 0_One_button)
+tool string java_compiler():    return "C:/Program Files/Java/jdk-11.0.1/bin/javac.exe"; end
+
+// Output paths
+tool string gen_folder():       return "generated_files";    end
+tool string java_folder():      return "Java";               end
+tool string java_class():       return "c2j";                end
+tool string java_package():     return "myPackage";          end
+tool string plc_folder():       return "PLC";                end
+
+// Output files
+tool string java_model():       return fmt("%s/%s/%s.cif",  gen_folder(), java_folder(), java_class());   end
+tool string java_file():        return fmt("%s/%s/%s.java", gen_folder(), java_folder(), java_class());   end
+tool string py_plugin():        return fmt("%s/%s/%s.py",   gen_folder(), java_folder(), java_class());   end
+
+tool string supervisor():       return fmt("%s/%s.cif",  gen_folder(), "1_Supervisor");          end // Location of supervisor
+tool string sup_hybrid():       return fmt("%s/%s.cif",  gen_folder(), "2_Supervisor_Hybrid");   end // Location of supervisor, hybrid plant, timers & visualization
+tool string sup_HW():           return fmt("%s/%s.cif",  gen_folder(), "3_Supervisor_Hardware"); end // Location of supervisor, timers & hardware map merged
+tool string plc_model():        return fmt("%s/%s.cif",  gen_folder(), "4_PLC_Model");           end // Location of model for PLC code generation
+tool string plc_path():         return fmt("%s/%s",      gen_folder(), "PLC");                   end // Location of generated PLC files
+
+tool string tag_path():         return fmt("%s/%s.xml",  plc_path(), "PLCTags_ign"); end
+tool string client_path():      return fmt("%s/%s.xml",  plc_path(), "SimTags");     end
+
+tool string input_old():        return "ivar_M_";     end
+tool string input_old2():       return "ivar_sup_";   end
+tool string input_new():        return "";            end
+tool string input_new2():       return "HW_";            end
+tool string output_old():       return "dvar_M_";     end
+tool string output_new():       return "";            end
+tool string scada_old1():       return "_SCADA_MAP_"; end
+tool string scada_old2():       return "_sup_SCADA_"; end
+tool string scada_new():        return "_";           end
+tool string sim_cont_new():     return "";            end
+// don't forget to change these in 3_Fix_tags.tooldef as well.
+

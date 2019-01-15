@@ -1,0 +1,142 @@
+import "Skeleton.cif";
+
+automaton def HW_Gate(Gate gate):
+    disc bool  Open   = false,
+               Closed = false;
+
+    input bool  Q_Open,
+                Q_Close;
+
+    location: initial;
+        edge gate.Sensor.u_open_on    do Open := true;
+        edge gate.Sensor.u_open_off   do Open := false;
+        edge gate.Sensor.u_closed_on  do Closed := true;
+        edge gate.Sensor.u_closed_off do Closed := false;
+        edge gate.Actuator.c_open           when Q_Open  = true;
+        edge gate.Actuator.c_close          when Q_Close = true;
+        edge gate.Actuator.c_emergencyStop  when Q_Close = false and Q_Open = false;
+        edge gate.Actuator.c_endStopOpening when Q_Open  = false;
+        edge gate.Actuator.c_endStopClosing when Q_Close = false;
+end
+
+automaton def HW_Paddle(Paddle paddle):
+    disc bool  Open     = false,
+               Closed = true;
+
+    input bool Q_Open,
+               Q_Close;
+
+    location: initial;
+        edge paddle.Sensor.u_open_on    do Open := true;
+        edge paddle.Sensor.u_open_off   do Open := false;
+        edge paddle.Sensor.u_closed_on  do Closed := true;
+        edge paddle.Sensor.u_closed_off do Closed := false;
+        edge paddle.Actuator.c_open            when Q_Open  = true;
+        edge paddle.Actuator.c_close           when Q_Close = true;
+        edge paddle.Actuator.c_emergencyStop   when Q_Close = false and Q_Open = false;
+        edge paddle.Actuator.c_endStopOpening  when Q_Open  = false;
+        edge paddle.Actuator.c_endStopClosing  when Q_Close = false;
+end
+
+automaton def HW_EnteringTL(EnteringTL TL):
+    disc bool  Red  = true,
+               Green = false,
+               RedRed  = false;
+    input bool Q_Red,
+               Q_Green,
+               Q_RedRed;
+
+    location: initial;
+        edge TL.SensorR1.u_on  do Red    := true;
+        edge TL.SensorR1.u_off do Red    := false;
+        edge TL.SensorG.u_on   do Green  := true;
+        edge TL.SensorG.u_off  do Green  := false;
+        edge TL.SensorR2.u_on  do RedRed := true;
+        edge TL.SensorR2.u_off do RedRed := false;
+        edge TL.Actuator.c_r  when Q_Red    = true and Q_Green = false and Q_RedRed = false;
+        edge TL.Actuator.c_rr when Q_RedRed = true;
+        edge TL.Actuator.c_rg when Q_Red    = true and Q_Green = true;
+        edge TL.Actuator.c_g  when Q_Green  = true;
+end
+
+automaton def HW_LeavingTL(LeavingTL TL):
+    disc bool  Red  = true,
+               Green = false;
+    input bool Q_Red,
+               Q_Green;
+
+    location: initial;
+        edge TL.SensorR.u_on  do Red  := true;
+        edge TL.SensorR.u_off do Red  := false;
+        edge TL.SensorG.u_on  do Green := true;
+        edge TL.SensorG.u_off do Green := false;
+        edge TL.Actuator.c_r when Q_Red = true  and Q_Green = false;
+        edge TL.Actuator.c_g when Q_Red = false and Q_Green = true;
+end
+
+automaton def HW_EqualWaterSensor(Sensor sensor):
+    disc bool Equal;
+
+    location: initial;
+        edge sensor.u_on  do Equal := true;
+        edge sensor.u_off do Equal := false;
+end
+
+automaton HW_Wh:
+	input bool HighWater;
+		location: initial;
+		edge Wh.high when     HighWater;
+		edge Wh.low  when not HighWater;
+end
+
+group North:
+    HW_Gate_BVH_East        : HW_Gate(Upstream.Gates.East);
+    HW_Gate_BVH_West        : HW_Gate(Upstream.Gates.West);
+    HW_Paddle_BVH_East      : HW_Paddle(Upstream.Paddles.East);
+    HW_Paddle_BVH_West      : HW_Paddle(Upstream.Paddles.West);
+    HW_EnteringTL_BVH_East  : HW_EnteringTL(Upstream.EnteringTLs.East);
+    HW_EnteringTL_BVH_West  : HW_EnteringTL(Upstream.EnteringTLs.West);
+    HW_LeavingTL_BVH_East   : HW_LeavingTL(Upstream.LeavingTLs.East);
+    HW_LeavingTL_BVH_West   : HW_LeavingTL(Upstream.LeavingTLs.West);
+    HW_EqualWaterSensor_BVH : HW_EqualWaterSensor(Upstream.EqualWaterSensor);
+
+    HW_Gate_BNH_East        : HW_Gate(Downstream.Gates.East);
+    HW_Gate_BNH_West        : HW_Gate(Downstream.Gates.West);
+    HW_Paddle_BNH_East      : HW_Paddle(Downstream.Paddles.East);
+    HW_Paddle_BNH_West      : HW_Paddle(Downstream.Paddles.West);
+    HW_EnteringTL_BNH_East  : HW_EnteringTL(Downstream.EnteringTLs.East);
+    HW_EnteringTL_BNH_West  : HW_EnteringTL(Downstream.EnteringTLs.West);
+    HW_LeavingTL_BNH_East   : HW_LeavingTL(Downstream.LeavingTLs.East);
+    HW_LeavingTL_BNH_West   : HW_LeavingTL(Downstream.LeavingTLs.West);
+    HW_EqualWaterSensor_BNH : HW_EqualWaterSensor(Downstream.EqualWaterSensor);
+end
+
+group South:
+    HW_Gate_BVH_East        : HW_Gate(Upstream.Gates.East);
+    HW_Gate_BVH_West        : HW_Gate(Upstream.Gates.West);
+    HW_Paddle_BVH_East      : HW_Paddle(Upstream.Paddles.East);
+    HW_Paddle_BVH_West      : HW_Paddle(Upstream.Paddles.West);
+    HW_EnteringTL_BVH_East  : HW_EnteringTL(Upstream.EnteringTLs.East);
+    HW_EnteringTL_BVH_West  : HW_EnteringTL(Upstream.EnteringTLs.West);
+    HW_LeavingTL_BVH_East   : HW_LeavingTL(Upstream.LeavingTLs.East);
+    HW_LeavingTL_BVH_West   : HW_LeavingTL(Upstream.LeavingTLs.West);
+    HW_EqualWaterSensor_BVH : HW_EqualWaterSensor(Upstream.EqualWaterSensor);
+
+    HW_Gate_BNH_East        : HW_Gate(Downstream.Gates.East);
+    HW_Gate_BNH_West        : HW_Gate(Downstream.Gates.West);
+    HW_Paddle_BNH_East      : HW_Paddle(Downstream.Paddles.East);
+    HW_Paddle_BNH_West      : HW_Paddle(Downstream.Paddles.West);
+    HW_EnteringTL_BNH_East  : HW_EnteringTL(Downstream.EnteringTLs.East);
+    HW_EnteringTL_BNH_West  : HW_EnteringTL(Downstream.EnteringTLs.West);
+    HW_LeavingTL_BNH_East   : HW_LeavingTL(Downstream.LeavingTLs.East);
+    HW_LeavingTL_BNH_West   : HW_LeavingTL(Downstream.LeavingTLs.West);
+    HW_EqualWaterSensor_BNH : HW_EqualWaterSensor(Downstream.EqualWaterSensor);
+end
+
+group Barrier:
+    HW_TL_BVH_East         : HW_LeavingTL(.Barrier.Upstream.TLs.East);
+    HW_TL_BVH_West         : HW_LeavingTL(.Barrier.Upstream.TLs.West);
+    HW_TL_BNH_East         : HW_LeavingTL(.Barrier.Downstream.TLs.East);
+    HW_TL_BNH_West         : HW_LeavingTL(.Barrier.Downstream.TLs.West);
+    HW_Barrier_BVH_East    : HW_Paddle(.Barrier.Barrier);
+end

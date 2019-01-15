@@ -1,0 +1,222 @@
+from "Tooldefs/config.tooldef2" import *;
+from "Tooldefs/myToolbox.tooldef2" import *;
+
+// Create directory for generated files.
+mkdir(gen_folder()+"/"+java_folder(), force=true);
+
+// Eliminate component definitions and algebraic variables as preprocessing.
+cif3cif(simulation(),
+        "-o", java_model(),
+        "-t", "elim-comp-def-inst,elim-alg-vars");
+outln("Removed component definitions and event exclusion invariants.");
+
+// Merge simulation model and hardware mapping
+cif3merge(java_model(), hardware_sim(),
+        "-o", java_model());
+
+// Linearize the model.
+cif3cif(java_model(),
+    "-o", java_model(),
+    "-t linearize-merge");
+outln("Linearized specification.");
+
+// Remove unnamed locations to reduce code size.
+removeUnamedLocations(java_model(), java_model());
+outln("Removed unamed locations.");
+
+// Generate Java code.
+cif3codegen(java_model(),
+    "-l", "java",
+    "-o", gen_folder()+"/"+java_folder(),
+    "-p", java_class(),
+    "--java-package=" + java_package());
+outln("Generated java code.");
+
+// remove test class (Don't need because we use Python implementation)
+rmfile(fmt("%s/%s/%s.java", gen_folder(), java_folder(), java_class() + "Test"));
+
+// read and remove class file
+list string file = readlines(java_file());
+rmfile(java_file(), force = true);
+
+// line markers
+bool firstLoopStarted = false;
+bool firstLoopEnded   = false;
+bool discVar  = false;
+bool inputVar = false;
+bool contVar  = false;
+
+// variable lists
+list string outputVars = [];
+list string inputVars  = [];
+list string contVars   = [];
+list string contInVars = [];
+
+// Write class file
+for line in file:
+    ///////////////////////////////
+    //   Possible line changes   //
+    ///////////////////////////////
+
+    // if this line defines the first infinite loop (the event loop)
+    if not firstLoopStarted and contains(line, "while (true) {"):
+        firstLoopStarted = true;
+        line = "        int i;" + "\n" +
+               "        for (i=0; i<=100; i++) {";
+    end
+
+    // if this line ends the first loop
+    if firstLoopStarted and not firstLoopEnded and contains(line, "}"):
+        firstLoopEnded = true;
+        // write this line immediately
+        writefile(java_file(), line+"\n", append = true);
+        // insert output on kill
+        line = "        if (i == 100) infoPrintOutput(\"Loop Killed\",\":stderr\");";
+    end
+
+    // if this line defines the exec method, change it to execInfinite
+    // As exec is a built-in function in Python we cannot call from Python.
+    if contains(line, "public void exec("):
+        line = replace(line, "exec", "execInfinite");
+    end
+
+    // rewrite the file
+    writefile(java_file(), line+"\n", append = true);
+
+    ///////////////////////////////
+    // Possible external changes //
+    ///////////////////////////////
+
+    // Check if the next line contains a discrete variable or input variable
+    if contains(line, "Discrete variable"):
+        discVar = true;
+        continue;
+    end
+    if contains(line, "Input variable"):
+        inputVar = true;
+        continue;
+    end
+    if contains(line, "Continuous variable"):
+        contVar = true;
+        continue;
+    end
+
+    // If this line contains a discrete variable, check if it is output bool
+    // If it is, then we derive its name.
+    if discVar:
+        discVar = false;
+        if contains(line, " public boolean ") and not contains(line, "_old_"):
+            string varName = trim(line);
+            varName = replace(varName,"public boolean ","");
+            varName = replace(varName,";","");
+            outputVars = outputVars + [varName];
+        end
+        continue;
+    end
+
+    // If this line contains an input bool, check if it is HW
+    // If it is, then we derive its name.
+    //maybe cont is not the best name
+    if inputVar:
+        inputVar = false;
+        if contains(line, " public boolean ") and contains(line, "_HW_"):
+            string varName = trim(line);
+            varName = replace(varName,"public boolean ","");
+            varName = replace(varName,";","");
+            inputVars = inputVars + [varName];
+        elif contains(line, " public ") and contains(line, "_HW_"):
+            list string varSplit = split(trim(line)," ");
+            string varName = varSplit[-1];
+            varName = replace(varName,";","");
+            contInVars = contInVars + [varName];
+        end
+        continue;
+    end
+
+    // If this line contains a continuous variable, write it directly
+    if contVar:
+        contVar = false;
+        if contains(line, " public double "):
+            string varName = trim(line);
+            varName = replace(varName,"public double ","");
+            varName = replace(varName,";","");
+            contVars = contVars + [varName];
+        end
+        continue;
+    end
+end
+outln("Adapted java code for Ignition.");
+
+///////////////////////////////
+//    variable conversion    //
+///////////////////////////////
+// rewrite PLC tags in Python (cosmetic + Java tags and Ignition tags will be consistent)
+tool string convertIvar(string var):
+    list string tag = split(var, "_");
+    var =  join(tag[0:-1], "_");
+    return replace(var, "M_",   "");
+end
+
+tool string convertDvar(string var):
+    list string tag = split(var, "_");
+    var =  join(tag[0:-1], "_");
+    return replace(var, "M_",   "");
+end
+
+tool string convertCvar(string var):
+    list string tag = split(var, "_");
+    var =  join(tag[0:-1], "_");
+    return replace(var, "M_",   "");
+end
+
+// Write the c2j.py file.
+int c = 0;
+rmfile(py_plugin(), force = true);
+
+// Make a nice header.
+write(py_plugin(), c, fmt("# Generated for use with %s in ignition.", java_class()));
+write(py_plugin(), c, "from project.myFuns import valueOf, writeTo, writeToState");
+
+// Connection for the boolean input vars, from PLC to Sim (Actuators).
+write(py_plugin(), c, "# input all actuator signals");
+write(py_plugin(), c, "def readTags(model):");
+c = indent(c);
+
+for inputVar in inputVars:
+    write(py_plugin(), c, fmt("model.%s = valueOf(\"%s\")", inputVar, convertIvar(inputVar)));
+end
+c = dedent(c);
+
+write(py_plugin(), c, "");
+
+// Connection for the out vars, from Sim to PLC (Sensors).
+write(py_plugin(), c, "# write all sensor signals");
+write(py_plugin(), c, "def writeTags(model):");
+c = indent(c);
+for outputVar in outputVars:
+    write(py_plugin(), c, fmt("writeTo(\"%s\", model.%s)", convertDvar(outputVar), outputVar));
+end
+c = dedent(c);
+
+// Connection for state vars from Sim to Sim interface (for visualization)
+write(py_plugin(), c, "");
+
+write(py_plugin(), c, "# write all state values");
+write(py_plugin(), c, "def updateState(model):");
+c = indent(c);
+for contVar in contVars:
+    write(py_plugin(), c, fmt("writeToState(\"%s\", model.%s)", convertCvar(contVar), contVar));
+end
+c = dedent(c);
+
+write(py_plugin(), c, "");
+
+// Connection for the non-boolean input vars, from PLC to Sim (Actuators).
+write(py_plugin(), c, "# write all nonbool input values");
+write(py_plugin(), c, "def readNonBoolTags(model):");
+c = indent(c);
+for inputVar in contInVars:
+    write(py_plugin(), c, fmt("model.%s = valueOf(\"%s\")", inputVar, convertIvar(inputVar)));
+end
+
+outln("Created python IO methods.");

@@ -1,0 +1,330 @@
+import "Skeleton.cif";
+
+automaton def HW_Gate(Gate gate):
+    input bool Open,
+               Closed;
+
+    disc bool  Q_Open  = false,
+               Q_Close = false;
+
+    location: initial;
+        edge gate.Sensor.u_open_on    when     Open;
+        edge gate.Sensor.u_open_off   when not Open;
+        edge gate.Sensor.u_closed_on  when     Closed;
+        edge gate.Sensor.u_closed_off when not Closed;
+        edge gate.Actuator.c_open           do Q_Open  := true;
+        edge gate.Actuator.c_close          do Q_Close := true;
+        edge gate.Actuator.c_emergencyStop  do Q_Close := false, Q_Open := false;
+        edge gate.Actuator.c_endStopOpening do Q_Open  := false;
+        edge gate.Actuator.c_endStopClosing do Q_Close := false;
+end
+
+automaton def HW_Paddle(Paddle paddle):
+    input bool Open,
+               Closed;
+
+    disc bool  Q_Open  = false,
+               Q_Close = false;
+
+    location: initial;
+        edge paddle.Sensor.u_open_on    when     Open;
+        edge paddle.Sensor.u_open_off   when not Open;
+        edge paddle.Sensor.u_closed_on  when     Closed;
+        edge paddle.Sensor.u_closed_off when not Closed;
+        edge paddle.Actuator.c_open           do Q_Open  := true;
+        edge paddle.Actuator.c_close          do Q_Close := true;
+        edge paddle.Actuator.c_emergencyStop  do Q_Close := false, Q_Open := false;
+        edge paddle.Actuator.c_endStopOpening do Q_Open  := false;
+        edge paddle.Actuator.c_endStopClosing do Q_Close := false;
+end
+
+automaton def HW_EnteringTL(EnteringTL TL):
+    input bool Red,
+               Green,
+               RedRed;
+    disc bool  Q_Red    = true,
+               Q_Green  = false,
+               Q_RedRed = false;
+
+    location: initial;
+        edge TL.SensorR1.u_on  when     Red;
+        edge TL.SensorR1.u_off when not Red;
+        edge TL.SensorG.u_on   when     Green;
+        edge TL.SensorG.u_off  when not Green;
+        edge TL.SensorR2.u_on  when     RedRed;
+        edge TL.SensorR2.u_off when not RedRed;
+        edge TL.Actuator.c_r   do Q_Red    := true, Q_Green := false, Q_RedRed := false;
+        edge TL.Actuator.c_rr  do Q_RedRed := true;
+        edge TL.Actuator.c_rg  do Q_Red    := true, Q_Green := true;
+        edge TL.Actuator.c_g   do Q_Green  := true;
+end
+
+automaton def HW_LeavingTL(LeavingTL TL):
+    input bool Red,
+               Green;
+    disc bool  Q_Red   = true,
+               Q_Green = false;
+
+    location: initial;
+        edge TL.SensorR.u_on  when     Red;
+        edge TL.SensorR.u_off when not Red;
+        edge TL.SensorG.u_on  when     Green;
+        edge TL.SensorG.u_off when not Green;
+        edge TL.Actuator.c_r  do Q_Red := true,  Q_Green := false;
+        edge TL.Actuator.c_g  do Q_Red := false, Q_Green := true;
+end
+
+automaton def HW_EqualWaterSensor(Sensor sensor):
+    input bool Equal;
+
+    location: initial;
+        edge sensor.u_on  when     Equal;
+        edge sensor.u_off when not Equal;
+end
+
+automaton def HW_Command(Command command):
+    input bool Active;
+
+    location: initial;
+        edge command.u_activate   when     Active;
+        edge command.u_deactivate when not Active;
+end
+
+group North:
+    HW_Gate_BVH_East        : HW_Gate(Upstream.Gates.East);
+    HW_Gate_BVH_West        : HW_Gate(Upstream.Gates.West);
+    HW_Paddle_BVH_East      : HW_Paddle(Upstream.Paddles.East);
+    HW_Paddle_BVH_West      : HW_Paddle(Upstream.Paddles.West);
+    HW_EnteringTL_BVH_East  : HW_EnteringTL(Upstream.EnteringTLs.East);
+    HW_EnteringTL_BVH_West  : HW_EnteringTL(Upstream.EnteringTLs.West);
+    HW_LeavingTL_BVH_East   : HW_LeavingTL(Upstream.LeavingTLs.East);
+    HW_LeavingTL_BVH_West   : HW_LeavingTL(Upstream.LeavingTLs.West);
+    HW_EqualWaterSensor_BVH : HW_EqualWaterSensor(Upstream.EqualWaterSensor);
+
+    HW_Gate_BNH_East        : HW_Gate(Downstream.Gates.East);
+    HW_Gate_BNH_West        : HW_Gate(Downstream.Gates.West);
+    HW_Paddle_BNH_East      : HW_Paddle(Downstream.Paddles.East);
+    HW_Paddle_BNH_West      : HW_Paddle(Downstream.Paddles.West);
+    HW_EnteringTL_BNH_East  : HW_EnteringTL(Downstream.EnteringTLs.East);
+    HW_EnteringTL_BNH_West  : HW_EnteringTL(Downstream.EnteringTLs.West);
+    HW_LeavingTL_BNH_East   : HW_LeavingTL(Downstream.LeavingTLs.East);
+    HW_LeavingTL_BNH_West   : HW_LeavingTL(Downstream.LeavingTLs.West);
+    HW_EqualWaterSensor_BNH : HW_EqualWaterSensor(Downstream.EqualWaterSensor);
+
+    HW_EmergencyStop : HW_Command(EmergencyStop);
+
+    automaton SCADA:
+        disc  bool DownstreamGateOpen,
+                   DownstreamGateClose,
+                   DownstreamGateStop,
+                   DownstreamPaddleOpen ,
+                   DownstreamPaddleClose,
+                   DownstreamPaddleStop ,
+                   DownstreamEnteringTLRedRed,
+                   DownstreamEnteringTLRed,
+                   DownstreamEnteringTLRedGreen,
+                   DownstreamEnteringTLGreen,
+                   DownstreamLeavingTLRed,
+                   DownstreamLeavingTLGreen,
+                   UpstreamGateOpen,
+                   UpstreamGateClose,
+                   UpstreamGateStop,
+                   UpstreamPaddleOpen,
+                   UpstreamPaddleClose,
+                   UpstreamPaddleStop,
+                   UpstreamEnteringTLRedRed,
+                   UpstreamEnteringTLRed,
+                   UpstreamEnteringTLRedGreen,
+                   UpstreamEnteringTLGreen,
+                   UpstreamLeavingTLRed,
+                   UpstreamLeavingTLGreen;
+        location Inactive: initial;
+            edge Commands.DownstreamGateOpen_act           when DownstreamGateOpen            goto Active;
+            edge Commands.DownstreamGateClose_act          when DownstreamGateClose           goto Active;
+            edge Commands.DownstreamGateStop_act           when DownstreamGateStop            goto Active;
+            edge Commands.DownstreamPaddleOpen_act         when DownstreamPaddleOpen          goto Active;
+            edge Commands.DownstreamPaddleClose_act        when DownstreamPaddleClose         goto Active;
+            edge Commands.DownstreamPaddleStop_act         when DownstreamPaddleStop          goto Active;
+            edge Commands.DownstreamEnteringTLRedRed_act   when DownstreamEnteringTLRedRed    goto Active;
+            edge Commands.DownstreamEnteringTLRed_act      when DownstreamEnteringTLRed       goto Active;
+            edge Commands.DownstreamEnteringTLRedGreen_act when DownstreamEnteringTLRedGreen  goto Active;
+            edge Commands.DownstreamEnteringTLGreen_act    when DownstreamEnteringTLGreen     goto Active;
+            edge Commands.DownstreamLeavingTLRed_act       when DownstreamLeavingTLRed        goto Active;
+            edge Commands.DownstreamLeavingTLGreen_act     when DownstreamLeavingTLGreen      goto Active;
+            edge Commands.UpstreamGateOpen_act             when UpstreamGateOpen              goto Active;
+            edge Commands.UpstreamGateClose_act            when UpstreamGateClose             goto Active;
+            edge Commands.UpstreamGateStop_act             when UpstreamGateStop              goto Active;
+            edge Commands.UpstreamPaddleOpen_act           when UpstreamPaddleOpen            goto Active;
+            edge Commands.UpstreamPaddleClose_act          when UpstreamPaddleClose           goto Active;
+            edge Commands.UpstreamPaddleStop_act           when UpstreamPaddleStop            goto Active;
+            edge Commands.UpstreamEnteringTLRedRed_act     when UpstreamEnteringTLRedRed      goto Active;
+            edge Commands.UpstreamEnteringTLRed_act        when UpstreamEnteringTLRed         goto Active;
+            edge Commands.UpstreamEnteringTLRedGreen_act   when UpstreamEnteringTLRedGreen    goto Active;
+            edge Commands.UpstreamEnteringTLGreen_act      when UpstreamEnteringTLGreen       goto Active;
+            edge Commands.UpstreamLeavingTLRed_act         when UpstreamLeavingTLRed          goto Active;
+            edge Commands.UpstreamLeavingTLGreen_act       when UpstreamLeavingTLGreen        goto Active;
+        location Active:
+            edge Commands.Deactivate when not DownstreamGateOpen,
+                                           not DownstreamGateClose,
+                                           not DownstreamGateStop,
+                                           not DownstreamPaddleOpen,
+                                           not DownstreamPaddleClose,
+                                           not DownstreamPaddleStop,
+                                           not DownstreamEnteringTLRedRed,
+                                           not DownstreamEnteringTLRed,
+                                           not DownstreamEnteringTLRedGreen,
+                                           not DownstreamEnteringTLGreen,
+                                           not DownstreamLeavingTLRed,
+                                           not DownstreamLeavingTLGreen,
+                                           not UpstreamGateOpen,
+                                           not UpstreamGateClose,
+                                           not UpstreamGateStop,
+                                           not UpstreamPaddleOpen,
+                                           not UpstreamPaddleClose,
+                                           not UpstreamPaddleStop,
+                                           not UpstreamEnteringTLRedRed,
+                                           not UpstreamEnteringTLRed,
+                                           not UpstreamEnteringTLRedGreen,
+                                           not UpstreamEnteringTLGreen,
+                                           not UpstreamLeavingTLRed,
+                                           not UpstreamLeavingTLGreen      goto Inactive;
+    end
+end
+
+group South:
+    HW_Gate_BVH_East        : HW_Gate(Upstream.Gates.East);
+    HW_Gate_BVH_West        : HW_Gate(Upstream.Gates.West);
+    HW_Paddle_BVH_East      : HW_Paddle(Upstream.Paddles.East);
+    HW_Paddle_BVH_West      : HW_Paddle(Upstream.Paddles.West);
+    HW_EnteringTL_BVH_East  : HW_EnteringTL(Upstream.EnteringTLs.East);
+    HW_EnteringTL_BVH_West  : HW_EnteringTL(Upstream.EnteringTLs.West);
+    HW_LeavingTL_BVH_East   : HW_LeavingTL(Upstream.LeavingTLs.East);
+    HW_LeavingTL_BVH_West   : HW_LeavingTL(Upstream.LeavingTLs.West);
+    HW_EqualWaterSensor_BVH : HW_EqualWaterSensor(Upstream.EqualWaterSensor);
+
+    HW_Gate_BNH_East        : HW_Gate(Downstream.Gates.East);
+    HW_Gate_BNH_West        : HW_Gate(Downstream.Gates.West);
+    HW_Paddle_BNH_East      : HW_Paddle(Downstream.Paddles.East);
+    HW_Paddle_BNH_West      : HW_Paddle(Downstream.Paddles.West);
+    HW_EnteringTL_BNH_East  : HW_EnteringTL(Downstream.EnteringTLs.East);
+    HW_EnteringTL_BNH_West  : HW_EnteringTL(Downstream.EnteringTLs.West);
+    HW_LeavingTL_BNH_East   : HW_LeavingTL(Downstream.LeavingTLs.East);
+    HW_LeavingTL_BNH_West   : HW_LeavingTL(Downstream.LeavingTLs.West);
+    HW_EqualWaterSensor_BNH : HW_EqualWaterSensor(Downstream.EqualWaterSensor);
+
+    HW_EmergencyStop : HW_Command(EmergencyStop);
+
+    automaton SCADA:
+        disc  bool DownstreamGateOpen,
+                   DownstreamGateClose,
+                   DownstreamGateStop,
+                   DownstreamPaddleOpen,
+                   DownstreamPaddleClose,
+                   DownstreamPaddleStop,
+                   DownstreamEnteringTLRedRed,
+                   DownstreamEnteringTLRed,
+                   DownstreamEnteringTLRedGreen,
+                   DownstreamEnteringTLGreen,
+                   DownstreamLeavingTLRed,
+                   DownstreamLeavingTLGreen,
+                   UpstreamGateOpen,
+                   UpstreamGateClose,
+                   UpstreamGateStop,
+                   UpstreamPaddleOpen,
+                   UpstreamPaddleClose,
+                   UpstreamPaddleStop,
+                   UpstreamEnteringTLRedRed,
+                   UpstreamEnteringTLRed,
+                   UpstreamEnteringTLRedGreen,
+                   UpstreamEnteringTLGreen,
+                   UpstreamLeavingTLRed,
+                   UpstreamLeavingTLGreen;
+        location Inactive: initial;
+            edge Commands.DownstreamGateOpen_act           when DownstreamGateOpen           goto Active;
+            edge Commands.DownstreamGateClose_act          when DownstreamGateClose          goto Active;
+            edge Commands.DownstreamGateStop_act           when DownstreamGateStop           goto Active;
+            edge Commands.DownstreamPaddleOpen_act         when DownstreamPaddleOpen         goto Active;
+            edge Commands.DownstreamPaddleClose_act        when DownstreamPaddleClose        goto Active;
+            edge Commands.DownstreamPaddleStop_act         when DownstreamPaddleStop         goto Active;
+            edge Commands.DownstreamEnteringTLRedRed_act   when DownstreamEnteringTLRedRed   goto Active;
+            edge Commands.DownstreamEnteringTLRed_act      when DownstreamEnteringTLRed      goto Active;
+            edge Commands.DownstreamEnteringTLRedGreen_act when DownstreamEnteringTLRedGreen goto Active;
+            edge Commands.DownstreamEnteringTLGreen_act    when DownstreamEnteringTLGreen    goto Active;
+            edge Commands.DownstreamLeavingTLRed_act       when DownstreamLeavingTLRed       goto Active;
+            edge Commands.DownstreamLeavingTLGreen_act     when DownstreamLeavingTLGreen     goto Active;
+            edge Commands.UpstreamGateOpen_act             when UpstreamGateOpen             goto Active;
+            edge Commands.UpstreamGateClose_act            when UpstreamGateClose            goto Active;
+            edge Commands.UpstreamGateStop_act             when UpstreamGateStop             goto Active;
+            edge Commands.UpstreamPaddleOpen_act           when UpstreamPaddleOpen           goto Active;
+            edge Commands.UpstreamPaddleClose_act          when UpstreamPaddleClose          goto Active;
+            edge Commands.UpstreamPaddleStop_act           when UpstreamPaddleStop           goto Active;
+            edge Commands.UpstreamEnteringTLRedRed_act     when UpstreamEnteringTLRedRed     goto Active;
+            edge Commands.UpstreamEnteringTLRed_act        when UpstreamEnteringTLRed        goto Active;
+            edge Commands.UpstreamEnteringTLRedGreen_act   when UpstreamEnteringTLRedGreen   goto Active;
+            edge Commands.UpstreamEnteringTLGreen_act      when UpstreamEnteringTLGreen      goto Active;
+            edge Commands.UpstreamLeavingTLRed_act         when UpstreamLeavingTLRed         goto Active;
+            edge Commands.UpstreamLeavingTLGreen_act       when UpstreamLeavingTLGreen       goto Active;
+        location Active:
+            edge Commands.Deactivate when not DownstreamGateOpen,
+                                           not DownstreamGateClose,
+                                           not DownstreamGateStop,
+                                           not DownstreamPaddleOpen,
+                                           not DownstreamPaddleClose,
+                                           not DownstreamPaddleStop,
+                                           not DownstreamEnteringTLRedRed,
+                                           not DownstreamEnteringTLRed,
+                                           not DownstreamEnteringTLRedGreen,
+                                           not DownstreamEnteringTLGreen,
+                                           not DownstreamLeavingTLRed,
+                                           not DownstreamLeavingTLGreen,
+                                           not UpstreamGateOpen,
+                                           not UpstreamGateClose,
+                                           not UpstreamGateStop,
+                                           not UpstreamPaddleOpen,
+                                           not UpstreamPaddleClose,
+                                           not UpstreamPaddleStop,
+                                           not UpstreamEnteringTLRedRed,
+                                           not UpstreamEnteringTLRed,
+                                           not UpstreamEnteringTLRedGreen,
+                                           not UpstreamEnteringTLGreen,
+                                           not UpstreamLeavingTLRed,
+                                           not UpstreamLeavingTLGreen      goto Inactive;
+    end
+end
+
+group Barrier:
+    HW_TL_BVH_East         : HW_LeavingTL(.Barrier.Upstream.TLs.East);
+    HW_TL_BVH_West         : HW_LeavingTL(.Barrier.Upstream.TLs.West);
+    HW_TL_BNH_East         : HW_LeavingTL(.Barrier.Downstream.TLs.East);
+    HW_TL_BNH_West         : HW_LeavingTL(.Barrier.Downstream.TLs.West);
+    HW_Barrier_BVH_East    : HW_Paddle(.Barrier.Barrier);
+
+    HW_EmergencyStop : HW_Command(EmergencyStop);
+
+    automaton SCADA:
+        disc  bool BarrierOpen,
+                   BarrierClose,
+                   BarrierStop,
+                   DownstreamTLRed,
+                   DownstreamTLGreen,
+                   UpstreamTLRed,
+                   UpstreamTLGreen;
+        location Inactive: initial;
+
+            edge Commands.BarrierOpen_act       when BarrierOpen       goto Active;
+            edge Commands.BarrierClose_act      when BarrierClose      goto Active;
+            edge Commands.BarrierStop_act       when BarrierStop       goto Active;
+            edge Commands.DownstreamTLRed_act   when DownstreamTLRed   goto Active;
+            edge Commands.DownstreamTLGreen_act when DownstreamTLGreen goto Active;
+            edge Commands.UpstreamTLRed_act     when UpstreamTLRed     goto Active;
+            edge Commands.UpstreamTLGreen_act   when UpstreamTLGreen   goto Active;
+        location Active:
+            edge Commands.Deactivate when not BarrierOpen,
+                                           not BarrierClose,
+                                           not BarrierStop,
+                                           not DownstreamTLRed,
+                                           not DownstreamTLGreen,
+                                           not UpstreamTLRed,
+                                           not UpstreamTLGreen goto Inactive;
+    end
+end

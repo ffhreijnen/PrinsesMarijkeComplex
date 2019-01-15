@@ -1,0 +1,574 @@
+import "Plant.cif";
+
+//Safety functions
+
+group North:
+    //{I Indien een nivelleermiddel op het andere hoofd Open is mag een nivelleermiddel niet Open worden.}
+    requirement not North.Downstream.Paddles.Closed disables
+    {North.Upstream.Paddles.East.Actuator.c_open,
+     North.Upstream.Paddles.West.Actuator.c_open};
+
+    requirement not North.Upstream.Paddles.Closed   disables
+    {North.Downstream.Paddles.East.Actuator.c_open,
+     North.Downstream.Paddles.West.Actuator.c_open};
+
+    //{II Indien een Gate op het andere hoofd Open is mag een nivelleermiddel niet Open worden.}
+    requirement not North.Downstream.Gates.Closed disables
+    {North.Upstream.Paddles.East.Actuator.c_open,
+     North.Upstream.Paddles.West.Actuator.c_open};
+
+    requirement not North.Upstream.Gates.Closed   disables
+    {North.Downstream.Paddles.East.Actuator.c_open,
+     North.Downstream.Paddles.West.Actuator.c_open};
+
+    //{III Indien het waterverschil over een Gate groter is dan het toegestane maximum mag deze niet Open worden.}
+    requirement North.Downstream.EqualWaterSensor.Unequal disables
+    {North.Downstream.Gates.East.Actuator.c_open,
+     North.Downstream.Gates.West.Actuator.c_open};
+
+    requirement North.Upstream.EqualWaterSensor.Unequal   disables
+    {North.Upstream.Gates.East.Actuator.c_open,
+     North.Upstream.Gates.West.Actuator.c_open};
+
+    //{IV Indien een nivelleermiddel op het andere hoofd Open is mag een Gate niet Open worden.}
+    requirement not North.Downstream.Paddles.Closed disables
+    {North.Upstream.Gates.East.Actuator.c_open,
+     North.Upstream.Gates.West.Actuator.c_open};
+
+    requirement not North.Upstream.Paddles.Closed   disables
+    {North.Downstream.Gates.East.Actuator.c_open,
+     North.Downstream.Gates.West.Actuator.c_open};
+
+    //{V Indien een Gate op het andere hoofd Open is mag een Gate niet Open worden.}
+    requirement not North.Downstream.Gates.Closed disables
+    {North.Upstream.Paddles.East.Actuator.c_open,
+     North.Upstream.Paddles.West.Actuator.c_open};
+
+    requirement not North.Upstream.Gates.Closed   disables
+    {North.Downstream.Paddles.East.Actuator.c_open,
+     North.Downstream.Paddles.West.Actuator.c_open};
+
+    //{VI Indien een LeavingTL op hetzelfde hoofd het seinbeeld Green toont mag het EnteringTL niet het seinbeeld Green tonen.}
+    requirement not North.Downstream.LeavingTLs.Red disables
+    {North.Downstream.EnteringTLs.East.Actuator.c_g,
+     North.Downstream.EnteringTLs.West.Actuator.c_g};
+
+    requirement not North.Upstream.LeavingTLs.Red   disables
+    {North.Upstream.EnteringTLs.East.Actuator.c_g,
+     North.Upstream.EnteringTLs.West.Actuator.c_g};
+
+    //{VII Indien de Gate niet geheel Open is mag het EnteringTL niet het seinbeeld Green tonen.}
+    requirement not North.Downstream.Gates.Open disables
+    {North.Downstream.EnteringTLs.East.Actuator.c_g,
+     North.Downstream.EnteringTLs.West.Actuator.c_g};
+
+    requirement not North.Upstream.Gates.Open   disables
+    {North.Upstream.EnteringTLs.East.Actuator.c_g,
+     North.Upstream.EnteringTLs.West.Actuator.c_g};
+
+    //{VIII Indien de Gate niet vergrendeld/opgezet is mag het EnteringTL niet het seinbeeld Green tonen.}
+    //Not applicable for MarijkeSluizen
+
+    //{IX Indien de rem van de aandrijving van de Gate niet gevallen is mag het EnteringTL niet het seinbeeld Green tonen.}
+    //Not applicable for MarijkeSluizen
+
+    //{X Indien er zich een vaarweggebruiker onder / tussen een Gate bevindt mag een Gate niet Closed worden.}
+    //No SIL 2 sensors to measure this.
+
+    //{XI Indien een EnteringTL niet het seinbeeld Red of RedRed toont mag een Gate niet aangdreven worden om te Closeen.}
+    requirement not North.Downstream.EnteringTLs.RedOrRedRed disables
+    {North.Downstream.Gates.East.Actuator.c_close,
+     North.Downstream.Gates.West.Actuator.c_close};
+
+    requirement not North.Upstream.EnteringTLs.RedOrRedRed   disables
+    {North.Upstream.Gates.East.Actuator.c_close,
+     North.Upstream.Gates.West.Actuator.c_close};
+
+    //{XII Indien een LeavingTL niet het seinbeeld Red toont mag een Gate niet aangdreven worden om te Closeen.}
+    requirement not North.Downstream.LeavingTLs.Red disables
+    {North.Downstream.Gates.East.Actuator.c_close,
+     North.Downstream.Gates.West.Actuator.c_close};
+
+    requirement not North.Upstream.LeavingTLs.Red   disables
+     {North.Upstream.Gates.East.Actuator.c_close,
+     North.Upstream.Gates.West.Actuator.c_close};
+
+    //{XIII Indien een EnteringTL niet het seinbeeld Red of RedRed toont mag een Gate niet ontgrendeld worden.}
+    //Not applicable for MarijkeSluizen
+
+    //{XIV Indien een LeavingTL niet het seinbeeld Red toont mag een Gate niet ontgrendeld worden.}
+    //Not applicable for MarijkeSluizen
+
+    //{XV Indien een EnteringTL niet het seinbeeld Red of RedRed toont mag de rem van de aandrijving van een Gate niet gelicht worden.}
+    //Not applicable for MarijkeSluizen
+
+    //{XVI Indien een LeavingTL niet het seinbeeld Red of RedRed toont mag de rem van de aandrijving van een Gate niet gelicht worden.}
+    //Not applicable for MarijkeSluizen
+
+    //{XVII Indien een scheepvaartsein het bovenste rode sein niet kan tonen dient het desbetreffende sein gedoofd te worden.}
+    //Only happy flow is modeled for now.
+
+    //{XVIII Indien een Gate de Closed stand verlaat als gevolg van een storing dient de beweging gestopt te worden door een beschermende stop.}
+    //Only happy flow is modeled for now.
+
+    //{XIX Indien een Gate de Opene stand verlaat als gevolg van een storing dienen alle scheepvaartseinen het seinbeeld Red te tonen en de beweging gestopt te worden door een beschermende stop.}
+    //Only happy flow is modeled for now.
+
+    //{XX  EmergencyStopfunctie.}
+    // Tijdens een actieve EmergencyStop mogen Gates niet gaan openen / Closeen.
+    requirement North.EmergencyStop.Active disables North.Downstream.Gates.East.Actuator.c_open;
+    requirement North.EmergencyStop.Active disables North.Downstream.Gates.East.Actuator.c_close;
+    requirement North.EmergencyStop.Active disables North.Downstream.Gates.West.Actuator.c_open;
+    requirement North.EmergencyStop.Active disables North.Downstream.Gates.West.Actuator.c_close;
+    requirement North.EmergencyStop.Active disables North.Upstream.Gates.East.Actuator.c_open;
+    requirement North.EmergencyStop.Active disables North.Upstream.Gates.East.Actuator.c_close;
+    requirement North.EmergencyStop.Active disables North.Upstream.Gates.West.Actuator.c_open;
+    requirement North.EmergencyStop.Active disables North.Upstream.Gates.West.Actuator.c_close;
+
+    // Tijdens een actieve EmergencyStop mogen Paddles niet gaan openen / Closeen.
+    requirement North.EmergencyStop.Active disables North.Downstream.Paddles.East.Actuator.c_open;
+    requirement North.EmergencyStop.Active disables North.Downstream.Paddles.East.Actuator.c_close;
+    requirement North.EmergencyStop.Active disables North.Downstream.Paddles.West.Actuator.c_open;
+    requirement North.EmergencyStop.Active disables North.Downstream.Paddles.West.Actuator.c_close;
+    requirement North.EmergencyStop.Active disables North.Upstream.Paddles.East.Actuator.c_open;
+    requirement North.EmergencyStop.Active disables North.Upstream.Paddles.East.Actuator.c_close;
+    requirement North.EmergencyStop.Active disables North.Upstream.Paddles.West.Actuator.c_open;
+    requirement North.EmergencyStop.Active disables North.Upstream.Paddles.West.Actuator.c_close;
+
+    // Tijdens een actieve EmergencyStop moeten Gates geEmergencyStopt worden.
+    requirement North.Downstream.Gates.East.Actuator.c_emergencyStop needs North.EmergencyStop.Active   or North.Commands.DownstreamGateStop;
+    requirement North.Downstream.Gates.West.Actuator.c_emergencyStop needs North.EmergencyStop.Active   or North.Commands.DownstreamGateStop;
+    requirement North.Upstream.Gates.East.Actuator.c_emergencyStop   needs North.EmergencyStop.Active   or North.Commands.UpstreamGateStop;
+    requirement North.Upstream.Gates.West.Actuator.c_emergencyStop   needs North.EmergencyStop.Active   or North.Commands.UpstreamGateStop;
+
+    // Tijdens een actieve EmergencyStop moeten Paddles geEmergencyStopt worden.
+    requirement North.Downstream.Paddles.East.Actuator.c_emergencyStop needs North.EmergencyStop.Active or North.Commands.DownstreamPaddleStop;
+    requirement North.Downstream.Paddles.West.Actuator.c_emergencyStop needs North.EmergencyStop.Active or North.Commands.DownstreamPaddleStop;
+    requirement North.Upstream.Paddles.East.Actuator.c_emergencyStop   needs North.EmergencyStop.Active or North.Commands.UpstreamPaddleStop;
+    requirement North.Upstream.Paddles.West.Actuator.c_emergencyStop   needs North.EmergencyStop.Active or North.Commands.UpstreamPaddleStop;
+
+    //{XXI Indien een nivelleermiddel de Closed stand verlaat als gevolg van een storing dient de beweging gestopt te worden door een beschermende stop.}
+    //Only happy flow is modeled for now.
+
+    //{XXII Indien een EnteringTL op hetzelfde hoofd het seinbeeld Green toont mag het LeavingTL niet het seinbeeld Green tonen.}
+    requirement not North.Downstream.EnteringTLs.RedOrRedRed disables
+    {North.Downstream.LeavingTLs.East.Actuator.c_g,
+     North.Downstream.LeavingTLs.West.Actuator.c_g};
+
+    requirement not North.Upstream.EnteringTLs.RedOrRedRed   disables
+    {North.Upstream.LeavingTLs.East.Actuator.c_g,
+     North.Upstream.LeavingTLs.West.Actuator.c_g};
+
+    //{XXIII Indien een Gate met een te hoge snelheid en/of in de verkeerde richting beweegt dient de beweging gestopt te worden door een beschermende stop.}
+    //Only happy flow is modeled for now.
+
+    //{?? Indien de Gate niet geheel Open is mag het LeavingTL niet het seinbeeld Green tonen.}
+    requirement not North.Downstream.Gates.Open disables
+    {North.Downstream.LeavingTLs.East.Actuator.c_g,
+     North.Downstream.LeavingTLs.West.Actuator.c_g};
+
+    requirement not North.Upstream.Gates.Open   disables
+    {North.Upstream.LeavingTLs.East.Actuator.c_g,
+     North.Upstream.LeavingTLs.West.Actuator.c_g};
+
+    //{?? Indien de Gate niet vergrendeld/opgezet is mag het LeavingTL niet het seinbeeld Green tonen.}
+    //Not applicable for MarijkeSluizen
+
+    //{?? Indien de rem van de aandrijving van de Gate niet gevallen is mag het LeavingTL niet het seinbeeld Green tonen.}
+    //Not applicable for MarijkeSluizen
+
+
+    // Operator commands
+
+    // Gates
+
+    // Gate mag openen wanneer Open commando gegeven is.
+    requirement {North.Downstream.Gates.East.Actuator.c_open,
+                 North.Downstream.Gates.West.Actuator.c_open} needs
+        North.Commands.DownstreamGateOpen;
+
+    requirement {North.Upstream.Gates.East.Actuator.c_open,
+                 North.Upstream.Gates.West.Actuator.c_open} needs
+        North.Commands.UpstreamGateOpen;
+
+    // Gate mag Closeen wanneer Close commando gegeven is.
+    requirement {North.Downstream.Gates.East.Actuator.c_close,
+                 North.Downstream.Gates.West.Actuator.c_close} needs
+        North.Commands.DownstreamGateClose;
+
+    requirement {North.Upstream.Gates.East.Actuator.c_close,
+                 North.Upstream.Gates.West.Actuator.c_close} needs
+        North.Commands.UpstreamGateClose;
+
+    //Paddles
+    // Paddle mag openen wanneer Open commando gegeven is.
+    requirement {North.Downstream.Paddles.East.Actuator.c_open,
+                 North.Downstream.Paddles.West.Actuator.c_open} needs
+        North.Commands.DownstreamPaddleOpen;
+
+    requirement {North.Upstream.Paddles.East.Actuator.c_open,
+                 North.Upstream.Paddles.West.Actuator.c_open} needs
+        North.Commands.UpstreamPaddleOpen;
+
+    // Paddle mag Closeen wanneer Close commando gegeven is.
+    requirement {North.Downstream.Paddles.East.Actuator.c_close,
+                 North.Downstream.Paddles.West.Actuator.c_close} needs
+        North.Commands.DownstreamPaddleClose;
+
+    requirement {North.Upstream.Paddles.East.Actuator.c_close,
+                 North.Upstream.Paddles.West.Actuator.c_close} needs
+        North.Commands.UpstreamPaddleClose;
+
+    //EnteringTLs
+    // EnteringTL mag RedRed sein gegeven als RedRed commando gegeven is.
+    requirement {North.Downstream.EnteringTLs.East.Actuator.c_rr,
+                 North.Downstream.EnteringTLs.West.Actuator.c_rr} needs
+        North.Commands.DownstreamEnteringTLRedRed;
+
+    requirement {North.Upstream.EnteringTLs.East.Actuator.c_rr,
+                 North.Upstream.EnteringTLs.West.Actuator.c_rr} needs
+        North.Commands.UpstreamEnteringTLRedRed;
+
+    // EnteringTL mag Red sein gegeven als Red commando gegeven is.
+    requirement {North.Downstream.EnteringTLs.East.Actuator.c_r,
+                 North.Downstream.EnteringTLs.West.Actuator.c_r} needs
+        North.Commands.DownstreamEnteringTLRed;
+
+    requirement {North.Upstream.EnteringTLs.East.Actuator.c_r,
+                 North.Upstream.EnteringTLs.West.Actuator.c_r} needs
+        North.Commands.UpstreamEnteringTLRed;
+
+    // EnteringTL mag RedGreen sein gegeven als RedGreen commando gegeven is.
+    requirement {North.Downstream.EnteringTLs.East.Actuator.c_rg,
+                 North.Downstream.EnteringTLs.West.Actuator.c_rg} needs
+        North.Commands.DownstreamEnteringTLRedGreen;
+
+    requirement {North.Upstream.EnteringTLs.East.Actuator.c_rg,
+                 North.Upstream.EnteringTLs.West.Actuator.c_rg} needs
+        North.Commands.UpstreamEnteringTLRedGreen;
+
+    // EnteringTL mag Green sein gegeven als Green commando gegeven is.
+    requirement {North.Downstream.EnteringTLs.East.Actuator.c_g,
+                 North.Downstream.EnteringTLs.West.Actuator.c_g} needs
+        North.Commands.DownstreamEnteringTLGreen;
+
+    requirement {North.Upstream.EnteringTLs.East.Actuator.c_g,
+                 North.Upstream.EnteringTLs.West.Actuator.c_g} needs
+        North.Commands.UpstreamEnteringTLGreen;
+
+    //LeavingTLs
+    // LeavingTL mag Red sein gegeven als Red commando gegeven is.
+    requirement {North.Downstream.LeavingTLs.East.Actuator.c_r,
+                 North.Downstream.LeavingTLs.West.Actuator.c_r} needs
+        North.Commands.DownstreamLeavingTLRed;
+
+    requirement {North.Upstream.LeavingTLs.East.Actuator.c_r,
+                 North.Upstream.LeavingTLs.West.Actuator.c_r} needs
+        North.Commands.UpstreamLeavingTLRed;
+
+    // LeavingTL mag Green sein gegeven als Green commando gegeven is.
+    requirement {North.Downstream.LeavingTLs.East.Actuator.c_g,
+                 North.Downstream.LeavingTLs.West.Actuator.c_g} needs
+        North.Commands.DownstreamLeavingTLGreen;
+
+    requirement {North.Upstream.LeavingTLs.East.Actuator.c_g,
+                 North.Upstream.LeavingTLs.West.Actuator.c_g} needs
+        North.Commands.UpstreamLeavingTLGreen;
+end
+
+group South:
+    //{I Indien een nivelleermiddel op het andere hoofd Open is mag een nivelleermiddel niet Open worden.}
+    requirement not South.Downstream.Paddles.Closed disables
+    {South.Upstream.Paddles.East.Actuator.c_open,
+     South.Upstream.Paddles.West.Actuator.c_open};
+
+    requirement not South.Upstream.Paddles.Closed   disables
+    {South.Downstream.Paddles.East.Actuator.c_open,
+     South.Downstream.Paddles.West.Actuator.c_open};
+
+    //{II Indien een Gate op het andere hoofd Open is mag een nivelleermiddel niet Open worden.}
+    requirement not South.Downstream.Gates.Closed disables
+    {South.Upstream.Paddles.East.Actuator.c_open,
+     South.Upstream.Paddles.West.Actuator.c_open};
+
+    requirement not South.Upstream.Gates.Closed   disables
+    {South.Downstream.Paddles.East.Actuator.c_open,
+     South.Downstream.Paddles.West.Actuator.c_open};
+
+    //{III Indien het waterverschil over een Gate groter is dan het toegestane maximum mag deze niet Open worden.}
+    requirement South.Downstream.EqualWaterSensor.Unequal disables
+    {South.Downstream.Gates.East.Actuator.c_open,
+     South.Downstream.Gates.West.Actuator.c_open};
+
+    requirement South.Upstream.EqualWaterSensor.Unequal   disables
+    {South.Upstream.Gates.East.Actuator.c_open,
+     South.Upstream.Gates.West.Actuator.c_open};
+
+    //{IV Indien een nivelleermiddel op het andere hoofd Open is mag een Gate niet Open worden.}
+    requirement not South.Downstream.Paddles.Closed disables
+    {South.Upstream.Gates.East.Actuator.c_open,
+     South.Upstream.Gates.West.Actuator.c_open};
+
+    requirement not South.Upstream.Paddles.Closed   disables
+    {South.Downstream.Gates.East.Actuator.c_open,
+     South.Downstream.Gates.West.Actuator.c_open};
+
+    //{V Indien een Gate op het andere hoofd Open is mag een Gate niet Open worden.}
+    requirement not South.Downstream.Gates.Closed disables
+    {South.Upstream.Paddles.East.Actuator.c_open,
+     South.Upstream.Paddles.West.Actuator.c_open};
+
+    requirement not South.Upstream.Gates.Closed   disables
+    {South.Downstream.Paddles.East.Actuator.c_open,
+     South.Downstream.Paddles.West.Actuator.c_open};
+
+    //{VI Indien een LeavingTL op hetzelfde hoofd het seinbeeld Green toont mag het EnteringTL niet het seinbeeld Green tonen.}
+    requirement not South.Downstream.LeavingTLs.Red disables
+    {South.Downstream.EnteringTLs.East.Actuator.c_g,
+     South.Downstream.EnteringTLs.West.Actuator.c_g};
+
+    requirement not South.Upstream.LeavingTLs.Red   disables
+    {South.Upstream.EnteringTLs.East.Actuator.c_g,
+     South.Upstream.EnteringTLs.West.Actuator.c_g};
+
+    //{VII Indien de Gate niet geheel Open is mag het EnteringTL niet het seinbeeld Green tonen.}
+    requirement not South.Downstream.Gates.Open disables
+    {South.Downstream.EnteringTLs.East.Actuator.c_g,
+     South.Downstream.EnteringTLs.West.Actuator.c_g};
+
+    requirement not South.Upstream.Gates.Open   disables
+    {South.Upstream.EnteringTLs.East.Actuator.c_g,
+     South.Upstream.EnteringTLs.West.Actuator.c_g};
+
+    //{VIII Indien de Gate niet vergrendeld/opgezet is mag het EnteringTL niet het seinbeeld Green tonen.}
+    //Not applicable for MarijkeSluizen
+
+    //{IX Indien de rem van de aandrijving van de Gate niet gevallen is mag het EnteringTL niet het seinbeeld Green tonen.}
+    //Not applicable for MarijkeSluizen
+
+    //{X Indien er zich een vaarweggebruiker onder / tussen een Gate bevindt mag een Gate niet Closed worden.}
+    //No SIL 2 sensors to measure this.
+
+    //{XI Indien een EnteringTL niet het seinbeeld Red of RedRed toont mag een Gate niet aangdreven worden om te Closeen.}
+    requirement not South.Downstream.EnteringTLs.RedOrRedRed disables
+    {South.Downstream.Gates.East.Actuator.c_close,
+     South.Downstream.Gates.West.Actuator.c_close};
+
+    requirement not South.Upstream.EnteringTLs.RedOrRedRed   disables
+    {South.Upstream.Gates.East.Actuator.c_close,
+     South.Upstream.Gates.West.Actuator.c_close};
+
+    //{XII Indien een LeavingTL niet het seinbeeld Red toont mag een Gate niet aangdreven worden om te Closeen.}
+    requirement not South.Downstream.LeavingTLs.Red disables
+    {South.Downstream.Gates.East.Actuator.c_close,
+     South.Downstream.Gates.West.Actuator.c_close};
+
+    requirement not South.Upstream.LeavingTLs.Red   disables
+     {South.Upstream.Gates.East.Actuator.c_close,
+     South.Upstream.Gates.West.Actuator.c_close};
+
+    //{XIII Indien een EnteringTL niet het seinbeeld Red of RedRed toont mag een Gate niet ontgrendeld worden.}
+    //Not applicable for MarijkeSluizen
+
+    //{XIV Indien een LeavingTL niet het seinbeeld Red toont mag een Gate niet ontgrendeld worden.}
+    //Not applicable for MarijkeSluizen
+
+    //{XV Indien een EnteringTL niet het seinbeeld Red of RedRed toont mag de rem van de aandrijving van een Gate niet gelicht worden.}
+    //Not applicable for MarijkeSluizen
+
+    //{XVI Indien een LeavingTL niet het seinbeeld Red of RedRed toont mag de rem van de aandrijving van een Gate niet gelicht worden.}
+    //Not applicable for MarijkeSluizen
+
+    //{XVII Indien een scheepvaartsein het bovenste rode sein niet kan tonen dient het desbetreffende sein gedoofd te worden.}
+    //Only happy flow is modeled for now.
+
+    //{XVIII Indien een Gate de Closed stand verlaat als gevolg van een storing dient de beweging gestopt te worden door een beschermende stop.}
+    //Only happy flow is modeled for now.
+
+    //{XIX Indien een Gate de Opene stand verlaat als gevolg van een storing dienen alle scheepvaartseinen het seinbeeld Red te tonen en de beweging gestopt te worden door een beschermende stop.}
+    //Only happy flow is modeled for now.
+
+    //{XX  EmergencyStopfunctie.}
+    // Tijdens een actieve EmergencyStop mogen Gates niet gaan openen / Closeen.
+    requirement South.EmergencyStop.Active disables South.Downstream.Gates.East.Actuator.c_open;
+    requirement South.EmergencyStop.Active disables South.Downstream.Gates.East.Actuator.c_close;
+    requirement South.EmergencyStop.Active disables South.Downstream.Gates.West.Actuator.c_open;
+    requirement South.EmergencyStop.Active disables South.Downstream.Gates.West.Actuator.c_close;
+    requirement South.EmergencyStop.Active disables South.Upstream.Gates.East.Actuator.c_open;
+    requirement South.EmergencyStop.Active disables South.Upstream.Gates.East.Actuator.c_close;
+    requirement South.EmergencyStop.Active disables South.Upstream.Gates.West.Actuator.c_open;
+    requirement South.EmergencyStop.Active disables South.Upstream.Gates.West.Actuator.c_close;
+
+    // Tijdens een actieve EmergencyStop mogen Paddles niet gaan openen / Closeen.
+    requirement South.EmergencyStop.Active disables South.Downstream.Paddles.East.Actuator.c_open;
+    requirement South.EmergencyStop.Active disables South.Downstream.Paddles.East.Actuator.c_close;
+    requirement South.EmergencyStop.Active disables South.Downstream.Paddles.West.Actuator.c_open;
+    requirement South.EmergencyStop.Active disables South.Downstream.Paddles.West.Actuator.c_close;
+    requirement South.EmergencyStop.Active disables South.Upstream.Paddles.East.Actuator.c_open;
+    requirement South.EmergencyStop.Active disables South.Upstream.Paddles.East.Actuator.c_close;
+    requirement South.EmergencyStop.Active disables South.Upstream.Paddles.West.Actuator.c_open;
+    requirement South.EmergencyStop.Active disables South.Upstream.Paddles.West.Actuator.c_close;
+
+    // Tijdens een actieve EmergencyStop moeten Gates geEmergencyStopt worden.
+    requirement South.Downstream.Gates.East.Actuator.c_emergencyStop needs South.EmergencyStop.Active   or South.Commands.DownstreamGateStop;
+    requirement South.Downstream.Gates.West.Actuator.c_emergencyStop needs South.EmergencyStop.Active   or South.Commands.DownstreamGateStop;
+    requirement South.Upstream.Gates.East.Actuator.c_emergencyStop   needs South.EmergencyStop.Active   or South.Commands.UpstreamGateStop;
+    requirement South.Upstream.Gates.West.Actuator.c_emergencyStop   needs South.EmergencyStop.Active   or South.Commands.UpstreamGateStop;
+
+    // Tijdens een actieve EmergencyStop moeten Paddles geEmergencyStopt worden.
+    requirement South.Downstream.Paddles.East.Actuator.c_emergencyStop needs South.EmergencyStop.Active or South.Commands.DownstreamPaddleStop;
+    requirement South.Downstream.Paddles.West.Actuator.c_emergencyStop needs South.EmergencyStop.Active or South.Commands.DownstreamPaddleStop;
+    requirement South.Upstream.Paddles.East.Actuator.c_emergencyStop   needs South.EmergencyStop.Active or South.Commands.UpstreamPaddleStop;
+    requirement South.Upstream.Paddles.West.Actuator.c_emergencyStop   needs South.EmergencyStop.Active or South.Commands.UpstreamPaddleStop;
+
+    //{XXI Indien een nivelleermiddel de Closed stand verlaat als gevolg van een storing dient de beweging gestopt te worden door een beschermende stop.}
+    //Only happy flow is modeled for now.
+
+    //{XXII Indien een EnteringTL op hetzelfde hoofd het seinbeeld Green toont mag het LeavingTL niet het seinbeeld Green tonen.}
+    requirement not South.Downstream.EnteringTLs.RedOrRedRed disables
+    {South.Downstream.LeavingTLs.East.Actuator.c_g,
+     South.Downstream.LeavingTLs.West.Actuator.c_g};
+
+    requirement not South.Upstream.EnteringTLs.RedOrRedRed   disables
+    {South.Upstream.LeavingTLs.East.Actuator.c_g,
+     South.Upstream.LeavingTLs.West.Actuator.c_g};
+
+    //{XXIII Indien een Gate met een te hoge snelheid en/of in de verkeerde richting beweegt dient de beweging gestopt te worden door een beschermende stop.}
+    //Only happy flow is modeled for now.
+
+    //{?? Indien de Gate niet geheel Open is mag het LeavingTL niet het seinbeeld Green tonen.}
+    requirement not South.Downstream.Gates.Open disables
+    {South.Downstream.LeavingTLs.East.Actuator.c_g,
+     South.Downstream.LeavingTLs.West.Actuator.c_g};
+
+    requirement not South.Upstream.Gates.Open   disables
+    {South.Upstream.LeavingTLs.East.Actuator.c_g,
+     South.Upstream.LeavingTLs.West.Actuator.c_g};
+
+    //{?? Indien de Gate niet vergrendeld/opgezet is mag het LeavingTL niet het seinbeeld Green tonen.}
+    //Not applicable for MarijkeSluizen
+
+    //{?? Indien de rem van de aandrijving van de Gate niet gevallen is mag het LeavingTL niet het seinbeeld Green tonen.}
+    //Not applicable for MarijkeSluizen
+
+
+    // BEDIEN COMMANDO'S
+
+    // Gates
+
+    // Gate mag openen wanneer Open commando gegeven is.
+    requirement {South.Downstream.Gates.East.Actuator.c_open,
+                 South.Downstream.Gates.West.Actuator.c_open} needs
+        South.Commands.DownstreamGateOpen;
+
+    requirement {South.Upstream.Gates.East.Actuator.c_open,
+                 South.Upstream.Gates.West.Actuator.c_open} needs
+        South.Commands.UpstreamGateOpen;
+
+    // Gate mag Closeen wanneer Close commando gegeven is.
+    requirement {South.Downstream.Gates.East.Actuator.c_close,
+                 South.Downstream.Gates.West.Actuator.c_close} needs
+        South.Commands.DownstreamGateClose;
+
+    requirement {South.Upstream.Gates.East.Actuator.c_close,
+                 South.Upstream.Gates.West.Actuator.c_close} needs
+        South.Commands.UpstreamGateClose;
+
+    //Paddles
+    // Paddle mag openen wanneer Open commando gegeven is.
+    requirement {South.Downstream.Paddles.East.Actuator.c_open,
+                 South.Downstream.Paddles.West.Actuator.c_open} needs
+        South.Commands.DownstreamPaddleOpen;
+
+    requirement {South.Upstream.Paddles.East.Actuator.c_open,
+                 South.Upstream.Paddles.West.Actuator.c_open} needs
+        South.Commands.UpstreamPaddleOpen;
+
+    // Paddle mag Closeen wanneer Close commando gegeven is.
+    requirement {South.Downstream.Paddles.East.Actuator.c_close,
+                 South.Downstream.Paddles.West.Actuator.c_close} needs
+        South.Commands.DownstreamPaddleClose;
+
+    requirement {South.Upstream.Paddles.East.Actuator.c_close,
+                 South.Upstream.Paddles.West.Actuator.c_close} needs
+        South.Commands.UpstreamPaddleClose;
+
+    //EnteringTLs
+    // EnteringTL mag RedRed sein gegeven als RedRed commando gegeven is.
+    requirement {South.Downstream.EnteringTLs.East.Actuator.c_rr,
+                 South.Downstream.EnteringTLs.West.Actuator.c_rr} needs
+        South.Commands.DownstreamEnteringTLRedRed;
+
+    requirement {South.Upstream.EnteringTLs.East.Actuator.c_rr,
+                 South.Upstream.EnteringTLs.West.Actuator.c_rr} needs
+        South.Commands.UpstreamEnteringTLRedRed;
+
+    // EnteringTL mag Red sein gegeven als Red commando gegeven is.
+    requirement {South.Downstream.EnteringTLs.East.Actuator.c_r,
+                 South.Downstream.EnteringTLs.West.Actuator.c_r} needs
+        South.Commands.DownstreamEnteringTLRed;
+
+    requirement {South.Upstream.EnteringTLs.East.Actuator.c_r,
+                 South.Upstream.EnteringTLs.West.Actuator.c_r} needs
+        South.Commands.UpstreamEnteringTLRed;
+
+    // EnteringTL mag RedGreen sein gegeven als RedGreen commando gegeven is.
+    requirement {South.Downstream.EnteringTLs.East.Actuator.c_rg,
+                 South.Downstream.EnteringTLs.West.Actuator.c_rg} needs
+        South.Commands.DownstreamEnteringTLRedGreen;
+
+    requirement {South.Upstream.EnteringTLs.East.Actuator.c_rg,
+                 South.Upstream.EnteringTLs.West.Actuator.c_rg} needs
+        South.Commands.UpstreamEnteringTLRedGreen;
+
+    // EnteringTL mag Green sein gegeven als Green commando gegeven is.
+    requirement {South.Downstream.EnteringTLs.East.Actuator.c_g,
+                 South.Downstream.EnteringTLs.West.Actuator.c_g} needs
+        South.Commands.DownstreamEnteringTLGreen;
+
+    requirement {South.Upstream.EnteringTLs.East.Actuator.c_g,
+                 South.Upstream.EnteringTLs.West.Actuator.c_g} needs
+        South.Commands.UpstreamEnteringTLGreen;
+
+    //LeavingTLs
+    // LeavingTL mag Red sein gegeven als Red commando gegeven is.
+    requirement {South.Downstream.LeavingTLs.East.Actuator.c_r,
+                 South.Downstream.LeavingTLs.West.Actuator.c_r} needs
+        South.Commands.DownstreamLeavingTLRed;
+
+    requirement {South.Upstream.LeavingTLs.East.Actuator.c_r,
+                 South.Upstream.LeavingTLs.West.Actuator.c_r} needs
+        South.Commands.UpstreamLeavingTLRed;
+
+    // LeavingTL mag Green sein gegeven als Green commando gegeven is.
+    requirement {South.Downstream.LeavingTLs.East.Actuator.c_g,
+                 South.Downstream.LeavingTLs.West.Actuator.c_g} needs
+        South.Commands.DownstreamLeavingTLGreen;
+
+    requirement {South.Upstream.LeavingTLs.East.Actuator.c_g,
+                 South.Upstream.LeavingTLs.West.Actuator.c_g} needs
+        South.Commands.UpstreamLeavingTLGreen;
+end
+
+group Barrier:
+    requirement Barrier.Actuator.c_close needs Downstream.TLs.Red and Upstream.TLs.Red;
+
+    requirement Downstream.TLs.East.Actuator.c_g needs Barrier.Open;
+    requirement Downstream.TLs.West.Actuator.c_g needs Barrier.Open;
+    requirement Upstream.TLs.East.Actuator.c_g   needs Barrier.Open;
+    requirement Upstream.TLs.West.Actuator.c_g   needs Barrier.Open;
+
+    requirement Downstream.TLs.East.Actuator.c_g needs Commands.DownstreamTLGreen;
+    requirement Downstream.TLs.West.Actuator.c_g needs Commands.DownstreamTLGreen;
+    requirement Downstream.TLs.East.Actuator.c_r needs Commands.DownstreamTLRed;
+    requirement Downstream.TLs.West.Actuator.c_r needs Commands.DownstreamTLRed;
+
+    requirement Upstream.TLs.East.Actuator.c_g   needs Commands.UpstreamTLGreen;
+    requirement Upstream.TLs.West.Actuator.c_g   needs Commands.UpstreamTLGreen;
+    requirement Upstream.TLs.East.Actuator.c_r   needs Commands.UpstreamTLRed;
+    requirement Upstream.TLs.West.Actuator.c_r   needs Commands.UpstreamTLRed;
+
+    requirement Barrier.Actuator.c_open          needs Commands.BarrierOpen;
+    requirement Barrier.Actuator.c_close         needs Commands.BarrierClose;
+    requirement Barrier.Actuator.c_emergencyStop needs EmergencyStop.Active or Commands.BarrierStop;
+end

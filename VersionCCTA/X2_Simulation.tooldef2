@@ -1,0 +1,18 @@
+from "Tooldefs/config.tooldef2" import *;
+from "Tooldefs/myToolbox.tooldef2" import *;
+
+// Merge supervisor with hybrid plant simulation model.
+outln("File \"%s\": generating...", sup_hybrid());
+cif3merge(supervisor(), simVisualization(), "-o", sup_hybrid());
+outln("File \"%s\": generated.", sup_hybrid());
+
+// Simulate the supervisor/hybrid plants simulation model.
+outln("Simulating \"%s\"...", sup_hybrid());
+outln();
+cif3sim(sup_hybrid(),
+        "-i svg",
+        "-a first",
+        "--frame-rate=10",
+        "--speed=1",
+        "--max-delay=10.0",
+        "--option-dialog=no");

@@ -1,0 +1,6 @@
+from "Tooldefs/config.tooldef2" import *;
+from "Tooldefs/myToolbox.tooldef2" import *;
+
+outln("Compiling Java code.");
+exec(java_compiler(), fmt("%s -d %s", java_file(), gen_folder()));
+outln("Compiled Java code.");

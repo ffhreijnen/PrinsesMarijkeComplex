@@ -1,0 +1,76 @@
+group def Sensor():
+  uncontrollable u_on;
+  uncontrollable u_off;
+end
+
+group def Gate():
+  group Actuator:
+    controllable c_open;
+    controllable c_close;
+    controllable c_emergencyStop;
+    controllable c_endStopClosing;
+    controllable c_endStopOpening;
+  end
+  group Sensor:
+    uncontrollable u_open_on;
+    uncontrollable u_open_off;
+    uncontrollable u_closed_on;
+    uncontrollable u_closed_off;
+  end
+end
+
+group def Paddle():
+  group Actuator:
+    controllable c_open;
+    controllable c_close;
+    controllable c_emergencyStop;
+    controllable c_endStopClosing;
+    controllable c_endStopOpening;
+  end
+  group Sensor:
+    uncontrollable u_open_on;
+    uncontrollable u_open_off;
+    uncontrollable u_closed_on;
+    uncontrollable u_closed_off;
+  end
+end
+
+group def EnteringTL():
+  group Actuator:
+    controllable c_r;
+    controllable c_rr;
+    controllable c_rg;
+    controllable c_g;
+  end
+  group SensorR1:
+    uncontrollable u_on;
+    uncontrollable u_off;
+  end
+  group SensorG:
+    uncontrollable u_on;
+    uncontrollable u_off;
+  end
+  group SensorR2:
+    uncontrollable u_on;
+    uncontrollable u_off;
+  end
+end
+
+group def LeavingTL():
+  group Actuator:
+    controllable c_r;
+    controllable c_g;
+  end
+  group SensorR:
+    uncontrollable u_on;
+    uncontrollable u_off;
+  end
+  group SensorG:
+    uncontrollable u_on;
+    uncontrollable u_off;
+  end
+end
+
+group def Command():
+  uncontrollable u_activate, u_deactivate;
+end

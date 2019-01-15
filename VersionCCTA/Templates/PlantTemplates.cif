@@ -1,0 +1,215 @@
+//Plant templates
+//EqualWaterSensor - Models a combination of two water height sensors.
+//@InitialEqual - true if initially there is equal water.
+plant def EqualWaterSensor(alg bool InitialEqual):
+    uncontrollable u_on, u_off;
+    location Unequal:
+        initial not InitialEqual;
+        marked  not InitialEqual;
+        edge u_on goto Equal;
+
+    location Equal:
+        initial InitialEqual;
+        marked  InitialEqual;
+        edge u_off goto Unequal;
+end
+
+//Sensor - Models an on/off sensor
+//@InitialOn - true if the initial and marked location is On, false if Off
+plant def Sensor(alg bool InitialOn):
+    uncontrollable u_on, u_off;
+    location Off:
+        initial not InitialOn;
+        marked  not InitialOn;
+        edge u_on goto On;
+
+    location On:
+        initial InitialOn;
+        marked  InitialOn;
+        edge u_off goto Off;
+end
+
+plant def Command():
+    uncontrollable u_activate, u_deactivate;
+    location Inactive:
+        initial; marked;
+        edge u_activate   goto Active;
+
+    location Active:
+        edge u_deactivate goto Inactive;
+end
+
+//Single IO Dynamics
+//@Sensor - the sensor for which dynamics are provided
+//@On  - the invariant for which the sensor can switch to the On location
+//@Off - the invariant for which the sensor can switch to the Off location
+plant def SensorDynamics(Sensor Sensor; alg bool On, Off):
+    location: initial; marked;
+        edge Sensor.u_on  when On;
+        edge Sensor.u_off when Off;
+end
+
+///////////////////////
+//Movable components //
+///////////////////////
+
+//Double Output Actuator - Models an bidirectional actuator
+plant def DoubleOutputActuator():
+    controllable c_open, c_close, c_emergencyStop, c_endStopClosing, c_endStopOpening;
+    location Rest:
+        initial; marked;
+        edge c_open  goto Opening;
+        edge c_close goto Closing;
+    location Opening:
+        edge c_emergencyStop, c_endStopOpening goto Rest;
+    location Closing:
+        edge c_emergencyStop, c_endStopClosing goto Rest;
+end
+
+//Sensor for movable components (gates and paddles).
+//@InitialClosed - true if the initial and marked location is Closed, false if Open
+plant def DoubleInputSensor(alg bool InitialLocationClosed):
+    uncontrollable u_open_on, u_open_off, u_closed_on, u_closed_off;
+    location Closed:
+        initial InitialLocationClosed;
+        marked  InitialLocationClosed;
+        edge u_closed_off goto Intermediate;
+    location Intermediate:
+        edge u_closed_on  goto Closed;
+        edge u_open_on    goto Open;
+    location Open:
+        initial not InitialLocationClosed;
+        marked  not InitialLocationClosed;
+        edge u_open_off goto Intermediate;
+end
+
+//Double IO Dynamics
+//@Sensor - the sensor for which dynamics are provided
+//@Actuator - the actuator which belongs to @Sensor
+plant def DoubleIODynamics(DoubleInputSensor Sensor; DoubleOutputActuator Actuator):
+    location: initial; marked;
+        edge Sensor.u_open_on,   Sensor.u_closed_off when Actuator.Opening;
+        edge Sensor.u_closed_on, Sensor.u_open_off   when Actuator.Closing;
+end
+
+//////////////////
+//Traffic lights//
+//////////////////
+
+//Actuator for an entering traffic light
+plant def EnteringTLActuator():
+    controllable c_r, c_rr, c_rg, c_g;
+    location RedRed:
+        marked;
+        edge c_r  goto Red;
+    location Red:
+        initial; marked;
+        edge c_rr goto RedRed;
+        edge c_rg goto RedGreen;
+    location RedGreen:
+        edge c_r  goto Red;
+        edge c_g  goto Green;
+    location Green:
+        edge c_r  goto Red;
+end
+
+//Actuator for a leaving traffic light
+plant def LeavingTLActuator():
+    controllable c_r, c_g;
+    location Red:
+        marked; initial;
+        edge c_g goto Green;
+    location Green:
+        edge c_r  goto Red;
+end
+
+///////////////////////////////
+//Plant combination templates//
+///////////////////////////////
+
+//Entering Traffic light template for the sensors, actuator, and dynamics
+//#RedRed   - true if Actuator.RedRed and Sensors measure RedRed
+//#Red      - true if Actuator.Red and Sensors measure Red
+//#RedGreen - true if Actuator.RedGreen and Sensors measure Green
+//#Green    - true if Actuator.Green and Sensors measure Green
+group def EnteringTL():
+    Actuator : EnteringTLActuator();
+
+    SensorR1 : Sensor(true);
+    SensorG  : Sensor(false);
+    SensorR2 : Sensor(false);
+
+    DynamicsR1 : SensorDynamics(SensorR1, not Actuator.Green, Actuator.Green);
+    DynamicsG  : SensorDynamics(SensorG, Actuator.Green or Actuator.RedGreen,
+                                Actuator.Red or Actuator.RedRed);
+    DynamicsR2 : SensorDynamics(SensorR2, Actuator.RedRed, not Actuator.RedRed);
+
+    alg bool RedRed   = Actuator.RedRed   and SensorR1.On  and SensorG.Off and SensorR2.On;
+    alg bool Red      = Actuator.Red      and SensorR1.On  and SensorG.Off and SensorR2.Off;
+    alg bool RedGreen = Actuator.RedGreen and SensorR1.On  and SensorG.On  and SensorR2.Off;
+    alg bool Green    = Actuator.Green    and SensorR1.Off and SensorG.On  and SensorR2.Off;
+end
+
+//Leaving Traffic Light template for the sensors, actuator, and dynamics
+//#Red      - true if Actuator.Red and Sensors measure Red
+//#Green    - true if Actuator.Green and Sensors measure Green
+group def LeavingTL():
+    Actuator : LeavingTLActuator();
+
+    SensorR  : Sensor(true);
+    SensorG  : Sensor(false);
+
+    DynamicsR : SensorDynamics(SensorR, not Actuator.Green, Actuator.Green);
+    DynamicsG : SensorDynamics(SensorG, not Actuator.Red,   Actuator.Red);
+
+    alg bool Red   = Actuator.Red   and SensorR.On  and SensorG.Off;
+    alg bool Green = Actuator.Green and SensorR.Off and SensorG.On;
+end
+
+//Gate template for its actuators, sensors and dynamics.
+//{R1 - The gate has to stop opening when it reaches the open   position.}
+//{R2 - The gate has to stop closing when it reaches the closed position.}
+//{R3 - The gate is only allowed to open  when it is not already open.}
+//{R4 - The gate is only allowed to close when it is not already closed.}
+//#Moving - true if the actuator is either opening or closing.
+//#Closed - true if the actuator is in rest and the gate is in the closed position.
+//#Open   - true if the actuator is in rest and the gate is in the open position.
+group def Gate():
+    Actuator : DoubleOutputActuator();
+    Sensor     : DoubleInputSensor(true);
+    Dynamics   : DoubleIODynamics(Sensor, Actuator);
+
+    requirement Actuator.c_endStopOpening needs Sensor.Open;
+    requirement Actuator.c_endStopClosing needs Sensor.Closed;
+
+    requirement Actuator.c_open  needs not Sensor.Open;
+    requirement Actuator.c_close needs not Sensor.Closed;
+
+    alg bool Moving = not Actuator.Rest;
+    alg bool Closed = Actuator.Rest and Sensor.Closed;
+    alg bool Open   = Actuator.Rest and Sensor.Open;
+end
+
+//Paddle template for its actuators, sensors and dynamics.
+//{R1 - The paddle has to stop opening when it reaches the open   position.}
+//{R2 - The paddle has to stop closing when it reaches the closed position.}
+//{R3 - The paddle is only allowed to open  when it is not already open.}
+//{R4 - The paddle is only allowed to close when it is not already closed.}
+//#Moving - true if the actuator is either opening or closing.
+//#Closed - true if the actuator is in rest and the gate is in the closed position.
+//#Open   - true if the actuator is in rest and the gate is in the open position.
+group def Paddle():
+    Actuator : DoubleOutputActuator();
+    Sensor   : DoubleInputSensor(true);
+    Dynamics : DoubleIODynamics(Sensor, Actuator);
+
+    requirement Actuator.c_endStopOpening needs Sensor.Open;
+    requirement Actuator.c_endStopClosing needs Sensor.Closed;
+
+    requirement Actuator.c_open  needs not Sensor.Open;
+    requirement Actuator.c_close needs not Sensor.Closed;
+
+    alg bool Moving = not Actuator.Rest;
+    alg bool Closed = Actuator.Rest and Sensor.Closed;
+    alg bool Open   = Actuator.Rest and Sensor.Open;
+end

@@ -1,0 +1,165 @@
+import "../Templates/SimTemplates.cif";
+
+//Constants
+//  * High water level at the upstream   side [m].
+//  * Low  water level at the upstream   side [m].
+//  * High water level at the downstream side [m].
+const real H_Upstream_high = 5.80, H_Upstream_low = 4.60, H_Downstream = 4.60;
+
+//Simulation model for the water  at the left side of the locks.
+automaton Wh:
+    monitor;
+    event high, low;
+    location High:
+        initial;
+        edge low goto Low;
+    location Low:
+        edge high goto High;
+end
+
+alg real H_Upstream = if Wh.High: H_Upstream_high else H_Upstream_low end;
+
+//North waterway lock
+group North:
+    group Upstream:
+        group Gates:
+            East: Gate();
+            West: Gate();
+        end
+
+        group Paddles:
+            East: Paddle();
+            West: Paddle();
+
+        end
+
+        group EnteringTLs:
+            East: EnteringTL();
+            West: EnteringTL();
+        end
+
+        group LeavingTLs:
+            East: LeavingTL();
+            West: LeavingTL();
+        end
+
+        EqualWaterSensor: .EqualWaterSensor(false, Water.H_Chamber >= H_Upstream);
+    end
+
+    group Downstream:
+        group Gates:
+            East: Gate();
+            West: Gate();
+        end
+
+        group Paddles:
+            East: Paddle();
+            West: Paddle();
+        end
+
+        group EnteringTLs:
+            East: EnteringTL();
+            West: EnteringTL();
+
+        end
+
+        group LeavingTLs:
+            East: LeavingTL();
+            West: LeavingTL();
+        end
+
+        EqualWaterSensor: .EqualWaterSensor(false, Water.H_Chamber <= H_Downstream);
+    end
+
+    group Water:
+        cont H_Chamber  = H_Downstream der if DownstreamOpen and H_Chamber > H_Downstream: -0.5
+                                         elif UpstreamOpen   and H_Chamber < H_Upstream  : +0.5
+                                         else 0 end;
+
+        alg bool DownstreamOpen = Downstream.Paddles.East.Open or Downstream.Paddles.West.Open;
+        alg bool UpstreamOpen   = Upstream.Paddles.East.Open   or Upstream.Paddles.West.Open;
+    end
+
+end
+
+//South lock
+group South:
+    group Upstream:
+        group Gates:
+            East: Gate();
+            West: Gate();
+        end
+
+        group Paddles:
+            East: Paddle();
+            West: Paddle();
+
+        end
+
+        group EnteringTLs:
+            East: EnteringTL();
+            West: EnteringTL();
+        end
+
+        group LeavingTLs:
+            East: LeavingTL();
+            West: LeavingTL();
+        end
+
+        EqualWaterSensor: .EqualWaterSensor(false, Water.H_Chamber >= H_Upstream);
+    end
+
+    group Downstream:
+        group Gates:
+            East: Gate();
+            West: Gate();
+        end
+
+        group Paddles:
+            East: Paddle();
+            West: Paddle();
+        end
+
+        group EnteringTLs:
+            East: EnteringTL();
+            West: EnteringTL();
+
+        end
+
+        group LeavingTLs:
+            East: LeavingTL();
+            West: LeavingTL();
+        end
+
+        EqualWaterSensor: .EqualWaterSensor(false, Water.H_Chamber <= H_Downstream);
+    end
+
+    group Water:
+        cont H_Chamber  = H_Downstream der if DownstreamOpen and H_Chamber > H_Downstream: -2.0
+                                         elif UpstreamOpen   and H_Chamber < H_Upstream  : +2.0
+                                         else 0 end;
+
+        alg bool DownstreamOpen = Downstream.Paddles.East.Open or Downstream.Paddles.West.Open;
+        alg bool UpstreamOpen   = Upstream.Paddles.East.Open   or Upstream.Paddles.West.Open;
+    end
+
+end
+
+//Storm surge barrier
+group Barrier:
+    group Downstream:
+        group TLs:
+            East: LeavingTL();
+            West: LeavingTL();
+        end
+    end
+
+    group Upstream:
+        group TLs:
+            East: LeavingTL();
+            West: LeavingTL();
+        end
+    end
+
+    Barrier : .Paddle();
+end

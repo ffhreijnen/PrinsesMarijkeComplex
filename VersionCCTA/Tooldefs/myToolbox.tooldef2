@@ -1,0 +1,45 @@
+from "lib:cif3" import *;
+
+tool int indent(int indentValue):
+    indentValue = indentValue + 1;
+    return indentValue;
+end
+
+tool int dedent(int indentValue):
+    indentValue = indentValue - 1;
+    return indentValue;
+end
+
+tool string tabs(int indent):
+    string s = "";
+    for i in range(1,indent):
+        s = s + "  ";
+    end
+    return s;
+end
+
+tool write(string file, int indent, string text):
+    writefile(file, tabs(indent) + text + "\n", append = true);
+end
+
+tool removeUnamedLocations(string inFileLocation, string outFileLocation):
+    // find the unnamed location (X) enumeration
+    list string file = readlines(inFileLocation);
+    rmfile(outFileLocation, force=true);
+    for line in file:
+        line = trim(line);
+        // if this line of the file defines a discrete integer
+        if startswith(line, "disc E "):
+            // if it is the empty location:
+            if endswith(line, " = X;"):
+                line = replace(line, "disc ", "const ");
+            end
+        end
+        // rewrite the file
+        writefile(outFileLocation, line+"\n", append = true);
+    end
+    cif3cif(outFileLocation,
+    "-o", outFileLocation,
+    "-t elim-consts," +
+    "simplify-values");
+end

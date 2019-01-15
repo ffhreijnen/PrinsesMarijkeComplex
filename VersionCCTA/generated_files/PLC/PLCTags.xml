@@ -1,0 +1,223 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Tagtable name='Default tag table'>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%I0.0'>ivar_M_Barrier_HW_Barrier_BVH_East_Open</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%I0.1'>ivar_M_Barrier_HW_Barrier_BVH_East_Closed</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%I0.2'>ivar_M_Barrier_HW_EmergencyStop_Active</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%I0.3'>ivar_M_Barrier_HW_TL_BNH_East_Red</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%I0.4'>ivar_M_Barrier_HW_TL_BNH_East_Green</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%I0.5'>ivar_M_Barrier_HW_TL_BNH_West_Red</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%I0.6'>ivar_M_Barrier_HW_TL_BNH_West_Green</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%I0.7'>ivar_M_Barrier_HW_TL_BVH_East_Red</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%I1.0'>ivar_M_Barrier_HW_TL_BVH_East_Green</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%I1.1'>ivar_M_Barrier_HW_TL_BVH_West_Red</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%I1.2'>ivar_M_Barrier_HW_TL_BVH_West_Green</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%I1.3'>ivar_M_North_HW_EmergencyStop_Active</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%I1.4'>ivar_M_North_HW_EnteringTL_BNH_East_Red</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%I1.5'>ivar_M_North_HW_EnteringTL_BNH_East_Green</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%I1.6'>ivar_M_North_HW_EnteringTL_BNH_East_RedRed</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%I1.7'>ivar_M_North_HW_EnteringTL_BNH_West_Red</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%I2.0'>ivar_M_North_HW_EnteringTL_BNH_West_Green</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%I2.1'>ivar_M_North_HW_EnteringTL_BNH_West_RedRed</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%I2.2'>ivar_M_North_HW_EnteringTL_BVH_East_Red</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%I2.3'>ivar_M_North_HW_EnteringTL_BVH_East_Green</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%I2.4'>ivar_M_North_HW_EnteringTL_BVH_East_RedRed</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%I2.5'>ivar_M_North_HW_EnteringTL_BVH_West_Red</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%I2.6'>ivar_M_North_HW_EnteringTL_BVH_West_Green</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%I2.7'>ivar_M_North_HW_EnteringTL_BVH_West_RedRed</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%I3.0'>ivar_M_North_HW_EqualWaterSensor_BNH_Equal</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%I3.1'>ivar_M_North_HW_EqualWaterSensor_BVH_Equal</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%I3.2'>ivar_M_North_HW_Gate_BNH_East_Open</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%I3.3'>ivar_M_North_HW_Gate_BNH_East_Closed</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%I3.4'>ivar_M_North_HW_Gate_BNH_West_Open</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%I3.5'>ivar_M_North_HW_Gate_BNH_West_Closed</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%I3.6'>ivar_M_North_HW_Gate_BVH_East_Open</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%I3.7'>ivar_M_North_HW_Gate_BVH_East_Closed</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%I4.0'>ivar_M_North_HW_Gate_BVH_West_Open</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%I4.1'>ivar_M_North_HW_Gate_BVH_West_Closed</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%I4.2'>ivar_M_North_HW_LeavingTL_BNH_East_Red</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%I4.3'>ivar_M_North_HW_LeavingTL_BNH_East_Green</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%I4.4'>ivar_M_North_HW_LeavingTL_BNH_West_Red</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%I4.5'>ivar_M_North_HW_LeavingTL_BNH_West_Green</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%I4.6'>ivar_M_North_HW_LeavingTL_BVH_East_Red</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%I4.7'>ivar_M_North_HW_LeavingTL_BVH_East_Green</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%I5.0'>ivar_M_North_HW_LeavingTL_BVH_West_Red</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%I5.1'>ivar_M_North_HW_LeavingTL_BVH_West_Green</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%I5.2'>ivar_M_North_HW_Paddle_BNH_East_Open</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%I5.3'>ivar_M_North_HW_Paddle_BNH_East_Closed</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%I5.4'>ivar_M_North_HW_Paddle_BNH_West_Open</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%I5.5'>ivar_M_North_HW_Paddle_BNH_West_Closed</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%I5.6'>ivar_M_North_HW_Paddle_BVH_East_Open</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%I5.7'>ivar_M_North_HW_Paddle_BVH_East_Closed</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%I6.0'>ivar_M_North_HW_Paddle_BVH_West_Open</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%I6.1'>ivar_M_North_HW_Paddle_BVH_West_Closed</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%I6.2'>ivar_M_South_HW_EmergencyStop_Active</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%I6.3'>ivar_M_South_HW_EnteringTL_BNH_East_Red</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%I6.4'>ivar_M_South_HW_EnteringTL_BNH_East_Green</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%I6.5'>ivar_M_South_HW_EnteringTL_BNH_East_RedRed</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%I6.6'>ivar_M_South_HW_EnteringTL_BNH_West_Red</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%I6.7'>ivar_M_South_HW_EnteringTL_BNH_West_Green</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%I7.0'>ivar_M_South_HW_EnteringTL_BNH_West_RedRed</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%I7.1'>ivar_M_South_HW_EnteringTL_BVH_East_Red</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%I7.2'>ivar_M_South_HW_EnteringTL_BVH_East_Green</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%I7.3'>ivar_M_South_HW_EnteringTL_BVH_East_RedRed</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%I7.4'>ivar_M_South_HW_EnteringTL_BVH_West_Red</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%I7.5'>ivar_M_South_HW_EnteringTL_BVH_West_Green</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%I7.6'>ivar_M_South_HW_EnteringTL_BVH_West_RedRed</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%I7.7'>ivar_M_South_HW_EqualWaterSensor_BNH_Equal</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%I8.0'>ivar_M_South_HW_EqualWaterSensor_BVH_Equal</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%I8.1'>ivar_M_South_HW_Gate_BNH_East_Open</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%I8.2'>ivar_M_South_HW_Gate_BNH_East_Closed</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%I8.3'>ivar_M_South_HW_Gate_BNH_West_Open</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%I8.4'>ivar_M_South_HW_Gate_BNH_West_Closed</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%I8.5'>ivar_M_South_HW_Gate_BVH_East_Open</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%I8.6'>ivar_M_South_HW_Gate_BVH_East_Closed</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%I8.7'>ivar_M_South_HW_Gate_BVH_West_Open</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%I9.0'>ivar_M_South_HW_Gate_BVH_West_Closed</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%I9.1'>ivar_M_South_HW_LeavingTL_BNH_East_Red</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%I9.2'>ivar_M_South_HW_LeavingTL_BNH_East_Green</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%I9.3'>ivar_M_South_HW_LeavingTL_BNH_West_Red</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%I9.4'>ivar_M_South_HW_LeavingTL_BNH_West_Green</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%I9.5'>ivar_M_South_HW_LeavingTL_BVH_East_Red</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%I9.6'>ivar_M_South_HW_LeavingTL_BVH_East_Green</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%I9.7'>ivar_M_South_HW_LeavingTL_BVH_West_Red</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%I10.0'>ivar_M_South_HW_LeavingTL_BVH_West_Green</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%I10.1'>ivar_M_South_HW_Paddle_BNH_East_Open</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%I10.2'>ivar_M_South_HW_Paddle_BNH_East_Closed</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%I10.3'>ivar_M_South_HW_Paddle_BNH_West_Open</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%I10.4'>ivar_M_South_HW_Paddle_BNH_West_Closed</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%I10.5'>ivar_M_South_HW_Paddle_BVH_East_Open</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%I10.6'>ivar_M_South_HW_Paddle_BVH_East_Closed</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%I10.7'>ivar_M_South_HW_Paddle_BVH_West_Open</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%I11.0'>ivar_M_South_HW_Paddle_BVH_West_Closed</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%Q0.0'>dvar_M_Barrier_HW_Barrier_BVH_East_Q_Open</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%Q0.1'>dvar_M_Barrier_HW_Barrier_BVH_East_Q_Close</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%Q0.2'>dvar_M_Barrier_HW_TL_BNH_East_Q_Red</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%Q0.3'>dvar_M_Barrier_HW_TL_BNH_East_Q_Green</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%Q0.4'>dvar_M_Barrier_HW_TL_BNH_West_Q_Red</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%Q0.5'>dvar_M_Barrier_HW_TL_BNH_West_Q_Green</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%Q0.6'>dvar_M_Barrier_HW_TL_BVH_East_Q_Red</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%Q0.7'>dvar_M_Barrier_HW_TL_BVH_East_Q_Green</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%Q1.0'>dvar_M_Barrier_HW_TL_BVH_West_Q_Red</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%Q1.1'>dvar_M_Barrier_HW_TL_BVH_West_Q_Green</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%Q1.2'>dvar_M_North_HW_EnteringTL_BNH_East_Q_Red</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%Q1.3'>dvar_M_North_HW_EnteringTL_BNH_East_Q_Green</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%Q1.4'>dvar_M_North_HW_EnteringTL_BNH_East_Q_RedRed</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%Q1.5'>dvar_M_North_HW_EnteringTL_BNH_West_Q_Red</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%Q1.6'>dvar_M_North_HW_EnteringTL_BNH_West_Q_Green</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%Q1.7'>dvar_M_North_HW_EnteringTL_BNH_West_Q_RedRed</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%Q2.0'>dvar_M_North_HW_EnteringTL_BVH_East_Q_Red</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%Q2.1'>dvar_M_North_HW_EnteringTL_BVH_East_Q_Green</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%Q2.2'>dvar_M_North_HW_EnteringTL_BVH_East_Q_RedRed</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%Q2.3'>dvar_M_North_HW_EnteringTL_BVH_West_Q_Red</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%Q2.4'>dvar_M_North_HW_EnteringTL_BVH_West_Q_Green</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%Q2.5'>dvar_M_North_HW_EnteringTL_BVH_West_Q_RedRed</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%Q2.6'>dvar_M_North_HW_Gate_BNH_East_Q_Open</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%Q2.7'>dvar_M_North_HW_Gate_BNH_East_Q_Close</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%Q3.0'>dvar_M_North_HW_Gate_BNH_West_Q_Open</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%Q3.1'>dvar_M_North_HW_Gate_BNH_West_Q_Close</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%Q3.2'>dvar_M_North_HW_Gate_BVH_East_Q_Open</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%Q3.3'>dvar_M_North_HW_Gate_BVH_East_Q_Close</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%Q3.4'>dvar_M_North_HW_Gate_BVH_West_Q_Open</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%Q3.5'>dvar_M_North_HW_Gate_BVH_West_Q_Close</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%Q3.6'>dvar_M_North_HW_LeavingTL_BNH_East_Q_Red</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%Q3.7'>dvar_M_North_HW_LeavingTL_BNH_East_Q_Green</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%Q4.0'>dvar_M_North_HW_LeavingTL_BNH_West_Q_Red</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%Q4.1'>dvar_M_North_HW_LeavingTL_BNH_West_Q_Green</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%Q4.2'>dvar_M_North_HW_LeavingTL_BVH_East_Q_Red</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%Q4.3'>dvar_M_North_HW_LeavingTL_BVH_East_Q_Green</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%Q4.4'>dvar_M_North_HW_LeavingTL_BVH_West_Q_Red</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%Q4.5'>dvar_M_North_HW_LeavingTL_BVH_West_Q_Green</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%Q4.6'>dvar_M_North_HW_Paddle_BNH_East_Q_Open</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%Q4.7'>dvar_M_North_HW_Paddle_BNH_East_Q_Close</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%Q5.0'>dvar_M_North_HW_Paddle_BNH_West_Q_Open</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%Q5.1'>dvar_M_North_HW_Paddle_BNH_West_Q_Close</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%Q5.2'>dvar_M_North_HW_Paddle_BVH_East_Q_Open</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%Q5.3'>dvar_M_North_HW_Paddle_BVH_East_Q_Close</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%Q5.4'>dvar_M_North_HW_Paddle_BVH_West_Q_Open</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%Q5.5'>dvar_M_North_HW_Paddle_BVH_West_Q_Close</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%Q5.6'>dvar_M_South_HW_EnteringTL_BNH_East_Q_Red</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%Q5.7'>dvar_M_South_HW_EnteringTL_BNH_East_Q_Green</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%Q6.0'>dvar_M_South_HW_EnteringTL_BNH_East_Q_RedRed</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%Q6.1'>dvar_M_South_HW_EnteringTL_BNH_West_Q_Red</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%Q6.2'>dvar_M_South_HW_EnteringTL_BNH_West_Q_Green</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%Q6.3'>dvar_M_South_HW_EnteringTL_BNH_West_Q_RedRed</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%Q6.4'>dvar_M_South_HW_EnteringTL_BVH_East_Q_Red</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%Q6.5'>dvar_M_South_HW_EnteringTL_BVH_East_Q_Green</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%Q6.6'>dvar_M_South_HW_EnteringTL_BVH_East_Q_RedRed</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%Q6.7'>dvar_M_South_HW_EnteringTL_BVH_West_Q_Red</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%Q7.0'>dvar_M_South_HW_EnteringTL_BVH_West_Q_Green</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%Q7.1'>dvar_M_South_HW_EnteringTL_BVH_West_Q_RedRed</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%Q7.2'>dvar_M_South_HW_Gate_BNH_East_Q_Open</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%Q7.3'>dvar_M_South_HW_Gate_BNH_East_Q_Close</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%Q7.4'>dvar_M_South_HW_Gate_BNH_West_Q_Open</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%Q7.5'>dvar_M_South_HW_Gate_BNH_West_Q_Close</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%Q7.6'>dvar_M_South_HW_Gate_BVH_East_Q_Open</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%Q7.7'>dvar_M_South_HW_Gate_BVH_East_Q_Close</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%Q8.0'>dvar_M_South_HW_Gate_BVH_West_Q_Open</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%Q8.1'>dvar_M_South_HW_Gate_BVH_West_Q_Close</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%Q8.2'>dvar_M_South_HW_LeavingTL_BNH_East_Q_Red</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%Q8.3'>dvar_M_South_HW_LeavingTL_BNH_East_Q_Green</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%Q8.4'>dvar_M_South_HW_LeavingTL_BNH_West_Q_Red</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%Q8.5'>dvar_M_South_HW_LeavingTL_BNH_West_Q_Green</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%Q8.6'>dvar_M_South_HW_LeavingTL_BVH_East_Q_Red</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%Q8.7'>dvar_M_South_HW_LeavingTL_BVH_East_Q_Green</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%Q9.0'>dvar_M_South_HW_LeavingTL_BVH_West_Q_Red</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%Q9.1'>dvar_M_South_HW_LeavingTL_BVH_West_Q_Green</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%Q9.2'>dvar_M_South_HW_Paddle_BNH_East_Q_Open</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%Q9.3'>dvar_M_South_HW_Paddle_BNH_East_Q_Close</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%Q9.4'>dvar_M_South_HW_Paddle_BNH_West_Q_Open</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%Q9.5'>dvar_M_South_HW_Paddle_BNH_West_Q_Close</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%Q9.6'>dvar_M_South_HW_Paddle_BVH_East_Q_Open</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%Q9.7'>dvar_M_South_HW_Paddle_BVH_East_Q_Close</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%Q10.0'>dvar_M_South_HW_Paddle_BVH_West_Q_Open</Tag>
+    <Tag type='BOOL' hmiVisible='True' hmiWriteable='True' hmiAccessible='True' retain='False' remark='Input' addr='%Q10.1'>dvar_M_South_HW_Paddle_BVH_West_Q_Close</Tag>
+    <Constant type ='Int' remark='' value='0'>elit_Active</Constant>
+    <Constant type ='Int' remark='' value='1'>elit_BarrierClose</Constant>
+    <Constant type ='Int' remark='' value='2'>elit_BarrierOpen</Constant>
+    <Constant type ='Int' remark='' value='3'>elit_BarrierStop</Constant>
+    <Constant type ='Int' remark='' value='4'>elit_Closed</Constant>
+    <Constant type ='Int' remark='' value='5'>elit_Closing</Constant>
+    <Constant type ='Int' remark='' value='6'>elit_DownstreamEnteringTLGreen</Constant>
+    <Constant type ='Int' remark='' value='7'>elit_DownstreamEnteringTLRed</Constant>
+    <Constant type ='Int' remark='' value='8'>elit_DownstreamEnteringTLRedGreen</Constant>
+    <Constant type ='Int' remark='' value='9'>elit_DownstreamEnteringTLRedRed</Constant>
+    <Constant type ='Int' remark='' value='10'>elit_DownstreamGateClose</Constant>
+    <Constant type ='Int' remark='' value='11'>elit_DownstreamGateOpen</Constant>
+    <Constant type ='Int' remark='' value='12'>elit_DownstreamGateStop</Constant>
+    <Constant type ='Int' remark='' value='13'>elit_DownstreamLeavingTLGreen</Constant>
+    <Constant type ='Int' remark='' value='14'>elit_DownstreamLeavingTLRed</Constant>
+    <Constant type ='Int' remark='' value='15'>elit_DownstreamPaddleClose</Constant>
+    <Constant type ='Int' remark='' value='16'>elit_DownstreamPaddleOpen</Constant>
+    <Constant type ='Int' remark='' value='17'>elit_DownstreamPaddleStop</Constant>
+    <Constant type ='Int' remark='' value='18'>elit_DownstreamTLGreen</Constant>
+    <Constant type ='Int' remark='' value='19'>elit_DownstreamTLRed</Constant>
+    <Constant type ='Int' remark='' value='20'>elit_Equal</Constant>
+    <Constant type ='Int' remark='' value='21'>elit_Green</Constant>
+    <Constant type ='Int' remark='' value='22'>elit_Inactive</Constant>
+    <Constant type ='Int' remark='' value='23'>elit_Intermediate</Constant>
+    <Constant type ='Int' remark='' value='24'>elit_NoCommand</Constant>
+    <Constant type ='Int' remark='' value='25'>elit_Off</Constant>
+    <Constant type ='Int' remark='' value='26'>elit_On</Constant>
+    <Constant type ='Int' remark='' value='27'>elit_Open</Constant>
+    <Constant type ='Int' remark='' value='28'>elit_Opening</Constant>
+    <Constant type ='Int' remark='' value='29'>elit_Red</Constant>
+    <Constant type ='Int' remark='' value='30'>elit_RedGreen</Constant>
+    <Constant type ='Int' remark='' value='31'>elit_RedRed</Constant>
+    <Constant type ='Int' remark='' value='32'>elit_Rest</Constant>
+    <Constant type ='Int' remark='' value='33'>elit_Unequal</Constant>
+    <Constant type ='Int' remark='' value='34'>elit_UpstreamEnteringTLGreen</Constant>
+    <Constant type ='Int' remark='' value='35'>elit_UpstreamEnteringTLRed</Constant>
+    <Constant type ='Int' remark='' value='36'>elit_UpstreamEnteringTLRedGreen</Constant>
+    <Constant type ='Int' remark='' value='37'>elit_UpstreamEnteringTLRedRed</Constant>
+    <Constant type ='Int' remark='' value='38'>elit_UpstreamGateClose</Constant>
+    <Constant type ='Int' remark='' value='39'>elit_UpstreamGateOpen</Constant>
+    <Constant type ='Int' remark='' value='40'>elit_UpstreamGateStop</Constant>
+    <Constant type ='Int' remark='' value='41'>elit_UpstreamLeavingTLGreen</Constant>
+    <Constant type ='Int' remark='' value='42'>elit_UpstreamLeavingTLRed</Constant>
+    <Constant type ='Int' remark='' value='43'>elit_UpstreamPaddleClose</Constant>
+    <Constant type ='Int' remark='' value='44'>elit_UpstreamPaddleOpen</Constant>
+    <Constant type ='Int' remark='' value='45'>elit_UpstreamPaddleStop</Constant>
+    <Constant type ='Int' remark='' value='46'>elit_UpstreamTLGreen</Constant>
+    <Constant type ='Int' remark='' value='47'>elit_UpstreamTLRed</Constant>
+    <Constant type ='Int' remark='' value='48'>elit_X</Constant>
+</Tagtable>

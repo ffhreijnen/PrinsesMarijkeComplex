@@ -1,0 +1,170 @@
+import "../Templates/SkelTemplates.cif";
+
+group North:
+  group Upstream:
+    group Gates:
+      East: Gate();
+      West: Gate();
+    end
+    group Paddles:
+      East: Paddle();
+      West: Paddle();
+    end
+    group EnteringTLs:
+      East: EnteringTL();
+      West: EnteringTL();
+    end
+    group LeavingTLs:
+      East: LeavingTL();
+      West: LeavingTL();
+    end
+    EqualWaterSensor: Sensor();
+  end
+  group Downstream:
+    group Gates:
+      East: Gate();
+      West: Gate();
+    end
+    group Paddles:
+      East: Paddle();
+      West: Paddle();
+    end
+    group EnteringTLs:
+      East: EnteringTL();
+      West: EnteringTL();
+    end
+    group LeavingTLs:
+      East: LeavingTL();
+      West: LeavingTL();
+    end
+    EqualWaterSensor: Sensor();
+  end
+
+  EmergencyStop : Command();
+
+  group Commands:
+    uncontrollable Deactivate;
+    uncontrollable DownstreamGateOpen_act;
+    uncontrollable DownstreamGateClose_act;
+    uncontrollable DownstreamGateStop_act;
+    uncontrollable DownstreamPaddleOpen_act;
+    uncontrollable DownstreamPaddleClose_act;
+    uncontrollable DownstreamPaddleStop_act;
+    uncontrollable DownstreamEnteringTLRedRed_act;
+    uncontrollable DownstreamEnteringTLRed_act;
+    uncontrollable DownstreamEnteringTLRedGreen_act;
+    uncontrollable DownstreamEnteringTLGreen_act;
+    uncontrollable DownstreamLeavingTLRed_act;
+    uncontrollable DownstreamLeavingTLGreen_act;
+    uncontrollable UpstreamGateOpen_act;
+    uncontrollable UpstreamGateClose_act;
+    uncontrollable UpstreamGateStop_act;
+    uncontrollable UpstreamPaddleOpen_act;
+    uncontrollable UpstreamPaddleClose_act;
+    uncontrollable UpstreamPaddleStop_act;
+    uncontrollable UpstreamEnteringTLRedRed_act;
+    uncontrollable UpstreamEnteringTLRed_act;
+    uncontrollable UpstreamEnteringTLRedGreen_act;
+    uncontrollable UpstreamEnteringTLGreen_act;
+    uncontrollable UpstreamLeavingTLRed_act;
+    uncontrollable UpstreamLeavingTLGreen_act;
+  end
+end
+
+group South:
+  group Upstream:
+    group Gates:
+      East: Gate();
+      West: Gate();
+    end
+    group Paddles:
+      East: Paddle();
+      West: Paddle();
+    end
+    group EnteringTLs:
+      East: EnteringTL();
+      West: EnteringTL();
+    end
+    group LeavingTLs:
+      East: LeavingTL();
+      West: LeavingTL();
+    end
+    EqualWaterSensor: Sensor();
+  end
+  group Downstream:
+    group Gates:
+      East: Gate();
+      West: Gate();
+    end
+    group Paddles:
+      East: Paddle();
+      West: Paddle();
+    end
+    group EnteringTLs:
+      East: EnteringTL();
+      West: EnteringTL();
+    end
+    group LeavingTLs:
+      East: LeavingTL();
+      West: LeavingTL();
+    end
+    EqualWaterSensor: Sensor();
+  end
+
+  EmergencyStop : Command();
+
+  group Commands:
+    uncontrollable Deactivate;
+    uncontrollable DownstreamGateOpen_act;
+    uncontrollable DownstreamGateClose_act;
+    uncontrollable DownstreamGateStop_act;
+    uncontrollable DownstreamPaddleOpen_act;
+    uncontrollable DownstreamPaddleClose_act;
+    uncontrollable DownstreamPaddleStop_act;
+    uncontrollable DownstreamEnteringTLRedRed_act;
+    uncontrollable DownstreamEnteringTLRed_act;
+    uncontrollable DownstreamEnteringTLRedGreen_act;
+    uncontrollable DownstreamEnteringTLGreen_act;
+    uncontrollable DownstreamLeavingTLRed_act;
+    uncontrollable DownstreamLeavingTLGreen_act;
+    uncontrollable UpstreamGateOpen_act;
+    uncontrollable UpstreamGateClose_act;
+    uncontrollable UpstreamGateStop_act;
+    uncontrollable UpstreamPaddleOpen_act;
+    uncontrollable UpstreamPaddleClose_act;
+    uncontrollable UpstreamPaddleStop_act;
+    uncontrollable UpstreamEnteringTLRedRed_act;
+    uncontrollable UpstreamEnteringTLRed_act;
+    uncontrollable UpstreamEnteringTLRedGreen_act;
+    uncontrollable UpstreamEnteringTLGreen_act;
+    uncontrollable UpstreamLeavingTLRed_act;
+    uncontrollable UpstreamLeavingTLGreen_act;
+  end
+end
+
+group Barrier:
+  group Downstream:
+    group TLs:
+      East: LeavingTL();
+      West: LeavingTL();
+    end
+  end
+  group Upstream:
+    group TLs:
+      East: LeavingTL();
+      West: LeavingTL();
+    end
+  end
+  Barrier : .Paddle();
+  EmergencyStop  : Command();
+  group Commands:
+    uncontrollable Deactivate;
+    uncontrollable BarrierOpen_act;
+    uncontrollable BarrierClose_act;
+    uncontrollable BarrierStop_act;
+    uncontrollable DownstreamTLRed_act;
+    uncontrollable DownstreamTLGreen_act;
+    uncontrollable UpstreamTLRed_act;
+    uncontrollable UpstreamTLGreen_act;
+  end
+end

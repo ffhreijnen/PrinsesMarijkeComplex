@@ -1,0 +1,1461 @@
+<Tags>
+    <Tag name="I" path="" type="Folder"/>
+    <Tag name="Barrier_HW_Barrier_BVH_East_Open" path="I" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]IX0.0</Property>
+    </Tag>
+    <Tag name="Barrier_HW_Barrier_BVH_East_Closed" path="I" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]IX0.1</Property>
+    </Tag>
+    <Tag name="Barrier_HW_EmergencyStop_Active" path="I" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]IX0.2</Property>
+    </Tag>
+    <Tag name="Barrier_HW_TL_BNH_East_Red" path="I" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]IX0.3</Property>
+    </Tag>
+    <Tag name="Barrier_HW_TL_BNH_East_Green" path="I" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]IX0.4</Property>
+    </Tag>
+    <Tag name="Barrier_HW_TL_BNH_West_Red" path="I" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]IX0.5</Property>
+    </Tag>
+    <Tag name="Barrier_HW_TL_BNH_West_Green" path="I" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]IX0.6</Property>
+    </Tag>
+    <Tag name="Barrier_HW_TL_BVH_East_Red" path="I" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]IX0.7</Property>
+    </Tag>
+    <Tag name="Barrier_HW_TL_BVH_East_Green" path="I" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]IX1.0</Property>
+    </Tag>
+    <Tag name="Barrier_HW_TL_BVH_West_Red" path="I" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]IX1.1</Property>
+    </Tag>
+    <Tag name="Barrier_HW_TL_BVH_West_Green" path="I" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]IX1.2</Property>
+    </Tag>
+    <Tag name="North_HW_EmergencyStop_Active" path="I" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]IX1.3</Property>
+    </Tag>
+    <Tag name="North_HW_EnteringTL_BNH_East_Red" path="I" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]IX1.4</Property>
+    </Tag>
+    <Tag name="North_HW_EnteringTL_BNH_East_Green" path="I" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]IX1.5</Property>
+    </Tag>
+    <Tag name="North_HW_EnteringTL_BNH_East_RedRed" path="I" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]IX1.6</Property>
+    </Tag>
+    <Tag name="North_HW_EnteringTL_BNH_West_Red" path="I" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]IX1.7</Property>
+    </Tag>
+    <Tag name="North_HW_EnteringTL_BNH_West_Green" path="I" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]IX2.0</Property>
+    </Tag>
+    <Tag name="North_HW_EnteringTL_BNH_West_RedRed" path="I" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]IX2.1</Property>
+    </Tag>
+    <Tag name="North_HW_EnteringTL_BVH_East_Red" path="I" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]IX2.2</Property>
+    </Tag>
+    <Tag name="North_HW_EnteringTL_BVH_East_Green" path="I" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]IX2.3</Property>
+    </Tag>
+    <Tag name="North_HW_EnteringTL_BVH_East_RedRed" path="I" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]IX2.4</Property>
+    </Tag>
+    <Tag name="North_HW_EnteringTL_BVH_West_Red" path="I" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]IX2.5</Property>
+    </Tag>
+    <Tag name="North_HW_EnteringTL_BVH_West_Green" path="I" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]IX2.6</Property>
+    </Tag>
+    <Tag name="North_HW_EnteringTL_BVH_West_RedRed" path="I" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]IX2.7</Property>
+    </Tag>
+    <Tag name="North_HW_EqualWaterSensor_BNH_Equal" path="I" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]IX3.0</Property>
+    </Tag>
+    <Tag name="North_HW_EqualWaterSensor_BVH_Equal" path="I" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]IX3.1</Property>
+    </Tag>
+    <Tag name="North_HW_Gate_BNH_East_Open" path="I" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]IX3.2</Property>
+    </Tag>
+    <Tag name="North_HW_Gate_BNH_East_Closed" path="I" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]IX3.3</Property>
+    </Tag>
+    <Tag name="North_HW_Gate_BNH_West_Open" path="I" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]IX3.4</Property>
+    </Tag>
+    <Tag name="North_HW_Gate_BNH_West_Closed" path="I" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]IX3.5</Property>
+    </Tag>
+    <Tag name="North_HW_Gate_BVH_East_Open" path="I" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]IX3.6</Property>
+    </Tag>
+    <Tag name="North_HW_Gate_BVH_East_Closed" path="I" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]IX3.7</Property>
+    </Tag>
+    <Tag name="North_HW_Gate_BVH_West_Open" path="I" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]IX4.0</Property>
+    </Tag>
+    <Tag name="North_HW_Gate_BVH_West_Closed" path="I" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]IX4.1</Property>
+    </Tag>
+    <Tag name="North_HW_LeavingTL_BNH_East_Red" path="I" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]IX4.2</Property>
+    </Tag>
+    <Tag name="North_HW_LeavingTL_BNH_East_Green" path="I" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]IX4.3</Property>
+    </Tag>
+    <Tag name="North_HW_LeavingTL_BNH_West_Red" path="I" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]IX4.4</Property>
+    </Tag>
+    <Tag name="North_HW_LeavingTL_BNH_West_Green" path="I" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]IX4.5</Property>
+    </Tag>
+    <Tag name="North_HW_LeavingTL_BVH_East_Red" path="I" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]IX4.6</Property>
+    </Tag>
+    <Tag name="North_HW_LeavingTL_BVH_East_Green" path="I" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]IX4.7</Property>
+    </Tag>
+    <Tag name="North_HW_LeavingTL_BVH_West_Red" path="I" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]IX5.0</Property>
+    </Tag>
+    <Tag name="North_HW_LeavingTL_BVH_West_Green" path="I" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]IX5.1</Property>
+    </Tag>
+    <Tag name="North_HW_Paddle_BNH_East_Open" path="I" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]IX5.2</Property>
+    </Tag>
+    <Tag name="North_HW_Paddle_BNH_East_Closed" path="I" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]IX5.3</Property>
+    </Tag>
+    <Tag name="North_HW_Paddle_BNH_West_Open" path="I" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]IX5.4</Property>
+    </Tag>
+    <Tag name="North_HW_Paddle_BNH_West_Closed" path="I" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]IX5.5</Property>
+    </Tag>
+    <Tag name="North_HW_Paddle_BVH_East_Open" path="I" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]IX5.6</Property>
+    </Tag>
+    <Tag name="North_HW_Paddle_BVH_East_Closed" path="I" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]IX5.7</Property>
+    </Tag>
+    <Tag name="North_HW_Paddle_BVH_West_Open" path="I" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]IX6.0</Property>
+    </Tag>
+    <Tag name="North_HW_Paddle_BVH_West_Closed" path="I" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]IX6.1</Property>
+    </Tag>
+    <Tag name="South_HW_EmergencyStop_Active" path="I" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]IX6.2</Property>
+    </Tag>
+    <Tag name="South_HW_EnteringTL_BNH_East_Red" path="I" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]IX6.3</Property>
+    </Tag>
+    <Tag name="South_HW_EnteringTL_BNH_East_Green" path="I" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]IX6.4</Property>
+    </Tag>
+    <Tag name="South_HW_EnteringTL_BNH_East_RedRed" path="I" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]IX6.5</Property>
+    </Tag>
+    <Tag name="South_HW_EnteringTL_BNH_West_Red" path="I" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]IX6.6</Property>
+    </Tag>
+    <Tag name="South_HW_EnteringTL_BNH_West_Green" path="I" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]IX6.7</Property>
+    </Tag>
+    <Tag name="South_HW_EnteringTL_BNH_West_RedRed" path="I" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]IX7.0</Property>
+    </Tag>
+    <Tag name="South_HW_EnteringTL_BVH_East_Red" path="I" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]IX7.1</Property>
+    </Tag>
+    <Tag name="South_HW_EnteringTL_BVH_East_Green" path="I" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]IX7.2</Property>
+    </Tag>
+    <Tag name="South_HW_EnteringTL_BVH_East_RedRed" path="I" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]IX7.3</Property>
+    </Tag>
+    <Tag name="South_HW_EnteringTL_BVH_West_Red" path="I" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]IX7.4</Property>
+    </Tag>
+    <Tag name="South_HW_EnteringTL_BVH_West_Green" path="I" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]IX7.5</Property>
+    </Tag>
+    <Tag name="South_HW_EnteringTL_BVH_West_RedRed" path="I" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]IX7.6</Property>
+    </Tag>
+    <Tag name="South_HW_EqualWaterSensor_BNH_Equal" path="I" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]IX7.7</Property>
+    </Tag>
+    <Tag name="South_HW_EqualWaterSensor_BVH_Equal" path="I" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]IX8.0</Property>
+    </Tag>
+    <Tag name="South_HW_Gate_BNH_East_Open" path="I" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]IX8.1</Property>
+    </Tag>
+    <Tag name="South_HW_Gate_BNH_East_Closed" path="I" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]IX8.2</Property>
+    </Tag>
+    <Tag name="South_HW_Gate_BNH_West_Open" path="I" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]IX8.3</Property>
+    </Tag>
+    <Tag name="South_HW_Gate_BNH_West_Closed" path="I" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]IX8.4</Property>
+    </Tag>
+    <Tag name="South_HW_Gate_BVH_East_Open" path="I" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]IX8.5</Property>
+    </Tag>
+    <Tag name="South_HW_Gate_BVH_East_Closed" path="I" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]IX8.6</Property>
+    </Tag>
+    <Tag name="South_HW_Gate_BVH_West_Open" path="I" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]IX8.7</Property>
+    </Tag>
+    <Tag name="South_HW_Gate_BVH_West_Closed" path="I" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]IX9.0</Property>
+    </Tag>
+    <Tag name="South_HW_LeavingTL_BNH_East_Red" path="I" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]IX9.1</Property>
+    </Tag>
+    <Tag name="South_HW_LeavingTL_BNH_East_Green" path="I" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]IX9.2</Property>
+    </Tag>
+    <Tag name="South_HW_LeavingTL_BNH_West_Red" path="I" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]IX9.3</Property>
+    </Tag>
+    <Tag name="South_HW_LeavingTL_BNH_West_Green" path="I" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]IX9.4</Property>
+    </Tag>
+    <Tag name="South_HW_LeavingTL_BVH_East_Red" path="I" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]IX9.5</Property>
+    </Tag>
+    <Tag name="South_HW_LeavingTL_BVH_East_Green" path="I" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]IX9.6</Property>
+    </Tag>
+    <Tag name="South_HW_LeavingTL_BVH_West_Red" path="I" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]IX9.7</Property>
+    </Tag>
+    <Tag name="South_HW_LeavingTL_BVH_West_Green" path="I" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]IX10.0</Property>
+    </Tag>
+    <Tag name="South_HW_Paddle_BNH_East_Open" path="I" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]IX10.1</Property>
+    </Tag>
+    <Tag name="South_HW_Paddle_BNH_East_Closed" path="I" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]IX10.2</Property>
+    </Tag>
+    <Tag name="South_HW_Paddle_BNH_West_Open" path="I" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]IX10.3</Property>
+    </Tag>
+    <Tag name="South_HW_Paddle_BNH_West_Closed" path="I" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]IX10.4</Property>
+    </Tag>
+    <Tag name="South_HW_Paddle_BVH_East_Open" path="I" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]IX10.5</Property>
+    </Tag>
+    <Tag name="South_HW_Paddle_BVH_East_Closed" path="I" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]IX10.6</Property>
+    </Tag>
+    <Tag name="South_HW_Paddle_BVH_West_Open" path="I" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]IX10.7</Property>
+    </Tag>
+    <Tag name="South_HW_Paddle_BVH_West_Closed" path="I" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]IX11.0</Property>
+    </Tag>
+    <Tag name="Q" path="" type="Folder"/>
+    <Tag name="Barrier_HW_Barrier_BVH_East_Q_Open" path="Q" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="AccessRights">0</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]QX0.0</Property>
+    </Tag>
+    <Tag name="Barrier_HW_Barrier_BVH_East_Q_Close" path="Q" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="AccessRights">0</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]QX0.1</Property>
+    </Tag>
+    <Tag name="Barrier_HW_TL_BNH_East_Q_Red" path="Q" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="AccessRights">0</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]QX0.2</Property>
+    </Tag>
+    <Tag name="Barrier_HW_TL_BNH_East_Q_Green" path="Q" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="AccessRights">0</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]QX0.3</Property>
+    </Tag>
+    <Tag name="Barrier_HW_TL_BNH_West_Q_Red" path="Q" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="AccessRights">0</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]QX0.4</Property>
+    </Tag>
+    <Tag name="Barrier_HW_TL_BNH_West_Q_Green" path="Q" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="AccessRights">0</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]QX0.5</Property>
+    </Tag>
+    <Tag name="Barrier_HW_TL_BVH_East_Q_Red" path="Q" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="AccessRights">0</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]QX0.6</Property>
+    </Tag>
+    <Tag name="Barrier_HW_TL_BVH_East_Q_Green" path="Q" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="AccessRights">0</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]QX0.7</Property>
+    </Tag>
+    <Tag name="Barrier_HW_TL_BVH_West_Q_Red" path="Q" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="AccessRights">0</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]QX1.0</Property>
+    </Tag>
+    <Tag name="Barrier_HW_TL_BVH_West_Q_Green" path="Q" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="AccessRights">0</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]QX1.1</Property>
+    </Tag>
+    <Tag name="North_HW_EnteringTL_BNH_East_Q_Red" path="Q" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="AccessRights">0</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]QX1.2</Property>
+    </Tag>
+    <Tag name="North_HW_EnteringTL_BNH_East_Q_Green" path="Q" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="AccessRights">0</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]QX1.3</Property>
+    </Tag>
+    <Tag name="North_HW_EnteringTL_BNH_East_Q_RedRed" path="Q" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="AccessRights">0</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]QX1.4</Property>
+    </Tag>
+    <Tag name="North_HW_EnteringTL_BNH_West_Q_Red" path="Q" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="AccessRights">0</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]QX1.5</Property>
+    </Tag>
+    <Tag name="North_HW_EnteringTL_BNH_West_Q_Green" path="Q" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="AccessRights">0</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]QX1.6</Property>
+    </Tag>
+    <Tag name="North_HW_EnteringTL_BNH_West_Q_RedRed" path="Q" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="AccessRights">0</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]QX1.7</Property>
+    </Tag>
+    <Tag name="North_HW_EnteringTL_BVH_East_Q_Red" path="Q" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="AccessRights">0</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]QX2.0</Property>
+    </Tag>
+    <Tag name="North_HW_EnteringTL_BVH_East_Q_Green" path="Q" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="AccessRights">0</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]QX2.1</Property>
+    </Tag>
+    <Tag name="North_HW_EnteringTL_BVH_East_Q_RedRed" path="Q" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="AccessRights">0</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]QX2.2</Property>
+    </Tag>
+    <Tag name="North_HW_EnteringTL_BVH_West_Q_Red" path="Q" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="AccessRights">0</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]QX2.3</Property>
+    </Tag>
+    <Tag name="North_HW_EnteringTL_BVH_West_Q_Green" path="Q" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="AccessRights">0</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]QX2.4</Property>
+    </Tag>
+    <Tag name="North_HW_EnteringTL_BVH_West_Q_RedRed" path="Q" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="AccessRights">0</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]QX2.5</Property>
+    </Tag>
+    <Tag name="North_HW_Gate_BNH_East_Q_Open" path="Q" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="AccessRights">0</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]QX2.6</Property>
+    </Tag>
+    <Tag name="North_HW_Gate_BNH_East_Q_Close" path="Q" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="AccessRights">0</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]QX2.7</Property>
+    </Tag>
+    <Tag name="North_HW_Gate_BNH_West_Q_Open" path="Q" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="AccessRights">0</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]QX3.0</Property>
+    </Tag>
+    <Tag name="North_HW_Gate_BNH_West_Q_Close" path="Q" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="AccessRights">0</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]QX3.1</Property>
+    </Tag>
+    <Tag name="North_HW_Gate_BVH_East_Q_Open" path="Q" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="AccessRights">0</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]QX3.2</Property>
+    </Tag>
+    <Tag name="North_HW_Gate_BVH_East_Q_Close" path="Q" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="AccessRights">0</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]QX3.3</Property>
+    </Tag>
+    <Tag name="North_HW_Gate_BVH_West_Q_Open" path="Q" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="AccessRights">0</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]QX3.4</Property>
+    </Tag>
+    <Tag name="North_HW_Gate_BVH_West_Q_Close" path="Q" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="AccessRights">0</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]QX3.5</Property>
+    </Tag>
+    <Tag name="North_HW_LeavingTL_BNH_East_Q_Red" path="Q" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="AccessRights">0</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]QX3.6</Property>
+    </Tag>
+    <Tag name="North_HW_LeavingTL_BNH_East_Q_Green" path="Q" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="AccessRights">0</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]QX3.7</Property>
+    </Tag>
+    <Tag name="North_HW_LeavingTL_BNH_West_Q_Red" path="Q" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="AccessRights">0</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]QX4.0</Property>
+    </Tag>
+    <Tag name="North_HW_LeavingTL_BNH_West_Q_Green" path="Q" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="AccessRights">0</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]QX4.1</Property>
+    </Tag>
+    <Tag name="North_HW_LeavingTL_BVH_East_Q_Red" path="Q" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="AccessRights">0</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]QX4.2</Property>
+    </Tag>
+    <Tag name="North_HW_LeavingTL_BVH_East_Q_Green" path="Q" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="AccessRights">0</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]QX4.3</Property>
+    </Tag>
+    <Tag name="North_HW_LeavingTL_BVH_West_Q_Red" path="Q" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="AccessRights">0</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]QX4.4</Property>
+    </Tag>
+    <Tag name="North_HW_LeavingTL_BVH_West_Q_Green" path="Q" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="AccessRights">0</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]QX4.5</Property>
+    </Tag>
+    <Tag name="North_HW_Paddle_BNH_East_Q_Open" path="Q" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="AccessRights">0</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]QX4.6</Property>
+    </Tag>
+    <Tag name="North_HW_Paddle_BNH_East_Q_Close" path="Q" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="AccessRights">0</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]QX4.7</Property>
+    </Tag>
+    <Tag name="North_HW_Paddle_BNH_West_Q_Open" path="Q" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="AccessRights">0</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]QX5.0</Property>
+    </Tag>
+    <Tag name="North_HW_Paddle_BNH_West_Q_Close" path="Q" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="AccessRights">0</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]QX5.1</Property>
+    </Tag>
+    <Tag name="North_HW_Paddle_BVH_East_Q_Open" path="Q" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="AccessRights">0</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]QX5.2</Property>
+    </Tag>
+    <Tag name="North_HW_Paddle_BVH_East_Q_Close" path="Q" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="AccessRights">0</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]QX5.3</Property>
+    </Tag>
+    <Tag name="North_HW_Paddle_BVH_West_Q_Open" path="Q" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="AccessRights">0</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]QX5.4</Property>
+    </Tag>
+    <Tag name="North_HW_Paddle_BVH_West_Q_Close" path="Q" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="AccessRights">0</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]QX5.5</Property>
+    </Tag>
+    <Tag name="South_HW_EnteringTL_BNH_East_Q_Red" path="Q" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="AccessRights">0</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]QX5.6</Property>
+    </Tag>
+    <Tag name="South_HW_EnteringTL_BNH_East_Q_Green" path="Q" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="AccessRights">0</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]QX5.7</Property>
+    </Tag>
+    <Tag name="South_HW_EnteringTL_BNH_East_Q_RedRed" path="Q" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="AccessRights">0</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]QX6.0</Property>
+    </Tag>
+    <Tag name="South_HW_EnteringTL_BNH_West_Q_Red" path="Q" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="AccessRights">0</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]QX6.1</Property>
+    </Tag>
+    <Tag name="South_HW_EnteringTL_BNH_West_Q_Green" path="Q" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="AccessRights">0</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]QX6.2</Property>
+    </Tag>
+    <Tag name="South_HW_EnteringTL_BNH_West_Q_RedRed" path="Q" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="AccessRights">0</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]QX6.3</Property>
+    </Tag>
+    <Tag name="South_HW_EnteringTL_BVH_East_Q_Red" path="Q" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="AccessRights">0</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]QX6.4</Property>
+    </Tag>
+    <Tag name="South_HW_EnteringTL_BVH_East_Q_Green" path="Q" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="AccessRights">0</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]QX6.5</Property>
+    </Tag>
+    <Tag name="South_HW_EnteringTL_BVH_East_Q_RedRed" path="Q" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="AccessRights">0</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]QX6.6</Property>
+    </Tag>
+    <Tag name="South_HW_EnteringTL_BVH_West_Q_Red" path="Q" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="AccessRights">0</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]QX6.7</Property>
+    </Tag>
+    <Tag name="South_HW_EnteringTL_BVH_West_Q_Green" path="Q" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="AccessRights">0</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]QX7.0</Property>
+    </Tag>
+    <Tag name="South_HW_EnteringTL_BVH_West_Q_RedRed" path="Q" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="AccessRights">0</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]QX7.1</Property>
+    </Tag>
+    <Tag name="South_HW_Gate_BNH_East_Q_Open" path="Q" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="AccessRights">0</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]QX7.2</Property>
+    </Tag>
+    <Tag name="South_HW_Gate_BNH_East_Q_Close" path="Q" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="AccessRights">0</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]QX7.3</Property>
+    </Tag>
+    <Tag name="South_HW_Gate_BNH_West_Q_Open" path="Q" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="AccessRights">0</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]QX7.4</Property>
+    </Tag>
+    <Tag name="South_HW_Gate_BNH_West_Q_Close" path="Q" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="AccessRights">0</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]QX7.5</Property>
+    </Tag>
+    <Tag name="South_HW_Gate_BVH_East_Q_Open" path="Q" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="AccessRights">0</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]QX7.6</Property>
+    </Tag>
+    <Tag name="South_HW_Gate_BVH_East_Q_Close" path="Q" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="AccessRights">0</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]QX7.7</Property>
+    </Tag>
+    <Tag name="South_HW_Gate_BVH_West_Q_Open" path="Q" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="AccessRights">0</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]QX8.0</Property>
+    </Tag>
+    <Tag name="South_HW_Gate_BVH_West_Q_Close" path="Q" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="AccessRights">0</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]QX8.1</Property>
+    </Tag>
+    <Tag name="South_HW_LeavingTL_BNH_East_Q_Red" path="Q" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="AccessRights">0</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]QX8.2</Property>
+    </Tag>
+    <Tag name="South_HW_LeavingTL_BNH_East_Q_Green" path="Q" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="AccessRights">0</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]QX8.3</Property>
+    </Tag>
+    <Tag name="South_HW_LeavingTL_BNH_West_Q_Red" path="Q" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="AccessRights">0</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]QX8.4</Property>
+    </Tag>
+    <Tag name="South_HW_LeavingTL_BNH_West_Q_Green" path="Q" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="AccessRights">0</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]QX8.5</Property>
+    </Tag>
+    <Tag name="South_HW_LeavingTL_BVH_East_Q_Red" path="Q" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="AccessRights">0</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]QX8.6</Property>
+    </Tag>
+    <Tag name="South_HW_LeavingTL_BVH_East_Q_Green" path="Q" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="AccessRights">0</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]QX8.7</Property>
+    </Tag>
+    <Tag name="South_HW_LeavingTL_BVH_West_Q_Red" path="Q" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="AccessRights">0</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]QX9.0</Property>
+    </Tag>
+    <Tag name="South_HW_LeavingTL_BVH_West_Q_Green" path="Q" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="AccessRights">0</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]QX9.1</Property>
+    </Tag>
+    <Tag name="South_HW_Paddle_BNH_East_Q_Open" path="Q" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="AccessRights">0</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]QX9.2</Property>
+    </Tag>
+    <Tag name="South_HW_Paddle_BNH_East_Q_Close" path="Q" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="AccessRights">0</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]QX9.3</Property>
+    </Tag>
+    <Tag name="South_HW_Paddle_BNH_West_Q_Open" path="Q" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="AccessRights">0</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]QX9.4</Property>
+    </Tag>
+    <Tag name="South_HW_Paddle_BNH_West_Q_Close" path="Q" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="AccessRights">0</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]QX9.5</Property>
+    </Tag>
+    <Tag name="South_HW_Paddle_BVH_East_Q_Open" path="Q" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="AccessRights">0</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]QX9.6</Property>
+    </Tag>
+    <Tag name="South_HW_Paddle_BVH_East_Q_Close" path="Q" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="AccessRights">0</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]QX9.7</Property>
+    </Tag>
+    <Tag name="South_HW_Paddle_BVH_West_Q_Open" path="Q" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="AccessRights">0</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]QX10.0</Property>
+    </Tag>
+    <Tag name="South_HW_Paddle_BVH_West_Q_Close" path="Q" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="AccessRights">0</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]QX10.1</Property>
+    </Tag>
+    <Tag name="SCADA" path="" type="Folder"/>
+    <Tag name="Barrier_SCADA_BarrierOpen" path="SCADA" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]DB10,X0.0</Property>
+    </Tag>
+    <Tag name="Barrier_SCADA_BarrierClose" path="SCADA" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]DB10,X0.1</Property>
+    </Tag>
+    <Tag name="Barrier_SCADA_BarrierStop" path="SCADA" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]DB10,X0.2</Property>
+    </Tag>
+    <Tag name="Barrier_SCADA_DownstreamTLRed" path="SCADA" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]DB10,X0.3</Property>
+    </Tag>
+    <Tag name="Barrier_SCADA_DownstreamTLGreen" path="SCADA" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]DB10,X0.4</Property>
+    </Tag>
+    <Tag name="Barrier_SCADA_UpstreamTLRed" path="SCADA" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]DB10,X0.5</Property>
+    </Tag>
+    <Tag name="Barrier_SCADA_UpstreamTLGreen" path="SCADA" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]DB10,X0.6</Property>
+    </Tag>
+    <Tag name="Barrier_SCADA" path="SCADA" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]DB10,X0.7</Property>
+    </Tag>
+    <Tag name="North_SCADA_DownstreamGateOpen" path="SCADA" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]DB10,X1.0</Property>
+    </Tag>
+    <Tag name="North_SCADA_DownstreamGateClose" path="SCADA" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]DB10,X1.1</Property>
+    </Tag>
+    <Tag name="North_SCADA_DownstreamGateStop" path="SCADA" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]DB10,X1.2</Property>
+    </Tag>
+    <Tag name="North_SCADA_DownstreamPaddleOpen" path="SCADA" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]DB10,X1.3</Property>
+    </Tag>
+    <Tag name="North_SCADA_DownstreamPaddleClose" path="SCADA" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]DB10,X1.4</Property>
+    </Tag>
+    <Tag name="North_SCADA_DownstreamPaddleStop" path="SCADA" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]DB10,X1.5</Property>
+    </Tag>
+    <Tag name="North_SCADA_DownstreamEnteringTLRedRed" path="SCADA" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]DB10,X1.6</Property>
+    </Tag>
+    <Tag name="North_SCADA_DownstreamEnteringTLRed" path="SCADA" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]DB10,X1.7</Property>
+    </Tag>
+    <Tag name="North_SCADA_DownstreamEnteringTLRedGreen" path="SCADA" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]DB10,X2.0</Property>
+    </Tag>
+    <Tag name="North_SCADA_DownstreamEnteringTLGreen" path="SCADA" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]DB10,X2.1</Property>
+    </Tag>
+    <Tag name="North_SCADA_DownstreamLeavingTLRed" path="SCADA" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]DB10,X2.2</Property>
+    </Tag>
+    <Tag name="North_SCADA_DownstreamLeavingTLGreen" path="SCADA" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]DB10,X2.3</Property>
+    </Tag>
+    <Tag name="North_SCADA_UpstreamGateOpen" path="SCADA" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]DB10,X2.4</Property>
+    </Tag>
+    <Tag name="North_SCADA_UpstreamGateClose" path="SCADA" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]DB10,X2.5</Property>
+    </Tag>
+    <Tag name="North_SCADA_UpstreamGateStop" path="SCADA" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]DB10,X2.6</Property>
+    </Tag>
+    <Tag name="North_SCADA_UpstreamPaddleOpen" path="SCADA" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]DB10,X2.7</Property>
+    </Tag>
+    <Tag name="North_SCADA_UpstreamPaddleClose" path="SCADA" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]DB10,X3.0</Property>
+    </Tag>
+    <Tag name="North_SCADA_UpstreamPaddleStop" path="SCADA" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]DB10,X3.1</Property>
+    </Tag>
+    <Tag name="North_SCADA_UpstreamEnteringTLRedRed" path="SCADA" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]DB10,X3.2</Property>
+    </Tag>
+    <Tag name="North_SCADA_UpstreamEnteringTLRed" path="SCADA" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]DB10,X3.3</Property>
+    </Tag>
+    <Tag name="North_SCADA_UpstreamEnteringTLRedGreen" path="SCADA" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]DB10,X3.4</Property>
+    </Tag>
+    <Tag name="North_SCADA_UpstreamEnteringTLGreen" path="SCADA" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]DB10,X3.5</Property>
+    </Tag>
+    <Tag name="North_SCADA_UpstreamLeavingTLRed" path="SCADA" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]DB10,X3.6</Property>
+    </Tag>
+    <Tag name="North_SCADA_UpstreamLeavingTLGreen" path="SCADA" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]DB10,X3.7</Property>
+    </Tag>
+    <Tag name="North_SCADA" path="SCADA" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]DB10,X4.0</Property>
+    </Tag>
+    <Tag name="South_SCADA_DownstreamGateOpen" path="SCADA" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]DB10,X4.1</Property>
+    </Tag>
+    <Tag name="South_SCADA_DownstreamGateClose" path="SCADA" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]DB10,X4.2</Property>
+    </Tag>
+    <Tag name="South_SCADA_DownstreamGateStop" path="SCADA" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]DB10,X4.3</Property>
+    </Tag>
+    <Tag name="South_SCADA_DownstreamPaddleOpen" path="SCADA" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]DB10,X4.4</Property>
+    </Tag>
+    <Tag name="South_SCADA_DownstreamPaddleClose" path="SCADA" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]DB10,X4.5</Property>
+    </Tag>
+    <Tag name="South_SCADA_DownstreamPaddleStop" path="SCADA" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]DB10,X4.6</Property>
+    </Tag>
+    <Tag name="South_SCADA_DownstreamEnteringTLRedRed" path="SCADA" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]DB10,X4.7</Property>
+    </Tag>
+    <Tag name="South_SCADA_DownstreamEnteringTLRed" path="SCADA" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]DB10,X5.0</Property>
+    </Tag>
+    <Tag name="South_SCADA_DownstreamEnteringTLRedGreen" path="SCADA" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]DB10,X5.1</Property>
+    </Tag>
+    <Tag name="South_SCADA_DownstreamEnteringTLGreen" path="SCADA" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]DB10,X5.2</Property>
+    </Tag>
+    <Tag name="South_SCADA_DownstreamLeavingTLRed" path="SCADA" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]DB10,X5.3</Property>
+    </Tag>
+    <Tag name="South_SCADA_DownstreamLeavingTLGreen" path="SCADA" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]DB10,X5.4</Property>
+    </Tag>
+    <Tag name="South_SCADA_UpstreamGateOpen" path="SCADA" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]DB10,X5.5</Property>
+    </Tag>
+    <Tag name="South_SCADA_UpstreamGateClose" path="SCADA" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]DB10,X5.6</Property>
+    </Tag>
+    <Tag name="South_SCADA_UpstreamGateStop" path="SCADA" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]DB10,X5.7</Property>
+    </Tag>
+    <Tag name="South_SCADA_UpstreamPaddleOpen" path="SCADA" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]DB10,X6.0</Property>
+    </Tag>
+    <Tag name="South_SCADA_UpstreamPaddleClose" path="SCADA" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]DB10,X6.1</Property>
+    </Tag>
+    <Tag name="South_SCADA_UpstreamPaddleStop" path="SCADA" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]DB10,X6.2</Property>
+    </Tag>
+    <Tag name="South_SCADA_UpstreamEnteringTLRedRed" path="SCADA" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]DB10,X6.3</Property>
+    </Tag>
+    <Tag name="South_SCADA_UpstreamEnteringTLRed" path="SCADA" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]DB10,X6.4</Property>
+    </Tag>
+    <Tag name="South_SCADA_UpstreamEnteringTLRedGreen" path="SCADA" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]DB10,X6.5</Property>
+    </Tag>
+    <Tag name="South_SCADA_UpstreamEnteringTLGreen" path="SCADA" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]DB10,X6.6</Property>
+    </Tag>
+    <Tag name="South_SCADA_UpstreamLeavingTLRed" path="SCADA" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]DB10,X6.7</Property>
+    </Tag>
+    <Tag name="South_SCADA_UpstreamLeavingTLGreen" path="SCADA" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]DB10,X7.0</Property>
+    </Tag>
+    <Tag name="South_SCADA" path="SCADA" type="OPC">
+        <Property name="Value"/>
+        <Property name="DataType">6</Property>
+        <Property name="OPCServer">Ignition OPC-UA Server</Property>
+        <Property name="OPCItemPath">[PLC_1]DB10,X7.1</Property>
+    </Tag>
+</Tags>

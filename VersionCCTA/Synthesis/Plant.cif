@@ -1,0 +1,440 @@
+import "../Templates/PlantTemplates.cif";
+
+//North waterway lock
+group North:
+    //Component models for the upstream side.
+    group Upstream:
+        //Two miter gates.
+        group Gates:
+            East: Gate();
+            West: Gate();
+
+            alg bool Open   = East.Open   and West.Open;
+            alg bool Closed = East.Closed and West.Closed;
+        end
+
+        //Two paddles (one in each miter gate).
+        group Paddles:
+            East: Paddle();
+            West: Paddle();
+
+            alg bool Open   = East.Open   and West.Open;
+            alg bool Closed = East.Closed and West.Closed;
+        end
+
+        //Two entering traffic lights.
+        group EnteringTLs:
+            East: EnteringTL();
+            West: EnteringTL();
+
+            alg bool RedRed   = East.RedRed   and West.RedRed;
+            alg bool Red      = East.Red      and West.Red;
+            alg bool RedGreen = East.RedGreen and West.RedGreen;
+            alg bool Green    = East.Green    and West.Green;
+            alg bool RedOrRedRed = Red or RedRed;
+        end
+
+        //Two leaving traffic lights.
+        group LeavingTLs:
+            East: LeavingTL();
+            West: LeavingTL();
+            alg bool Red   = East.Red   and West.Red;
+            alg bool Green = East.Green and West.Green;
+        end
+
+        //One equal water sensor over the miter gates.
+        EqualWaterSensor: .EqualWaterSensor(false);
+    end
+
+    //Component models for the upstream side.
+    group Downstream:
+        //Two miter gates.
+        group Gates:
+            East: Gate();
+            West: Gate();
+
+            alg bool Open   = East.Open   and West.Open;
+            alg bool Closed = East.Closed and West.Closed;
+        end
+
+        //Two paddles (one in each miter gate).
+        group Paddles:
+            East: Paddle();
+            West: Paddle();
+
+            alg bool Open   = East.Open   and West.Open;
+            alg bool Closed = East.Closed and West.Closed;
+        end
+
+        //Two entering traffic lights.
+        group EnteringTLs:
+            East: EnteringTL();
+            West: EnteringTL();
+
+            alg bool RedRed   = East.RedRed   and West.RedRed;
+            alg bool Red      = East.Red      and West.Red;
+            alg bool RedGreen = East.RedGreen and West.RedGreen;
+            alg bool Green    = East.Green    and West.Green;
+            alg bool RedOrRedRed = Red or RedRed;
+        end
+
+        //Two leaving traffic lights.
+        group LeavingTLs:
+            East: LeavingTL();
+            West: LeavingTL();
+            alg bool Red   = East.Red   and West.Red;
+            alg bool Green = East.Green and West.Green;
+        end
+
+        //One equal water sensor over the miter gates.
+        EqualWaterSensor: .EqualWaterSensor(false);
+    end
+
+    EmergencyStop : Command();
+
+    plant Commands:
+        monitor;
+        uncontrollable Deactivate,
+                       DownstreamGateOpen_act,            //DownstreamGateOpen_deact,
+                       DownstreamGateClose_act,           //DownstreamGateClose_deact,
+                       DownstreamGateStop_act,            //DownstreamGateStop_deact,
+                       DownstreamPaddleOpen_act,          //DownstreamPaddleOpen_deact,
+                       DownstreamPaddleClose_act,         //DownstreamPaddleClose_deact,
+                       DownstreamPaddleStop_act,          //DownstreamPaddleStop_deact,
+                       DownstreamEnteringTLRedRed_act,    //DownstreamEnteringTLRedRed_deact,
+                       DownstreamEnteringTLRed_act,       //DownstreamEnteringTLRed_deact,
+                       DownstreamEnteringTLRedGreen_act,  //DownstreamEnteringTLRedGreen_deact,
+                       DownstreamEnteringTLGreen_act,     //DownstreamEnteringTLGreen_deact,
+                       DownstreamLeavingTLRed_act,        //DownstreamLeavingTLRed_deact,
+                       DownstreamLeavingTLGreen_act,      //DownstreamLeavingTLGreen_deact,
+                       UpstreamGateOpen_act,              //UpstreamGateOpen_deact,
+                       UpstreamGateClose_act,             //UpstreamGateClose_deact,
+                       UpstreamGateStop_act,              //UpstreamGateStop_deact,
+                       UpstreamPaddleOpen_act,            //UpstreamPaddleOpen_deact,
+                       UpstreamPaddleClose_act,           //UpstreamPaddleClose_deact,
+                       UpstreamPaddleStop_act,            //UpstreamPaddleStop_deact,
+                       UpstreamEnteringTLRedRed_act,      //UpstreamEnteringTLRedRed_deact,
+                       UpstreamEnteringTLRed_act,         //UpstreamEnteringTLRed_deact,
+                       UpstreamEnteringTLRedGreen_act,    //UpstreamEnteringTLRedGreen_deact,
+                       UpstreamEnteringTLGreen_act,       //UpstreamEnteringTLGreen_deact,
+                       UpstreamLeavingTLRed_act,          //UpstreamLeavingTLRed_deact,
+                       UpstreamLeavingTLGreen_act;        //UpstreamLeavingTLGreen_deact;
+        location NoCommand:
+            initial; marked;
+            edge DownstreamGateOpen_act            goto DownstreamGateOpen;
+            edge DownstreamGateClose_act           goto DownstreamGateClose;
+            edge DownstreamGateStop_act            goto DownstreamGateStop;
+            edge DownstreamPaddleOpen_act          goto DownstreamPaddleOpen;
+            edge DownstreamPaddleClose_act         goto DownstreamPaddleClose;
+            edge DownstreamPaddleStop_act          goto DownstreamPaddleStop;
+            edge DownstreamEnteringTLRedRed_act    goto DownstreamEnteringTLRedRed;
+            edge DownstreamEnteringTLRed_act       goto DownstreamEnteringTLRed;
+            edge DownstreamEnteringTLRedGreen_act  goto DownstreamEnteringTLRedGreen;
+            edge DownstreamEnteringTLGreen_act     goto DownstreamEnteringTLGreen;
+            edge DownstreamLeavingTLRed_act        goto DownstreamLeavingTLRed;
+            edge DownstreamLeavingTLGreen_act      goto DownstreamLeavingTLGreen;
+            edge UpstreamGateOpen_act              goto UpstreamGateOpen;
+            edge UpstreamGateClose_act             goto UpstreamGateClose;
+            edge UpstreamGateStop_act              goto UpstreamGateStop;
+            edge UpstreamPaddleOpen_act            goto UpstreamPaddleOpen;
+            edge UpstreamPaddleClose_act           goto UpstreamPaddleClose;
+            edge UpstreamPaddleStop_act            goto UpstreamPaddleStop;
+            edge UpstreamEnteringTLRedRed_act      goto UpstreamEnteringTLRedRed;
+            edge UpstreamEnteringTLRed_act         goto UpstreamEnteringTLRed;
+            edge UpstreamEnteringTLRedGreen_act    goto UpstreamEnteringTLRedGreen;
+            edge UpstreamEnteringTLGreen_act       goto UpstreamEnteringTLGreen;
+            edge UpstreamLeavingTLRed_act          goto UpstreamLeavingTLRed;
+            edge UpstreamLeavingTLGreen_act        goto UpstreamLeavingTLGreen;
+        location DownstreamGateOpen:
+            edge Deactivate                        goto NoCommand;
+        location DownstreamGateClose:
+            edge Deactivate                        goto NoCommand;
+        location DownstreamGateStop:
+            edge Deactivate                        goto NoCommand;
+        location DownstreamPaddleOpen:
+            edge Deactivate                        goto NoCommand;
+        location DownstreamPaddleClose:
+            edge Deactivate                        goto NoCommand;
+        location DownstreamPaddleStop:
+            edge Deactivate                        goto NoCommand;
+        location DownstreamEnteringTLRedRed:
+            edge Deactivate                        goto NoCommand;
+        location DownstreamEnteringTLRed:
+            edge Deactivate                        goto NoCommand;
+        location DownstreamEnteringTLRedGreen:
+            edge Deactivate                        goto NoCommand;
+        location DownstreamEnteringTLGreen:
+            edge Deactivate                        goto NoCommand;
+        location DownstreamLeavingTLRed:
+            edge Deactivate                        goto NoCommand;
+        location DownstreamLeavingTLGreen:
+            edge Deactivate                        goto NoCommand;
+        location UpstreamGateOpen:
+            edge Deactivate                        goto NoCommand;
+        location UpstreamGateClose:
+            edge Deactivate                        goto NoCommand;
+        location UpstreamGateStop:
+            edge Deactivate                        goto NoCommand;
+        location UpstreamPaddleOpen:
+            edge Deactivate                        goto NoCommand;
+        location UpstreamPaddleClose:
+            edge Deactivate                        goto NoCommand;
+        location UpstreamPaddleStop:
+            edge Deactivate                        goto NoCommand;
+        location UpstreamEnteringTLRedRed:
+            edge Deactivate                        goto NoCommand;
+        location UpstreamEnteringTLRed:
+            edge Deactivate                        goto NoCommand;
+        location UpstreamEnteringTLRedGreen:
+            edge Deactivate                        goto NoCommand;
+        location UpstreamEnteringTLGreen:
+            edge Deactivate                        goto NoCommand;
+        location UpstreamLeavingTLRed:
+            edge Deactivate                        goto NoCommand;
+        location UpstreamLeavingTLGreen:
+            edge Deactivate                        goto NoCommand;
+    end
+end
+
+//Zuid Sluis
+group South:
+// Componenten aan Upstream
+    group Upstream:
+        group Gates:
+            East: Gate();
+            West: Gate();
+
+            alg bool Open   = East.Open   and West.Open;
+            alg bool Closed = East.Closed and West.Closed;
+        end
+
+        group Paddles:
+            East: Paddle();
+            West: Paddle();
+
+            alg bool Open   = East.Open   and West.Open;
+            alg bool Closed = East.Closed and West.Closed;
+        end
+
+        group EnteringTLs:
+            East: EnteringTL();
+            West: EnteringTL();
+
+            alg bool RedRed   = East.RedRed   and West.RedRed;
+            alg bool Red      = East.Red      and West.Red;
+            alg bool RedGreen = East.RedGreen and West.RedGreen;
+            alg bool Green    = East.Green    and West.Green;
+            alg bool RedOrRedRed = Red or RedRed;
+        end
+
+        group LeavingTLs:
+            East: LeavingTL();
+            West: LeavingTL();
+            alg bool Red   = East.Red   and West.Red;
+            alg bool Green = East.Green and West.Green;
+        end
+
+        EqualWaterSensor: .EqualWaterSensor(false);
+    end
+
+    // Componenten aan Downstream
+    group Downstream:
+        group Gates:
+            East: Gate();
+            West: Gate();
+
+            alg bool Open   = East.Open   and West.Open;
+            alg bool Closed = East.Closed and West.Closed;
+        end
+
+        group Paddles:
+            East: Paddle();
+            West: Paddle();
+
+            alg bool Open   = East.Open   and West.Open;
+            alg bool Closed = East.Closed and West.Closed;
+        end
+
+        group EnteringTLs:
+            East: EnteringTL();
+            West: EnteringTL();
+
+            alg bool RedRed   = East.RedRed   and West.RedRed;
+            alg bool Red      = East.Red      and West.Red;
+            alg bool RedGreen = East.RedGreen and West.RedGreen;
+            alg bool Green    = East.Green    and West.Green;
+            alg bool RedOrRedRed = Red or RedRed;
+        end
+
+        group LeavingTLs:
+            East: LeavingTL();
+            West: LeavingTL();
+            alg bool Red   = East.Red   and West.Red;
+            alg bool Green = East.Green and West.Green;
+        end
+
+        EqualWaterSensor: .EqualWaterSensor(false);
+    end
+
+    EmergencyStop : Command();
+
+    plant Commands:
+        monitor;
+        uncontrollable Deactivate,
+                       DownstreamGateOpen_act,            //DownstreamGateOpen_deact,
+                       DownstreamGateClose_act,           //DownstreamGateClose_deact,
+                       DownstreamGateStop_act,            //DownstreamGateStop_deact,
+                       DownstreamPaddleOpen_act,          //DownstreamPaddleOpen_deact,
+                       DownstreamPaddleClose_act,         //DownstreamPaddleClose_deact,
+                       DownstreamPaddleStop_act,          //DownstreamPaddleStop_deact,
+                       DownstreamEnteringTLRedRed_act,    //DownstreamEnteringTLRedRed_deact,
+                       DownstreamEnteringTLRed_act,       //DownstreamEnteringTLRed_deact,
+                       DownstreamEnteringTLRedGreen_act,  //DownstreamEnteringTLRedGreen_deact,
+                       DownstreamEnteringTLGreen_act,     //DownstreamEnteringTLGreen_deact,
+                       DownstreamLeavingTLRed_act,        //DownstreamLeavingTLRed_deact,
+                       DownstreamLeavingTLGreen_act,      //DownstreamLeavingTLGreen_deact,
+                       UpstreamGateOpen_act,              //UpstreamGateOpen_deact,
+                       UpstreamGateClose_act,             //UpstreamGateClose_deact,
+                       UpstreamGateStop_act,              //UpstreamGateStop_deact,
+                       UpstreamPaddleOpen_act,            //UpstreamPaddleOpen_deact,
+                       UpstreamPaddleClose_act,           //UpstreamPaddleClose_deact,
+                       UpstreamPaddleStop_act,            //UpstreamPaddleStop_deact,
+                       UpstreamEnteringTLRedRed_act,      //UpstreamEnteringTLRedRed_deact,
+                       UpstreamEnteringTLRed_act,         //UpstreamEnteringTLRed_deact,
+                       UpstreamEnteringTLRedGreen_act,    //UpstreamEnteringTLRedGreen_deact,
+                       UpstreamEnteringTLGreen_act,       //UpstreamEnteringTLGreen_deact,
+                       UpstreamLeavingTLRed_act,          //UpstreamLeavingTLRed_deact,
+                       UpstreamLeavingTLGreen_act;        //UpstreamLeavingTLGreen_deact;
+        location NoCommand:
+            initial; marked;
+            edge DownstreamGateOpen_act            goto DownstreamGateOpen;
+            edge DownstreamGateClose_act           goto DownstreamGateClose;
+            edge DownstreamGateStop_act            goto DownstreamGateStop;
+            edge DownstreamPaddleOpen_act          goto DownstreamPaddleOpen;
+            edge DownstreamPaddleClose_act         goto DownstreamPaddleClose;
+            edge DownstreamPaddleStop_act          goto DownstreamPaddleStop;
+            edge DownstreamEnteringTLRedRed_act    goto DownstreamEnteringTLRedRed;
+            edge DownstreamEnteringTLRed_act       goto DownstreamEnteringTLRed;
+            edge DownstreamEnteringTLRedGreen_act  goto DownstreamEnteringTLRedGreen;
+            edge DownstreamEnteringTLGreen_act     goto DownstreamEnteringTLGreen;
+            edge DownstreamLeavingTLRed_act        goto DownstreamLeavingTLRed;
+            edge DownstreamLeavingTLGreen_act      goto DownstreamLeavingTLGreen;
+            edge UpstreamGateOpen_act              goto UpstreamGateOpen;
+            edge UpstreamGateClose_act             goto UpstreamGateClose;
+            edge UpstreamGateStop_act              goto UpstreamGateStop;
+            edge UpstreamPaddleOpen_act            goto UpstreamPaddleOpen;
+            edge UpstreamPaddleClose_act           goto UpstreamPaddleClose;
+            edge UpstreamPaddleStop_act            goto UpstreamPaddleStop;
+            edge UpstreamEnteringTLRedRed_act      goto UpstreamEnteringTLRedRed;
+            edge UpstreamEnteringTLRed_act         goto UpstreamEnteringTLRed;
+            edge UpstreamEnteringTLRedGreen_act    goto UpstreamEnteringTLRedGreen;
+            edge UpstreamEnteringTLGreen_act       goto UpstreamEnteringTLGreen;
+            edge UpstreamLeavingTLRed_act          goto UpstreamLeavingTLRed;
+            edge UpstreamLeavingTLGreen_act        goto UpstreamLeavingTLGreen;
+        location DownstreamGateOpen:
+            edge Deactivate                        goto NoCommand;
+        location DownstreamGateClose:
+            edge Deactivate                        goto NoCommand;
+        location DownstreamGateStop:
+            edge Deactivate                        goto NoCommand;
+        location DownstreamPaddleOpen:
+            edge Deactivate                        goto NoCommand;
+        location DownstreamPaddleClose:
+            edge Deactivate                        goto NoCommand;
+        location DownstreamPaddleStop:
+            edge Deactivate                        goto NoCommand;
+        location DownstreamEnteringTLRedRed:
+            edge Deactivate                        goto NoCommand;
+        location DownstreamEnteringTLRed:
+            edge Deactivate                        goto NoCommand;
+        location DownstreamEnteringTLRedGreen:
+            edge Deactivate                        goto NoCommand;
+        location DownstreamEnteringTLGreen:
+            edge Deactivate                        goto NoCommand;
+        location DownstreamLeavingTLRed:
+            edge Deactivate                        goto NoCommand;
+        location DownstreamLeavingTLGreen:
+            edge Deactivate                        goto NoCommand;
+        location UpstreamGateOpen:
+            edge Deactivate                        goto NoCommand;
+        location UpstreamGateClose:
+            edge Deactivate                        goto NoCommand;
+        location UpstreamGateStop:
+            edge Deactivate                        goto NoCommand;
+        location UpstreamPaddleOpen:
+            edge Deactivate                        goto NoCommand;
+        location UpstreamPaddleClose:
+            edge Deactivate                        goto NoCommand;
+        location UpstreamPaddleStop:
+            edge Deactivate                        goto NoCommand;
+        location UpstreamEnteringTLRedRed:
+            edge Deactivate                        goto NoCommand;
+        location UpstreamEnteringTLRed:
+            edge Deactivate                        goto NoCommand;
+        location UpstreamEnteringTLRedGreen:
+            edge Deactivate                        goto NoCommand;
+        location UpstreamEnteringTLGreen:
+            edge Deactivate                        goto NoCommand;
+        location UpstreamLeavingTLRed:
+            edge Deactivate                        goto NoCommand;
+        location UpstreamLeavingTLGreen:
+            edge Deactivate                        goto NoCommand;
+    end
+end
+
+//Storm surge barrier
+group Barrier:
+    group Downstream:
+        group TLs:
+            East: LeavingTL();
+            West: LeavingTL();
+            alg bool Red = East.Red and West.Red;
+        end
+    end
+    group Upstream:
+        group TLs:
+            East: LeavingTL();
+            West: LeavingTL();
+            alg bool Red = East.Red and West.Red;
+        end
+    end
+
+    Barrier : .Paddle();
+
+    EmergencyStop : Command();
+
+    plant Commands:
+        monitor;
+        uncontrollable Deactivate,
+                       BarrierOpen_act,       //PaddleOpen_deact,
+                       BarrierClose_act,      //PaddleClose_deact,
+                       BarrierStop_act,       //PaddleStop_deact,
+                       DownstreamTLRed_act,   //DownstreamTLRed_deact,
+                       DownstreamTLGreen_act, //DownstreamTLGreen_deact,
+                       UpstreamTLRed_act,     //UpstreamTLRed_deact,
+                       UpstreamTLGreen_act;   //UpstreamTLGreen_deact;
+        location NoCommand:
+            initial; marked;
+            edge BarrierOpen_act        goto BarrierOpen;
+            edge BarrierClose_act       goto BarrierClose;
+            edge BarrierStop_act        goto BarrierStop;
+            edge DownstreamTLRed_act    goto DownstreamTLRed;
+            edge DownstreamTLGreen_act  goto DownstreamTLGreen;
+            edge UpstreamTLRed_act      goto UpstreamTLRed;
+            edge UpstreamTLGreen_act    goto UpstreamTLGreen;
+        location BarrierOpen:
+            edge Deactivate             goto NoCommand;
+        location BarrierClose:
+            edge Deactivate             goto NoCommand;
+        location BarrierStop:
+            edge Deactivate             goto NoCommand;
+        location DownstreamTLRed:
+            edge Deactivate             goto NoCommand;
+        location DownstreamTLGreen:
+            edge Deactivate             goto NoCommand;
+        location UpstreamTLRed:
+            edge Deactivate             goto NoCommand;
+        location UpstreamTLGreen:
+            edge Deactivate             goto NoCommand;
+    end
+end

@@ -1,0 +1,58 @@
+## imports
+import sys
+import threading
+from project.myFuns import *
+import project.c2j as myIO
+
+folderTag = system.tag.read("[Client]FolderSim")
+sys.path.append(folderTag.value)
+print sys.path
+from myPackage import c2j
+
+## asynchronous wrapper function
+def runCif():
+  model = CifHandler()
+  model.doInfoEvent = True
+  print "async started"
+  try:
+    model.execInfinite(30)
+  except SystemExit:
+    print "async finished"
+    
+## Java model handler class
+class CifHandler(c2j):
+  # Method for updating input variables
+  def updateInputs(self):
+    # Input all Actuator signals
+    myIO.readTags(self)
+    myIO.readNonBoolTags(self)
+  
+  # Print info on execution time 
+  def infoExec(self, duration, cycleTime):
+    if (duration > cycleTime):
+      print "Cycle time exceeded: " + str(duration) + " ns > " + str(cycleTime) + " ns."
+
+  # Print the executed event name.
+  def infoEvent(self, idx, pre):
+    if not pre:
+      name = self.getEventName(idx)
+      print(str(self.time) + ": Event " + name)
+  
+  # Internal output parser
+  def infoPrintOutput(self, text, target):
+    print(target + ": " + text)
+
+  # Method for start of cycle events
+  def preExec(self):
+    # Check termination condition
+    CertValue = system.tag.read("[client]Running")
+    if not CertValue.value or not CertValue.quality.isGood():
+      raise SystemExit('Thread terminated')
+
+  # Method for end of cycle events
+  def postExec(self):
+    myIO.writeTags(self)
+    myIO.updateState(self)
+    
+  def timeStamp(self):
+    print "state @ t" + str(self.time)

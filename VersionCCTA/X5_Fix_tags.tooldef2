@@ -1,0 +1,52 @@
+from "Tooldefs/config.tooldef2" import *;
+from "Tooldefs/myToolbox.tooldef2" import *;
+
+// read and clear Ignition tag list
+list string file = readlines(tag_path());
+rmfile(tag_path(),    force = true);
+
+// rewrite PLC tags (connection to PLC) in Ignition (cosmetic + Java tags and Ignition tags will be consistent)
+for line in file:
+    // remove SCADA prefixes (2x)
+    if contains(line, scada_old1()):
+        line = replace(line, scada_old1(), scada_new());
+    end
+    if contains(line, scada_old2()):
+        line = replace(line, scada_old2(), scada_new());
+    end
+    // remove input prefix
+    if contains(line, input_old()):
+        line = replace(line, input_old(), input_new());
+    end
+    if contains(line, input_old2()):
+        line = replace(line, input_old2(), input_new2());
+    end
+    // remove discrete prefix
+    if contains(line, output_old()):
+        line = replace(line, output_old(), output_new());
+    end
+    // rewrite the file
+    writefile(tag_path(), line+"\n", append = true);
+end
+outln("Adapted plc tags for Ignition.");
+
+// Create broken client tags
+file = readlines(tag_path());
+rmfile(client_path(), force = true);
+for line in file:
+    // change type
+    if contains(line, "type=\"OPC\""):
+        line = replace(line,"\"OPC\"","\"Client\"");
+    end
+    // replace server with scanner property
+    if contains(line, "name=\"OPCserver\""):
+        line = "<Property name=\"PollRate\" mode=\"2\">0</Property>";
+    end
+    // skip OPCPath and access
+    if contains(line, "name=\"OPCItemPath\"") or contains(line, "name=\"AccessRights\""):
+        continue;
+    end
+    //write to file
+    writefile(client_path(), line+"\n", append = true);
+end
+outln("Added client tags for Ignition.");

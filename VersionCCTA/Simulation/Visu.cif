@@ -1,0 +1,213 @@
+svgfile "./visu.svg";
+
+import  "UI.cif";
+//import  "../Templates/Visualization.cif";
+
+group def GateV(alg string GateID, PaddleID; alg bool PaddleClosed; alg int x, y, OpenDegree; alg real Degree):
+    svgout id GateID attr "transform" value fmt("rotate(%s, %s, %s)", scale(Degree, 0, 90, 0.01, OpenDegree), x, y);
+    svgout id PaddleID attr "fill" value if PaddleClosed : "grey" else "lightblue" end;
+end
+
+group def EnteringTLV(alg string Red, Green, RedRed; alg tuple (bool Red, Green, RedRed) Sensors):
+    svgout id Red    attr "fill" value if Sensors[Red]:    "red"   else "grey" end;
+    svgout id Green  attr "fill" value if Sensors[Green]:  "green" else "grey" end;
+    svgout id RedRed attr "fill" value if Sensors[RedRed]: "red"   else "grey" end;
+end
+
+group def LeavingTLV(alg string Red, Green; alg tuple (bool Red, Green) Sensors):
+    svgout id Red   attr "fill" value if Sensors[Red]:   "red"   else "grey" end;
+    svgout id Green attr "fill" value if Sensors[Green]: "green" else "grey" end;
+end
+
+group def EmergencyStopV(alg string CommandoID; Command command):
+    svgin  id CommandoID event if North.Commands.NoCommand: command.u_activate else command.u_deactivate end;
+end
+
+group def CommmandVNorth(alg string CommandoID; uncontrollable u_activate):
+    svgin  id CommandoID event if North.Commands.NoCommand: u_activate else North.Commands.Deactivate end;
+end
+
+group def CommmandVSouth(alg string CommandoID; uncontrollable u_activate):
+    svgin  id CommandoID event if South.Commands.NoCommand: u_activate else South.Commands.Deactivate end;
+end
+
+group def CommmandVPaddle(alg string CommandoID; uncontrollable u_activate):
+    svgin  id CommandoID event if Barrier.Commands.NoCommand: u_activate else Barrier.Commands.Deactivate end;
+end
+
+automaton def SingleWindow(alg string name):
+    monitor;
+    event vis, invis;
+    location Invisible:
+        initial;
+        edge vis   goto Visible;
+    location Visible:
+        edge invis goto Invisible;
+    svgin id name  event vis;
+    svgin id name + "X" event invis;
+    svgout id name + "W" attr "visibility" value if Invisible: "hidden" else "visible" end;
+end
+
+automaton def DoubleWindow(alg string name1, name2):
+    monitor;
+    event vis, invis;
+    location Invisible:
+        initial;
+        edge vis goto Visible;
+    location Visible:
+        edge invis goto Invisible;
+    svgin id name1  event vis;
+    svgin id name1 + "X" event invis;
+    svgin id name2 + "X" event invis;
+    svgout id name1 + "W" attr "visibility" value if Invisible: "hidden" else "visible" end;
+    svgout id name2 + "W" attr "visibility" value if Invisible: "hidden" else "visible" end;
+end
+
+svgout id "BNHH"  text value fmt("%.2f", H_Downstream);
+svgout id "BVHH"  text value fmt("%.2f", H_Upstream);
+
+svgin id "high" event Wh.high;
+svgin id "low"  event Wh.low;
+
+svgout id "w1" attr "fill" value if Wh.High: "#114c8b" else "#9ecaff" end;
+
+group North:
+    //Lock gates
+    GateUpstreamEast   : GateV("BVHGateO", "BVHPaddleO", North.Upstream.Paddles.East.Sensor.Closed,   128, 166,  77, North.Upstream.Gates.East.Degree);
+    GateUpstreamWest   : GateV("BVHGateW", "BVHPaddleW", North.Upstream.Paddles.West.Sensor.Closed,   128, 222, -77, North.Upstream.Gates.West.Degree);
+    GateDownstreamEast : GateV("BNHGateO", "BNHPaddleO", North.Downstream.Paddles.East.Sensor.Closed, 443, 166,  77, North.Downstream.Gates.East.Degree);
+    GateDownstreamWest : GateV("BNHGateW", "BNHPaddleW", North.Downstream.Paddles.West.Sensor.Closed, 443, 222, -77, North.Downstream.Gates.West.Degree);
+
+    //Lock entering traffic lights
+    EnteringTLUpstreamEast    : EnteringTLV("BVHIOR", "BVHIOG", "BVHIOS", North.Upstream.EnteringTLs.East.Sensors);
+    EnteringTLUpstreamWest    : EnteringTLV("BVHIWR", "BVHIWG", "BVHIWS", North.Upstream.EnteringTLs.West.Sensors);
+    EnteringTLDownstreamEast  : EnteringTLV("BNHIOR", "BNHIOG", "BNHIOS", North.Downstream.EnteringTLs.East.Sensors);
+    EnteringTLDownstreamWest  : EnteringTLV("BNHIWR", "BNHIWG", "BNHIWS", North.Downstream.EnteringTLs.West.Sensors);
+
+    //Lock leaving traffic lights
+    LeavingTLUpstreamEast   : LeavingTLV("BVHUOR", "BVHUOG", North.Upstream.LeavingTLs.East.Sensors);
+    LeavingTLUpstreamWest   : LeavingTLV("BVHUWR", "BVHUWG", North.Upstream.LeavingTLs.West.Sensors);
+    LeavingTLDownstreamEast : LeavingTLV("BNHUOR", "BNHUOG", North.Downstream.LeavingTLs.East.Sensors);
+    LeavingTLDownstreamWest : LeavingTLV("BNHUWR", "BNHUWG", North.Downstream.LeavingTLs.West.Sensors);
+
+    GateUpstreamOpen      : CommmandVNorth("BVHGateOpen",    North.Commands.UpstreamGateOpen_act);
+    GateUpstreamStop      : CommmandVNorth("BVHGateStop",    North.Commands.UpstreamGateStop_act);
+    GateUpstreamClose     : CommmandVNorth("BVHGateClose",   North.Commands.UpstreamGateClose_act);
+    PaddleUpstreamOpen    : CommmandVNorth("BVHPaddleOpen",  North.Commands.UpstreamPaddleOpen_act);
+    PaddleUpstreamStop    : CommmandVNorth("BVHPaddleStop",  North.Commands.UpstreamPaddleStop_act);
+    PaddleUpstreamClose   : CommmandVNorth("BVHPaddleClose", North.Commands.UpstreamPaddleClose_act);
+    GateDownstreamOpen    : CommmandVNorth("BNHGateOpen",    North.Commands.DownstreamGateOpen_act);
+    GateDownstreamStop    : CommmandVNorth("BNHGateStop",    North.Commands.DownstreamGateStop_act);
+    GateDownstreamClose   : CommmandVNorth("BNHGateClose",   North.Commands.DownstreamGateClose_act);
+    PaddleDownstreamOpen  : CommmandVNorth("BNHPaddleOpen",  North.Commands.DownstreamPaddleOpen_act);
+    PaddleDownstreamStop  : CommmandVNorth("BNHPaddleStop",  North.Commands.DownstreamPaddleStop_act);
+    PaddleDownstreamClose : CommmandVNorth("BNHPaddleClose", North.Commands.DownstreamPaddleClose_act);
+
+    EnteringDownstreamRed      : CommmandVNorth("BNHEnteringRed",      North.Commands.DownstreamEnteringTLRed_act);
+    EnteringDownstreamRedGreen : CommmandVNorth("BNHEnteringRedGreen", North.Commands.DownstreamEnteringTLRedGreen_act);
+    EnteringDownstreamGreen    : CommmandVNorth("BNHEnteringGreen",    North.Commands.DownstreamEnteringTLGreen_act);
+    EnteringDownstreamRedRed   : CommmandVNorth("BNHEnteringRedRed",   North.Commands.DownstreamEnteringTLRedRed_act);
+    EnteringUpstreamRed        : CommmandVNorth("BVHEnteringRed",      North.Commands.UpstreamEnteringTLRed_act);
+    EnteringUpstreamRedGreen   : CommmandVNorth("BVHEnteringRedGreen", North.Commands.UpstreamEnteringTLRedGreen_act);
+    EnteringUpstreamGreen      : CommmandVNorth("BVHEnteringGreen",    North.Commands.UpstreamEnteringTLGreen_act);
+    EnteringUpstreamRedRed     : CommmandVNorth("BVHEnteringRedRed",   North.Commands.UpstreamEnteringTLRedRed_act);
+
+    LeavingDownstreamRed     : CommmandVNorth("BNHLeavingRed",     North.Commands.DownstreamLeavingTLRed_act);
+    LeavingDownstreamGreen   : CommmandVNorth("BNHLeavingGreen",   North.Commands.DownstreamLeavingTLGreen_act);
+    LeavingUpstreamRed       : CommmandVNorth("BVHLeavingRed",     North.Commands.UpstreamLeavingTLRed_act);
+    LeavingUpstreamGreen     : CommmandVNorth("BVHLeavingGreen",   North.Commands.UpstreamLeavingTLGreen_act);
+
+    EmergencyStopVis         : EmergencyStopV("EmergencyStop",     North.EmergencyStop);
+
+
+    svgout id "ChamberH" text value fmt("%.2f", North.Water.H_Chamber);
+    svgout id "water_chamber_north" attr "fill" value if North.Water.H_Chamber >= H_Upstream_high: "#114c8b" else "#9ecaff" end;
+
+    WEnteringDownstream      : SingleWindow("NBVHITL");
+    WLeavingDownstream       : SingleWindow("NBVHUTL");
+    WGatesPaddlesDownstream  : DoubleWindow("NBVHGates", "NBVHPaddles");
+    WEnteringUpstream        : SingleWindow("NBNHITL");
+    WLeavingUpstream         : SingleWindow("NBNHUTL");
+    WGatesPaddlesUpstream    : DoubleWindow("NBNHGates", "NBNHPaddles");
+end
+
+group South:
+    GateUpstreamEast   : GateV("ZBVHGateO", "ZBVHPaddleO", South.Upstream.Paddles.East.Sensor.Closed,   128, 250,  77, South.Upstream.Gates.East.Degree);
+    GateUpstreamWest   : GateV("ZBVHGateW", "ZBVHPaddleW", South.Upstream.Paddles.West.Sensor.Closed,   128, 305, -77, South.Upstream.Gates.West.Degree);
+    GateDownstreamEast : GateV("ZBNHGateO", "ZBNHPaddleO", South.Downstream.Paddles.East.Sensor.Closed, 443, 250,  77, South.Downstream.Gates.East.Degree);
+    GateDownstreamWest : GateV("ZBNHGateW", "ZBNHPaddleW", South.Downstream.Paddles.West.Sensor.Closed, 443, 305, -77, South.Downstream.Gates.West.Degree);
+
+    // lock signlights
+    EnteringTLUpstreamEast    : EnteringTLV("ZBVHIOR", "ZBVHIOG", "ZBVHIOS", South.Upstream.EnteringTLs.East.Sensors);
+    EnteringTLUpstreamWest    : EnteringTLV("ZBVHIWR", "ZBVHIWG", "ZBVHIWS", South.Upstream.EnteringTLs.West.Sensors);
+    EnteringTLDownstreamEast  : EnteringTLV("ZBNHIOR", "ZBNHIOG", "ZBNHIOS", South.Downstream.EnteringTLs.East.Sensors);
+    EnteringTLDownstreamWest  : EnteringTLV("ZBNHIWR", "ZBNHIWG", "ZBNHIWS", South.Downstream.EnteringTLs.West.Sensors);
+
+    LeavingTLUpstreamEast   : LeavingTLV("ZBVHUOR", "ZBVHUOG", South.Upstream.LeavingTLs.East.Sensors);
+    LeavingTLUpstreamWest   : LeavingTLV("ZBVHUWR", "ZBVHUWG", South.Upstream.LeavingTLs.West.Sensors);
+    LeavingTLDownstreamEast : LeavingTLV("ZBNHUOR", "ZBNHUOG", South.Downstream.LeavingTLs.East.Sensors);
+    LeavingTLDownstreamWest : LeavingTLV("ZBNHUWR", "ZBNHUWG", South.Downstream.LeavingTLs.West.Sensors);
+
+    //svgout id "water_chamber" attr "fill" value if Lock.Water.H_Chamber >= 10: "#000080" elif Lock.Water.H_Chamber <=  2.0: "#9ecaff" else "#0000ff" end;
+    GateUpstreamOpen      : CommmandVSouth("ZBVHGateOpen",    South.Commands.UpstreamGateOpen_act);
+    GateUpstreamStop      : CommmandVSouth("ZBVHGateStop",    South.Commands.UpstreamGateStop_act);
+    GateUpstreamClose     : CommmandVSouth("ZBVHGateClose",   South.Commands.UpstreamGateClose_act);
+    PaddleUpstreamOpen    : CommmandVSouth("ZBVHPaddleOpen",  South.Commands.UpstreamPaddleOpen_act);
+    PaddleUpstreamStop    : CommmandVSouth("ZBVHPaddleStop",  South.Commands.UpstreamPaddleStop_act);
+    PaddleUpstreamClose   : CommmandVSouth("ZBVHPaddleClose", South.Commands.UpstreamPaddleClose_act);
+    GateDownstreamOpen    : CommmandVSouth("ZBNHGateOpen",    South.Commands.DownstreamGateOpen_act);
+    GateDownstreamStop    : CommmandVSouth("ZBNHGateStop",    South.Commands.DownstreamGateStop_act);
+    GateDownstreamClose   : CommmandVSouth("ZBNHGateClose",   South.Commands.DownstreamGateClose_act);
+    PaddleDownstreamOpen  : CommmandVSouth("ZBNHPaddleOpen",  South.Commands.DownstreamPaddleOpen_act);
+    PaddleDownstreamStop  : CommmandVSouth("ZBNHPaddleStop",  South.Commands.DownstreamPaddleStop_act);
+    PaddleDownstreamClose : CommmandVSouth("ZBNHPaddleClose", South.Commands.DownstreamPaddleClose_act);
+
+    EnteringDownstreamRed      : CommmandVSouth("ZBNHEnteringRed",      South.Commands.DownstreamEnteringTLRed_act);
+    EnteringDownstreamRedGreen : CommmandVSouth("ZBNHEnteringRedGreen", South.Commands.DownstreamEnteringTLRedGreen_act);
+    EnteringDownstreamGreen    : CommmandVSouth("ZBNHEnteringGreen",    South.Commands.DownstreamEnteringTLGreen_act);
+    EnteringDownstreamRedRed   : CommmandVSouth("ZBNHEnteringRedRed",   South.Commands.DownstreamEnteringTLRedRed_act);
+    EnteringUpstreamRed        : CommmandVSouth("ZBVHEnteringRed",      South.Commands.UpstreamEnteringTLRed_act);
+    EnteringUpstreamRedGreen   : CommmandVSouth("ZBVHEnteringRedGreen", South.Commands.UpstreamEnteringTLRedGreen_act);
+    EnteringUpstreamGreen      : CommmandVSouth("ZBVHEnteringGreen",    South.Commands.UpstreamEnteringTLGreen_act);
+    EnteringUpstreamRedRed     : CommmandVSouth("ZBVHEnteringRedRed",   South.Commands.UpstreamEnteringTLRedRed_act);
+
+    LeavingDownstreamRed     : CommmandVSouth("ZBNHLeavingRed",     South.Commands.DownstreamLeavingTLRed_act);
+    LeavingDownstreamGreen   : CommmandVSouth("ZBNHLeavingGreen",   South.Commands.DownstreamLeavingTLGreen_act);
+    LeavingUpstreamRed       : CommmandVSouth("ZBVHLeavingRed",     South.Commands.UpstreamLeavingTLRed_act);
+    LeavingUpstreamGreen     : CommmandVSouth("ZBVHLeavingGreen",   South.Commands.UpstreamLeavingTLGreen_act);
+
+    EmergencyStopVis         : EmergencyStopV("ZEmergencyStop",     South.EmergencyStop);
+
+    svgout id "ZChamberH" text value fmt("%.2f", South.Water.H_Chamber);
+    svgout id "water_chamber_south" attr "fill" value if South.Water.H_Chamber >= H_Upstream_high: "#114c8b" else "#9ecaff" end;
+
+    WEnteringDownstream     : SingleWindow("ZBVHITL");
+    WLeavingDownstream      : SingleWindow("ZBVHUTL");
+    WGatesPaddlesDownstream : DoubleWindow("ZBVHGates", "ZBVHPaddles");
+    WEnteringUpstream       : SingleWindow("ZBNHITL");
+    WLeavingUpstream        : SingleWindow("ZBNHUTL");
+    WGatesPaddlesUpstream   : DoubleWindow("ZBNHGates", "ZBNHPaddles");
+end
+
+group Barrier:
+    TLUpstreamEast    : LeavingTLV("SBVHOR", "SBVHOG", .Barrier.Upstream.TLs.East.Sensors);
+    TLUpstreamWest    : LeavingTLV("SBVHWR", "SBVHWG", .Barrier.Upstream.TLs.West.Sensors);
+    TLDownstreamEast  : LeavingTLV("SBNHOR", "SBNHOG", .Barrier.Downstream.TLs.East.Sensors);
+    TLDownstreamWest  : LeavingTLV("SBNHWR", "SBNHWG", .Barrier.Downstream.TLs.West.Sensors);
+
+    PaddleOpen        : CommmandVPaddle("PaddleOpen",  .Barrier.Commands.BarrierOpen_act);
+    PaddleStop        : CommmandVPaddle("PaddleStop",  .Barrier.Commands.BarrierStop_act);
+    PaddleClose       : CommmandVPaddle("PaddleClose", .Barrier.Commands.BarrierClose_act);
+
+    TLDownstreamRed   : CommmandVPaddle("SBNHRed",   .Barrier.Commands.DownstreamTLRed_act);
+    TLDownstreamGreen : CommmandVPaddle("SBNHGreen", .Barrier.Commands.DownstreamTLGreen_act);
+    TLUpstreamRed     : CommmandVPaddle("SBVHRed",   .Barrier.Commands.UpstreamTLRed_act);
+    TLUpstreamGreen   : CommmandVPaddle("SBVHGreen", .Barrier.Commands.UpstreamTLGreen_act);
+
+    svgout id "PaddleIn" attr "visibility" value if .Barrier.Barrier.Sensor.Open: "hidden" else "visible" end;
+
+    EmergencyStopVis  : EmergencyStopV("SEmergencyStop", .Barrier.EmergencyStop);
+    STLDownstream     : SingleWindow("SBNHTL");
+    STLUpstream       : SingleWindow("SBVHTL");
+    PaddleW           : SingleWindow("Paddle");
+end

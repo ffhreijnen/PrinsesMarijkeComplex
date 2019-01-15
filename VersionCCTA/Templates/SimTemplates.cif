@@ -1,0 +1,187 @@
+//Plant templates
+//EqualWaterSensor
+//@InitialEqual - true if initially there is equal water.
+//@OnCondition  - Invariant for when the sensor switches on.
+automaton def EqualWaterSensor(alg bool InitialEqual, OnCondition):
+    uncontrollable u_on, u_off;
+    location Unequal:
+        initial not InitialEqual;
+        edge u_on when OnCondition     goto Equal;
+
+    location Equal:
+        initial InitialEqual;
+        edge u_off when not OnCondition goto Unequal;
+end
+
+//@InitialOn - true if the initial and marked location is On, false if Off
+automaton def Sensor(alg bool InitialOn):
+    uncontrollable u_on, u_off;
+    location Off:
+        initial not InitialOn;
+        edge u_on goto On;
+
+    location On:
+        initial InitialOn;
+        edge u_off goto Off;
+end
+
+plant def Command():
+    uncontrollable u_activate, u_deactivate;
+    location Inactive:
+        initial; marked;
+        edge u_activate   goto Active;
+
+    location Active:
+        edge u_deactivate goto Inactive;
+end
+
+//Single IO Dynamics
+//@Sensor - the sensor for which dynamics are provided
+//@On  - the invariant for which the sensor can switch to the On location
+//@Off - the invariant for which the sensor can switch to the Off location
+automaton def SensorDynamics(Sensor Sensor; alg bool On, Off):
+    location: initial; marked;
+        edge Sensor.u_on  when On;
+        edge Sensor.u_off when Off;
+end
+
+///////////////////////
+//Movable components //
+///////////////////////
+
+//Double Output Actuator
+automaton def DoubleOutputActuator():
+    controllable c_open, c_close, c_emergencyStop, c_endStopClosing, c_endStopOpening;
+    location Rest:
+        initial;
+        edge c_open  goto Opening;
+        edge c_close goto Closing;
+    location Opening:
+        edge c_emergencyStop, c_endStopOpening goto Rest;
+    location Closing:
+        edge c_emergencyStop, c_endStopClosing goto Rest;
+end
+
+//Sensor for movable components (gates and paddles).
+//@InitialClosed - true if the initial and marked location is Closed, false if Open
+automaton def DoubleInputSensor(alg bool InitialLocationClosed):
+    uncontrollable u_open_on, u_open_off, u_closed_on, u_closed_off;
+    location Closed:
+        initial InitialLocationClosed;
+        edge u_closed_off goto Intermediate;
+    location Intermediate:
+        edge u_closed_on  goto Closed;
+        edge u_open_on    goto Open;
+    location Open:
+        initial not InitialLocationClosed;
+        edge u_open_off goto Intermediate;
+end
+
+//Double IO Dynamics
+//@Sensor - the sensor for which dynamics are provided
+//@ClosedDegree - Constant that denotes the closed position.
+//@OpenDegree   - Constant that denotes the open position.
+//@Degree       - Continuous variable that denotes the gate rotation.
+automaton def DoubleIODynamics(DoubleInputSensor Sensor;
+                                 alg real ClosedDegree, OpenDegree, Degree):
+    location: initial;
+        edge Sensor.u_open_on    when Degree >= OpenDegree;
+        edge Sensor.u_closed_off when Degree <  OpenDegree;
+        edge Sensor.u_closed_on  when Degree <= ClosedDegree;
+        edge Sensor.u_open_off   when Degree >  ClosedDegree;
+end
+
+////////////////////////////////////////////////////////
+//Scheepvaartseinen//
+////////////////////////////////////////////////////////
+
+//Actuator for an entering traffic light
+plant def EnteringTLActuator():
+    controllable c_r, c_rr, c_rg, c_g;
+    location RedRed:
+        marked;
+        edge c_r  goto Red;
+    location Red:
+        initial; marked;
+        edge c_rr goto RedRed;
+        edge c_rg goto RedGreen;
+    location RedGreen:
+        edge c_r  goto Red;
+        edge c_g  goto Green;
+    location Green:
+        edge c_r  goto Red;
+end
+
+//Actuator for a leaving traffic light
+plant def LeavingTLActuator():
+    controllable c_r, c_g;
+    location Red:
+        marked; initial;
+        edge c_g goto Green;
+    location Green:
+        edge c_r  goto Red;
+end
+
+///////////////////////////////
+//Plant combination templates//
+///////////////////////////////
+
+//Invaarsein templates for sensoren, aansturing en dynamiek.
+//#Sper      - true wanneer de sper       aansturing actief is en de sensoren een sper      seinbeeld meten.
+//#Rood      - true wanneer de rode       aansturing actief is en de sensoren een rood      seinbeeld meten.
+//#RoodGroen - true wanneer de roodgroene aansturing actief is en de sensoren een roodgroen seinbeeld meten.
+//#Groenn    - true wanneer de groene     aansturing actief is en de sensoren een groen     seinbeeld meten.
+group def EnteringTL():
+    Actuator : EnteringTLActuator();
+
+    SensorR1 : Sensor(true);
+    SensorG  : Sensor(false);
+    SensorR2 : Sensor(false);
+
+    DynamicsR1 : SensorDynamics(SensorR1, not Actuator.Green, Actuator.Green);
+    DynamicsG  : SensorDynamics(SensorG, Actuator.Green or Actuator.RedGreen,
+                                Actuator.Red or Actuator.RedRed);
+    DynamicsR2 : SensorDynamics(SensorR2, Actuator.RedRed, not Actuator.RedRed);
+
+    alg tuple (bool R1, G, R2) Sensors = (SensorR1.On, SensorG.On, SensorR2.On);
+end
+
+//Uitvaarsein templates for sensoren, aansturing en dynamiek.
+//#Red      - true if Actuator.Red and Sensors measure Red
+//#RedGreen - true if Actuator.RedGreen and Sensors measure Green
+//#Green    - true if Actuator.Green and Sensors measure Green
+group def LeavingTL():
+    Actuator : LeavingTLActuator();
+
+    SensorR  : Sensor(true);
+    SensorG  : Sensor(false);
+
+    DynamicsR : SensorDynamics(SensorR, not Actuator.Green, Actuator.Green);
+    DynamicsG : SensorDynamics(SensorG, not Actuator.Red,   Actuator.Red);
+
+    alg tuple (bool R, G) Sensors = (SensorR.On, SensorG.On);
+end
+
+//Gate template for its actuators, sensors and dynamics.
+group def Gate():
+    cont Degree = 0.0
+              der if Actuator.Opening and Degree < 90.0: +30.0
+                elif Actuator.Closing and Degree > 0.0 : -30.0
+                else 0.0 end;
+    Actuator : DoubleOutputActuator();
+    Sensor   : DoubleInputSensor(true);
+    Dynamics : DoubleIODynamics(Sensor, 0.0, 90.0, Degree);
+end
+
+//Paddle template for its actuators, sensors and dynamics.
+group def Paddle():
+    cont Degree = 0.0
+              der if Actuator.Opening and Degree < 90.0: +30.0
+                elif Actuator.Closing and Degree > 0.0 : -30.0
+                else 0.0 end;
+    Actuator : DoubleOutputActuator();
+    Sensor   : DoubleInputSensor(true);
+    Dynamics : DoubleIODynamics(Sensor, 0.0, 90.0, Degree);
+
+    alg bool Open  = Sensor.Open;
+end

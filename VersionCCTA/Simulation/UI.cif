@@ -1,0 +1,305 @@
+import "Sim.cif";
+
+group North:
+    EmergencyStop : Command();
+    plant Commands:
+        monitor        DownstreamGateOpen_act,            //DownstreamGateOpen_deact,
+                       DownstreamGateClose_act,           //DownstreamGateClose_deact,
+                       DownstreamGateStop_act,            //DownstreamGateStop_deact,
+                       DownstreamPaddleOpen_act,          //DownstreamPaddleOpen_deact,
+                       DownstreamPaddleClose_act,         //DownstreamPaddleClose_deact,
+                       DownstreamPaddleStop_act,          //DownstreamPaddleStop_deact,
+                       DownstreamEnteringTLRedRed_act,    //DownstreamEnteringTLRedRed_deact,
+                       DownstreamEnteringTLRed_act,       //DownstreamEnteringTLRed_deact,
+                       DownstreamEnteringTLRedGreen_act,  //DownstreamEnteringTLRedGreen_deact,
+                       DownstreamEnteringTLGreen_act,     //DownstreamEnteringTLGreen_deact,
+                       DownstreamLeavingTLRed_act,        //DownstreamLeavingTLRed_deact,
+                       DownstreamLeavingTLGreen_act,      //DownstreamLeavingTLGreen_deact,
+                       UpstreamGateOpen_act,              //UpstreamGateOpen_deact,
+                       UpstreamGateClose_act,             //UpstreamGateClose_deact,
+                       UpstreamGateStop_act,              //UpstreamGateStop_deact,
+                       UpstreamPaddleOpen_act,            //UpstreamPaddleOpen_deact,
+                       UpstreamPaddleClose_act,           //UpstreamPaddleClose_deact,
+                       UpstreamPaddleStop_act,            //UpstreamPaddleStop_deact,
+                       UpstreamEnteringTLRedRed_act,      //UpstreamEnteringTLRedRed_deact,
+                       UpstreamEnteringTLRed_act,         //UpstreamEnteringTLRed_deact,
+                       UpstreamEnteringTLRedGreen_act,    //UpstreamEnteringTLRedGreen_deact,
+                       UpstreamEnteringTLGreen_act,       //UpstreamEnteringTLGreen_deact,
+                       UpstreamLeavingTLRed_act,          //UpstreamLeavingTLRed_deact,
+                       UpstreamLeavingTLGreen_act;
+        uncontrollable Deactivate,
+                       DownstreamGateOpen_act,            //DownstreamGateOpen_deact,
+                       DownstreamGateClose_act,           //DownstreamGateClose_deact,
+                       DownstreamGateStop_act,            //DownstreamGateStop_deact,
+                       DownstreamPaddleOpen_act,          //DownstreamPaddleOpen_deact,
+                       DownstreamPaddleClose_act,         //DownstreamPaddleClose_deact,
+                       DownstreamPaddleStop_act,          //DownstreamPaddleStop_deact,
+                       DownstreamEnteringTLRedRed_act,    //DownstreamEnteringTLRedRed_deact,
+                       DownstreamEnteringTLRed_act,       //DownstreamEnteringTLRed_deact,
+                       DownstreamEnteringTLRedGreen_act,  //DownstreamEnteringTLRedGreen_deact,
+                       DownstreamEnteringTLGreen_act,     //DownstreamEnteringTLGreen_deact,
+                       DownstreamLeavingTLRed_act,        //DownstreamLeavingTLRed_deact,
+                       DownstreamLeavingTLGreen_act,      //DownstreamLeavingTLGreen_deact,
+                       UpstreamGateOpen_act,              //UpstreamGateOpen_deact,
+                       UpstreamGateClose_act,             //UpstreamGateClose_deact,
+                       UpstreamGateStop_act,              //UpstreamGateStop_deact,
+                       UpstreamPaddleOpen_act,            //UpstreamPaddleOpen_deact,
+                       UpstreamPaddleClose_act,           //UpstreamPaddleClose_deact,
+                       UpstreamPaddleStop_act,            //UpstreamPaddleStop_deact,
+                       UpstreamEnteringTLRedRed_act,      //UpstreamEnteringTLRedRed_deact,
+                       UpstreamEnteringTLRed_act,         //UpstreamEnteringTLRed_deact,
+                       UpstreamEnteringTLRedGreen_act,    //UpstreamEnteringTLRedGreen_deact,
+                       UpstreamEnteringTLGreen_act,       //UpstreamEnteringTLGreen_deact,
+                       UpstreamLeavingTLRed_act,          //UpstreamLeavingTLRed_deact,
+                       UpstreamLeavingTLGreen_act;        //UpstreamLeavingTLGreen_deact;
+        location NoCommand:
+            initial; marked;
+            edge DownstreamGateOpen_act            goto DownstreamGateOpen;
+            edge DownstreamGateClose_act           goto DownstreamGateClose;
+            edge DownstreamGateStop_act            goto DownstreamGateStop;
+            edge DownstreamPaddleOpen_act          goto DownstreamPaddleOpen;
+            edge DownstreamPaddleClose_act         goto DownstreamPaddleClose;
+            edge DownstreamPaddleStop_act          goto DownstreamPaddleStop;
+            edge DownstreamEnteringTLRedRed_act    goto DownstreamEnteringTLRedRed;
+            edge DownstreamEnteringTLRed_act       goto DownstreamEnteringTLRed;
+            edge DownstreamEnteringTLRedGreen_act  goto DownstreamEnteringTLRedGreen;
+            edge DownstreamEnteringTLGreen_act     goto DownstreamEnteringTLGreen;
+            edge DownstreamLeavingTLRed_act        goto DownstreamLeavingTLRed;
+            edge DownstreamLeavingTLGreen_act      goto DownstreamLeavingTLGreen;
+            edge UpstreamGateOpen_act              goto UpstreamGateOpen;
+            edge UpstreamGateClose_act             goto UpstreamGateClose;
+            edge UpstreamGateStop_act              goto UpstreamGateStop;
+            edge UpstreamPaddleOpen_act            goto UpstreamPaddleOpen;
+            edge UpstreamPaddleClose_act           goto UpstreamPaddleClose;
+            edge UpstreamPaddleStop_act            goto UpstreamPaddleStop;
+            edge UpstreamEnteringTLRedRed_act      goto UpstreamEnteringTLRedRed;
+            edge UpstreamEnteringTLRed_act         goto UpstreamEnteringTLRed;
+            edge UpstreamEnteringTLRedGreen_act    goto UpstreamEnteringTLRedGreen;
+            edge UpstreamEnteringTLGreen_act       goto UpstreamEnteringTLGreen;
+            edge UpstreamLeavingTLRed_act          goto UpstreamLeavingTLRed;
+            edge UpstreamLeavingTLGreen_act        goto UpstreamLeavingTLGreen;
+        location DownstreamGateOpen:
+            edge Deactivate            goto NoCommand;
+        location DownstreamGateClose:
+            edge Deactivate            goto NoCommand;
+        location DownstreamGateStop:
+            edge Deactivate            goto NoCommand;
+        location DownstreamPaddleOpen:
+            edge Deactivate            goto NoCommand;
+        location DownstreamPaddleClose:
+            edge Deactivate            goto NoCommand;
+        location DownstreamPaddleStop:
+            edge Deactivate            goto NoCommand;
+        location DownstreamEnteringTLRedRed:
+            edge Deactivate            goto NoCommand;
+        location DownstreamEnteringTLRed:
+            edge Deactivate            goto NoCommand;
+        location DownstreamEnteringTLRedGreen:
+            edge Deactivate            goto NoCommand;
+        location DownstreamEnteringTLGreen:
+            edge Deactivate            goto NoCommand;
+        location DownstreamLeavingTLRed:
+            edge Deactivate            goto NoCommand;
+        location DownstreamLeavingTLGreen:
+            edge Deactivate            goto NoCommand;
+        location UpstreamGateOpen:
+            edge Deactivate            goto NoCommand;
+        location UpstreamGateClose:
+            edge Deactivate            goto NoCommand;
+        location UpstreamGateStop:
+            edge Deactivate            goto NoCommand;
+        location UpstreamPaddleOpen:
+            edge Deactivate            goto NoCommand;
+        location UpstreamPaddleClose:
+            edge Deactivate            goto NoCommand;
+        location UpstreamPaddleStop:
+            edge Deactivate            goto NoCommand;
+        location UpstreamEnteringTLRedRed:
+            edge Deactivate            goto NoCommand;
+        location UpstreamEnteringTLRed:
+            edge Deactivate            goto NoCommand;
+        location UpstreamEnteringTLRedGreen:
+            edge Deactivate            goto NoCommand;
+        location UpstreamEnteringTLGreen:
+            edge Deactivate            goto NoCommand;
+        location UpstreamLeavingTLRed:
+            edge Deactivate            goto NoCommand;
+        location UpstreamLeavingTLGreen:
+            edge Deactivate            goto NoCommand;
+    end
+
+end
+
+group South:
+    EmergencyStop : Command();
+    plant Commands:
+        monitor        DownstreamGateOpen_act,            //DownstreamGateOpen_deact,
+                       DownstreamGateClose_act,           //DownstreamGateClose_deact,
+                       DownstreamGateStop_act,            //DownstreamGateStop_deact,
+                       DownstreamPaddleOpen_act,          //DownstreamPaddleOpen_deact,
+                       DownstreamPaddleClose_act,         //DownstreamPaddleClose_deact,
+                       DownstreamPaddleStop_act,          //DownstreamPaddleStop_deact,
+                       DownstreamEnteringTLRedRed_act,    //DownstreamEnteringTLRedRed_deact,
+                       DownstreamEnteringTLRed_act,       //DownstreamEnteringTLRed_deact,
+                       DownstreamEnteringTLRedGreen_act,  //DownstreamEnteringTLRedGreen_deact,
+                       DownstreamEnteringTLGreen_act,     //DownstreamEnteringTLGreen_deact,
+                       DownstreamLeavingTLRed_act,        //DownstreamLeavingTLRed_deact,
+                       DownstreamLeavingTLGreen_act,      //DownstreamLeavingTLGreen_deact,
+                       UpstreamGateOpen_act,              //UpstreamGateOpen_deact,
+                       UpstreamGateClose_act,             //UpstreamGateClose_deact,
+                       UpstreamGateStop_act,              //UpstreamGateStop_deact,
+                       UpstreamPaddleOpen_act,            //UpstreamPaddleOpen_deact,
+                       UpstreamPaddleClose_act,           //UpstreamPaddleClose_deact,
+                       UpstreamPaddleStop_act,            //UpstreamPaddleStop_deact,
+                       UpstreamEnteringTLRedRed_act,      //UpstreamEnteringTLRedRed_deact,
+                       UpstreamEnteringTLRed_act,         //UpstreamEnteringTLRed_deact,
+                       UpstreamEnteringTLRedGreen_act,    //UpstreamEnteringTLRedGreen_deact,
+                       UpstreamEnteringTLGreen_act,       //UpstreamEnteringTLGreen_deact,
+                       UpstreamLeavingTLRed_act,          //UpstreamLeavingTLRed_deact,
+                       UpstreamLeavingTLGreen_act;
+        uncontrollable Deactivate,
+                       DownstreamGateOpen_act,            //DownstreamGateOpen_deact,
+                       DownstreamGateClose_act,           //DownstreamGateClose_deact,
+                       DownstreamGateStop_act,            //DownstreamGateStop_deact,
+                       DownstreamPaddleOpen_act,          //DownstreamPaddleOpen_deact,
+                       DownstreamPaddleClose_act,         //DownstreamPaddleClose_deact,
+                       DownstreamPaddleStop_act,          //DownstreamPaddleStop_deact,
+                       DownstreamEnteringTLRedRed_act,    //DownstreamEnteringTLRedRed_deact,
+                       DownstreamEnteringTLRed_act,       //DownstreamEnteringTLRed_deact,
+                       DownstreamEnteringTLRedGreen_act,  //DownstreamEnteringTLRedGreen_deact,
+                       DownstreamEnteringTLGreen_act,     //DownstreamEnteringTLGreen_deact,
+                       DownstreamLeavingTLRed_act,        //DownstreamLeavingTLRed_deact,
+                       DownstreamLeavingTLGreen_act,      //DownstreamLeavingTLGreen_deact,
+                       UpstreamGateOpen_act,              //UpstreamGateOpen_deact,
+                       UpstreamGateClose_act,             //UpstreamGateClose_deact,
+                       UpstreamGateStop_act,              //UpstreamGateStop_deact,
+                       UpstreamPaddleOpen_act,            //UpstreamPaddleOpen_deact,
+                       UpstreamPaddleClose_act,           //UpstreamPaddleClose_deact,
+                       UpstreamPaddleStop_act,            //UpstreamPaddleStop_deact,
+                       UpstreamEnteringTLRedRed_act,      //UpstreamEnteringTLRedRed_deact,
+                       UpstreamEnteringTLRed_act,         //UpstreamEnteringTLRed_deact,
+                       UpstreamEnteringTLRedGreen_act,    //UpstreamEnteringTLRedGreen_deact,
+                       UpstreamEnteringTLGreen_act,       //UpstreamEnteringTLGreen_deact,
+                       UpstreamLeavingTLRed_act,          //UpstreamLeavingTLRed_deact,
+                       UpstreamLeavingTLGreen_act;        //UpstreamLeavingTLGreen_deact;
+        location NoCommand:
+            initial; marked;
+            edge DownstreamGateOpen_act            goto DownstreamGateOpen;
+            edge DownstreamGateClose_act           goto DownstreamGateClose;
+            edge DownstreamGateStop_act            goto DownstreamGateStop;
+            edge DownstreamPaddleOpen_act          goto DownstreamPaddleOpen;
+            edge DownstreamPaddleClose_act         goto DownstreamPaddleClose;
+            edge DownstreamPaddleStop_act          goto DownstreamPaddleStop;
+            edge DownstreamEnteringTLRedRed_act    goto DownstreamEnteringTLRedRed;
+            edge DownstreamEnteringTLRed_act       goto DownstreamEnteringTLRed;
+            edge DownstreamEnteringTLRedGreen_act  goto DownstreamEnteringTLRedGreen;
+            edge DownstreamEnteringTLGreen_act     goto DownstreamEnteringTLGreen;
+            edge DownstreamLeavingTLRed_act        goto DownstreamLeavingTLRed;
+            edge DownstreamLeavingTLGreen_act      goto DownstreamLeavingTLGreen;
+            edge UpstreamGateOpen_act              goto UpstreamGateOpen;
+            edge UpstreamGateClose_act             goto UpstreamGateClose;
+            edge UpstreamGateStop_act              goto UpstreamGateStop;
+            edge UpstreamPaddleOpen_act            goto UpstreamPaddleOpen;
+            edge UpstreamPaddleClose_act           goto UpstreamPaddleClose;
+            edge UpstreamPaddleStop_act            goto UpstreamPaddleStop;
+            edge UpstreamEnteringTLRedRed_act      goto UpstreamEnteringTLRedRed;
+            edge UpstreamEnteringTLRed_act         goto UpstreamEnteringTLRed;
+            edge UpstreamEnteringTLRedGreen_act    goto UpstreamEnteringTLRedGreen;
+            edge UpstreamEnteringTLGreen_act       goto UpstreamEnteringTLGreen;
+            edge UpstreamLeavingTLRed_act          goto UpstreamLeavingTLRed;
+            edge UpstreamLeavingTLGreen_act        goto UpstreamLeavingTLGreen;
+        location DownstreamGateOpen:
+            edge Deactivate            goto NoCommand;
+        location DownstreamGateClose:
+            edge Deactivate            goto NoCommand;
+        location DownstreamGateStop:
+            edge Deactivate            goto NoCommand;
+        location DownstreamPaddleOpen:
+            edge Deactivate            goto NoCommand;
+        location DownstreamPaddleClose:
+            edge Deactivate            goto NoCommand;
+        location DownstreamPaddleStop:
+            edge Deactivate            goto NoCommand;
+        location DownstreamEnteringTLRedRed:
+            edge Deactivate            goto NoCommand;
+        location DownstreamEnteringTLRed:
+            edge Deactivate            goto NoCommand;
+        location DownstreamEnteringTLRedGreen:
+            edge Deactivate            goto NoCommand;
+        location DownstreamEnteringTLGreen:
+            edge Deactivate            goto NoCommand;
+        location DownstreamLeavingTLRed:
+            edge Deactivate            goto NoCommand;
+        location DownstreamLeavingTLGreen:
+            edge Deactivate            goto NoCommand;
+        location UpstreamGateOpen:
+            edge Deactivate            goto NoCommand;
+        location UpstreamGateClose:
+            edge Deactivate            goto NoCommand;
+        location UpstreamGateStop:
+            edge Deactivate            goto NoCommand;
+        location UpstreamPaddleOpen:
+            edge Deactivate            goto NoCommand;
+        location UpstreamPaddleClose:
+            edge Deactivate            goto NoCommand;
+        location UpstreamPaddleStop:
+            edge Deactivate            goto NoCommand;
+        location UpstreamEnteringTLRedRed:
+            edge Deactivate            goto NoCommand;
+        location UpstreamEnteringTLRed:
+            edge Deactivate            goto NoCommand;
+        location UpstreamEnteringTLRedGreen:
+            edge Deactivate            goto NoCommand;
+        location UpstreamEnteringTLGreen:
+            edge Deactivate            goto NoCommand;
+        location UpstreamLeavingTLRed:
+            edge Deactivate            goto NoCommand;
+        location UpstreamLeavingTLGreen:
+            edge Deactivate            goto NoCommand;
+    end
+end
+
+group Barrier:
+    EmergencyStop : Command();
+
+    plant Commands:
+        monitor        BarrierOpen_act,
+                       BarrierClose_act,
+                       BarrierStop_act,
+                       DownstreamTLRed_act,
+                       DownstreamTLGreen_act,
+                       UpstreamTLRed_act,
+                       UpstreamTLGreen_act;
+        uncontrollable Deactivate,
+                       BarrierOpen_act,
+                       BarrierClose_act,
+                       BarrierStop_act,
+                       DownstreamTLRed_act,
+                       DownstreamTLGreen_act,
+                       UpstreamTLRed_act,
+                       UpstreamTLGreen_act;
+        location NoCommand:
+            initial; marked;
+            edge BarrierOpen_act       goto BarrierOpen;
+            edge BarrierClose_act      goto BarrierClose;
+            edge BarrierStop_act       goto BarrierStop;
+            edge DownstreamTLRed_act   goto DownstreamTLRed;
+            edge DownstreamTLGreen_act goto DownstreamTLGreen;
+            edge UpstreamTLRed_act     goto UpstreamTLRed;
+            edge UpstreamTLGreen_act   goto UpstreamTLGreen;
+        location BarrierOpen:
+            edge Deactivate    goto NoCommand;
+        location BarrierClose:
+            edge Deactivate    goto NoCommand;
+        location BarrierStop:
+            edge Deactivate    goto NoCommand;
+        location DownstreamTLRed:
+            edge Deactivate    goto NoCommand;
+        location DownstreamTLGreen:
+            edge Deactivate    goto NoCommand;
+        location UpstreamTLRed:
+            edge Deactivate    goto NoCommand;
+        location UpstreamTLGreen:
+            edge Deactivate    goto NoCommand;
+    end
+end

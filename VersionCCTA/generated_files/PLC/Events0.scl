@@ -1,0 +1,2708 @@
+FUNCTION "Events0": VOID
+VAR_IN_OUT
+    progress: BOOL;
+END_VAR
+VAR_TEMP
+    state1: STATE;
+    b1: BOOL;
+    b2: BOOL;
+END_VAR
+
+
+// Event "Barrier_Barrier_Actuator_c_close".
+IF NOT progress THEN
+    b1 := ("DB".state0.dvar_M_sup_Barrier_Barrier_Actuator) = (elit_Rest);
+    b1 := b1 AND (("DB".state0.dvar_M_sup_Barrier_Barrier_Sensor) <> (elit_Closed));
+    b1 := b1 AND (("DB".state0.dvar_M_sup_Barrier_Downstream_TLs_East_Actuator) = (elit_Red));
+    b1 := b1 AND (("DB".state0.dvar_M_sup_Barrier_Downstream_TLs_East_SensorR) = (elit_On));
+    b1 := b1 AND (("DB".state0.dvar_M_sup_Barrier_Downstream_TLs_East_SensorG) = (elit_Off));
+    b1 := b1 AND (("DB".state0.dvar_M_sup_Barrier_Downstream_TLs_West_Actuator) = (elit_Red));
+    b1 := b1 AND (("DB".state0.dvar_M_sup_Barrier_Downstream_TLs_West_SensorR) = (elit_On));
+    b1 := b1 AND (("DB".state0.dvar_M_sup_Barrier_Downstream_TLs_West_SensorG) = (elit_Off));
+    b1 := b1 AND (("DB".state0.dvar_M_sup_Barrier_Upstream_TLs_East_Actuator) = (elit_Red));
+    b1 := b1 AND (("DB".state0.dvar_M_sup_Barrier_Upstream_TLs_East_SensorR) = (elit_On));
+    b1 := b1 AND (("DB".state0.dvar_M_sup_Barrier_Upstream_TLs_East_SensorG) = (elit_Off));
+    b1 := b1 AND (("DB".state0.dvar_M_sup_Barrier_Upstream_TLs_West_Actuator) = (elit_Red));
+    b1 := b1 AND (("DB".state0.dvar_M_sup_Barrier_Upstream_TLs_West_SensorR) = (elit_On));
+    b1 := b1 AND (("DB".state0.dvar_M_sup_Barrier_Upstream_TLs_West_SensorG) = (elit_Off));
+    b1 := b1 AND (("DB".state0.dvar_M_sup_Barrier_Commands) = (elit_BarrierClose));
+    IF b1 THEN
+        progress := TRUE;
+        state1 := "DB".state0;
+
+        state1.dvar_M_Barrier_HW_Barrier_BVH_East_Q_Close := TRUE;
+        state1.dvar_M_sup_Barrier_Barrier_Actuator := elit_Closing;
+
+        "DB".state0 := state1;
+    END_IF;
+END_IF;
+
+// Event "Barrier_Barrier_Actuator_c_emergencyStop".
+IF NOT progress THEN
+    b2 := ("DB".state0.dvar_M_sup_Barrier_Barrier_Actuator) = (elit_Opening);
+    b2 := b2 OR (("DB".state0.dvar_M_sup_Barrier_Barrier_Actuator) = (elit_Closing));
+    b1 := b2;
+    IF b1 THEN
+        b2 := ("DB".state0.dvar_M_sup_Barrier_EmergencyStop) = (elit_Active);
+        b2 := b2 OR (("DB".state0.dvar_M_sup_Barrier_Commands) = (elit_BarrierStop));
+        b1 := b1 AND (b2);
+    END_IF;
+    IF b1 THEN
+        progress := TRUE;
+        state1 := "DB".state0;
+
+        state1.dvar_M_Barrier_HW_Barrier_BVH_East_Q_Close := FALSE;
+        state1.dvar_M_Barrier_HW_Barrier_BVH_East_Q_Open := FALSE;
+        IF (("DB".state0.dvar_M_sup_Barrier_Barrier_Actuator) = (elit_Opening)) THEN
+            state1.dvar_M_sup_Barrier_Barrier_Actuator := elit_Rest;
+        ELSIF (("DB".state0.dvar_M_sup_Barrier_Barrier_Actuator) = (elit_Closing)) THEN
+            state1.dvar_M_sup_Barrier_Barrier_Actuator := elit_Rest;
+        END_IF;
+
+        "DB".state0 := state1;
+    END_IF;
+END_IF;
+
+// Event "Barrier_Barrier_Actuator_c_endStopClosing".
+IF NOT progress THEN
+    b1 := ("DB".state0.dvar_M_sup_Barrier_Barrier_Actuator) = (elit_Closing);
+    b1 := b1 AND (("DB".state0.dvar_M_sup_Barrier_Barrier_Sensor) = (elit_Closed));
+    IF b1 THEN
+        progress := TRUE;
+        state1 := "DB".state0;
+
+        state1.dvar_M_Barrier_HW_Barrier_BVH_East_Q_Close := FALSE;
+        state1.dvar_M_sup_Barrier_Barrier_Actuator := elit_Rest;
+
+        "DB".state0 := state1;
+    END_IF;
+END_IF;
+
+// Event "Barrier_Barrier_Actuator_c_endStopOpening".
+IF NOT progress THEN
+    b1 := ("DB".state0.dvar_M_sup_Barrier_Barrier_Actuator) = (elit_Opening);
+    b1 := b1 AND (("DB".state0.dvar_M_sup_Barrier_Barrier_Sensor) = (elit_Open));
+    IF b1 THEN
+        progress := TRUE;
+        state1 := "DB".state0;
+
+        state1.dvar_M_Barrier_HW_Barrier_BVH_East_Q_Open := FALSE;
+        state1.dvar_M_sup_Barrier_Barrier_Actuator := elit_Rest;
+
+        "DB".state0 := state1;
+    END_IF;
+END_IF;
+
+// Event "Barrier_Barrier_Actuator_c_open".
+IF NOT progress THEN
+    b1 := ("DB".state0.dvar_M_sup_Barrier_Barrier_Actuator) = (elit_Rest);
+    b1 := b1 AND (("DB".state0.dvar_M_sup_Barrier_Barrier_Sensor) <> (elit_Open));
+    b1 := b1 AND (("DB".state0.dvar_M_sup_Barrier_Commands) = (elit_BarrierOpen));
+    IF b1 THEN
+        progress := TRUE;
+        state1 := "DB".state0;
+
+        state1.dvar_M_Barrier_HW_Barrier_BVH_East_Q_Open := TRUE;
+        state1.dvar_M_sup_Barrier_Barrier_Actuator := elit_Opening;
+
+        "DB".state0 := state1;
+    END_IF;
+END_IF;
+
+// Event "Barrier_Barrier_Sensor_u_closed_off".
+IF NOT progress THEN
+    b1 := NOT(ivar_M_Barrier_HW_Barrier_BVH_East_Closed);
+    b1 := b1 AND (("DB".state0.dvar_M_sup_Barrier_Barrier_Actuator) = (elit_Opening));
+    b1 := b1 AND (("DB".state0.dvar_M_sup_Barrier_Barrier_Sensor) = (elit_Closed));
+    IF b1 THEN
+        progress := TRUE;
+        state1 := "DB".state0;
+
+        state1.dvar_M_sup_Barrier_Barrier_Sensor := elit_Intermediate;
+
+        "DB".state0 := state1;
+    END_IF;
+END_IF;
+
+// Event "Barrier_Barrier_Sensor_u_closed_on".
+IF NOT progress THEN
+    b1 := ivar_M_Barrier_HW_Barrier_BVH_East_Closed;
+    b1 := b1 AND (("DB".state0.dvar_M_sup_Barrier_Barrier_Actuator) = (elit_Closing));
+    b1 := b1 AND (("DB".state0.dvar_M_sup_Barrier_Barrier_Sensor) = (elit_Intermediate));
+    IF b1 THEN
+        progress := TRUE;
+        state1 := "DB".state0;
+
+        state1.dvar_M_sup_Barrier_Barrier_Sensor := elit_Closed;
+
+        "DB".state0 := state1;
+    END_IF;
+END_IF;
+
+// Event "Barrier_Barrier_Sensor_u_open_off".
+IF NOT progress THEN
+    b1 := NOT(ivar_M_Barrier_HW_Barrier_BVH_East_Open);
+    b1 := b1 AND (("DB".state0.dvar_M_sup_Barrier_Barrier_Actuator) = (elit_Closing));
+    b1 := b1 AND (("DB".state0.dvar_M_sup_Barrier_Barrier_Sensor) = (elit_Open));
+    IF b1 THEN
+        progress := TRUE;
+        state1 := "DB".state0;
+
+        state1.dvar_M_sup_Barrier_Barrier_Sensor := elit_Intermediate;
+
+        "DB".state0 := state1;
+    END_IF;
+END_IF;
+
+// Event "Barrier_Barrier_Sensor_u_open_on".
+IF NOT progress THEN
+    b1 := ivar_M_Barrier_HW_Barrier_BVH_East_Open;
+    b1 := b1 AND (("DB".state0.dvar_M_sup_Barrier_Barrier_Actuator) = (elit_Opening));
+    b1 := b1 AND (("DB".state0.dvar_M_sup_Barrier_Barrier_Sensor) = (elit_Intermediate));
+    IF b1 THEN
+        progress := TRUE;
+        state1 := "DB".state0;
+
+        state1.dvar_M_sup_Barrier_Barrier_Sensor := elit_Open;
+
+        "DB".state0 := state1;
+    END_IF;
+END_IF;
+
+// Event "Barrier_Commands_BarrierClose_act".
+IF NOT progress THEN
+    b1 := ("DB".state0.dvar_M_Barrier_SCADA) = (elit_Inactive);
+    b1 := b1 AND ("SCADA".dvar_M_Barrier_SCADA_BarrierClose);
+    IF b1 THEN
+        progress := TRUE;
+        state1 := "DB".state0;
+
+        state1.dvar_M_Barrier_SCADA := elit_Active;
+        IF (("DB".state0.dvar_M_sup_Barrier_Commands) = (elit_NoCommand)) THEN
+            state1.dvar_M_sup_Barrier_Commands := elit_BarrierClose;
+        ELSIF (("DB".state0.dvar_M_sup_Barrier_Commands) = (elit_BarrierOpen)) THEN
+            state1.dvar_M_sup_Barrier_Commands := elit_BarrierOpen;
+        ELSIF (("DB".state0.dvar_M_sup_Barrier_Commands) = (elit_BarrierClose)) THEN
+            state1.dvar_M_sup_Barrier_Commands := elit_BarrierClose;
+        ELSIF (("DB".state0.dvar_M_sup_Barrier_Commands) = (elit_BarrierStop)) THEN
+            state1.dvar_M_sup_Barrier_Commands := elit_BarrierStop;
+        ELSIF (("DB".state0.dvar_M_sup_Barrier_Commands) = (elit_DownstreamTLRed)) THEN
+            state1.dvar_M_sup_Barrier_Commands := elit_DownstreamTLRed;
+        ELSIF (("DB".state0.dvar_M_sup_Barrier_Commands) = (elit_DownstreamTLGreen)) THEN
+            state1.dvar_M_sup_Barrier_Commands := elit_DownstreamTLGreen;
+        ELSIF (("DB".state0.dvar_M_sup_Barrier_Commands) = (elit_UpstreamTLRed)) THEN
+            state1.dvar_M_sup_Barrier_Commands := elit_UpstreamTLRed;
+        ELSIF (("DB".state0.dvar_M_sup_Barrier_Commands) = (elit_UpstreamTLGreen)) THEN
+            state1.dvar_M_sup_Barrier_Commands := elit_UpstreamTLGreen;
+        END_IF;
+
+        "DB".state0 := state1;
+    END_IF;
+END_IF;
+
+// Event "Barrier_Commands_BarrierOpen_act".
+IF NOT progress THEN
+    b1 := ("DB".state0.dvar_M_Barrier_SCADA) = (elit_Inactive);
+    b1 := b1 AND ("SCADA".dvar_M_Barrier_SCADA_BarrierOpen);
+    IF b1 THEN
+        progress := TRUE;
+        state1 := "DB".state0;
+
+        state1.dvar_M_Barrier_SCADA := elit_Active;
+        IF (("DB".state0.dvar_M_sup_Barrier_Commands) = (elit_NoCommand)) THEN
+            state1.dvar_M_sup_Barrier_Commands := elit_BarrierOpen;
+        ELSIF (("DB".state0.dvar_M_sup_Barrier_Commands) = (elit_BarrierOpen)) THEN
+            state1.dvar_M_sup_Barrier_Commands := elit_BarrierOpen;
+        ELSIF (("DB".state0.dvar_M_sup_Barrier_Commands) = (elit_BarrierClose)) THEN
+            state1.dvar_M_sup_Barrier_Commands := elit_BarrierClose;
+        ELSIF (("DB".state0.dvar_M_sup_Barrier_Commands) = (elit_BarrierStop)) THEN
+            state1.dvar_M_sup_Barrier_Commands := elit_BarrierStop;
+        ELSIF (("DB".state0.dvar_M_sup_Barrier_Commands) = (elit_DownstreamTLRed)) THEN
+            state1.dvar_M_sup_Barrier_Commands := elit_DownstreamTLRed;
+        ELSIF (("DB".state0.dvar_M_sup_Barrier_Commands) = (elit_DownstreamTLGreen)) THEN
+            state1.dvar_M_sup_Barrier_Commands := elit_DownstreamTLGreen;
+        ELSIF (("DB".state0.dvar_M_sup_Barrier_Commands) = (elit_UpstreamTLRed)) THEN
+            state1.dvar_M_sup_Barrier_Commands := elit_UpstreamTLRed;
+        ELSIF (("DB".state0.dvar_M_sup_Barrier_Commands) = (elit_UpstreamTLGreen)) THEN
+            state1.dvar_M_sup_Barrier_Commands := elit_UpstreamTLGreen;
+        END_IF;
+
+        "DB".state0 := state1;
+    END_IF;
+END_IF;
+
+// Event "Barrier_Commands_BarrierStop_act".
+IF NOT progress THEN
+    b1 := ("DB".state0.dvar_M_Barrier_SCADA) = (elit_Inactive);
+    b1 := b1 AND ("SCADA".dvar_M_Barrier_SCADA_BarrierStop);
+    IF b1 THEN
+        progress := TRUE;
+        state1 := "DB".state0;
+
+        state1.dvar_M_Barrier_SCADA := elit_Active;
+        IF (("DB".state0.dvar_M_sup_Barrier_Commands) = (elit_NoCommand)) THEN
+            state1.dvar_M_sup_Barrier_Commands := elit_BarrierStop;
+        ELSIF (("DB".state0.dvar_M_sup_Barrier_Commands) = (elit_BarrierOpen)) THEN
+            state1.dvar_M_sup_Barrier_Commands := elit_BarrierOpen;
+        ELSIF (("DB".state0.dvar_M_sup_Barrier_Commands) = (elit_BarrierClose)) THEN
+            state1.dvar_M_sup_Barrier_Commands := elit_BarrierClose;
+        ELSIF (("DB".state0.dvar_M_sup_Barrier_Commands) = (elit_BarrierStop)) THEN
+            state1.dvar_M_sup_Barrier_Commands := elit_BarrierStop;
+        ELSIF (("DB".state0.dvar_M_sup_Barrier_Commands) = (elit_DownstreamTLRed)) THEN
+            state1.dvar_M_sup_Barrier_Commands := elit_DownstreamTLRed;
+        ELSIF (("DB".state0.dvar_M_sup_Barrier_Commands) = (elit_DownstreamTLGreen)) THEN
+            state1.dvar_M_sup_Barrier_Commands := elit_DownstreamTLGreen;
+        ELSIF (("DB".state0.dvar_M_sup_Barrier_Commands) = (elit_UpstreamTLRed)) THEN
+            state1.dvar_M_sup_Barrier_Commands := elit_UpstreamTLRed;
+        ELSIF (("DB".state0.dvar_M_sup_Barrier_Commands) = (elit_UpstreamTLGreen)) THEN
+            state1.dvar_M_sup_Barrier_Commands := elit_UpstreamTLGreen;
+        END_IF;
+
+        "DB".state0 := state1;
+    END_IF;
+END_IF;
+
+// Event "Barrier_Commands_Deactivate".
+IF NOT progress THEN
+    b1 := ("DB".state0.dvar_M_Barrier_SCADA) = (elit_Active);
+    b1 := b1 AND (NOT("SCADA".dvar_M_Barrier_SCADA_BarrierOpen));
+    b1 := b1 AND (NOT("SCADA".dvar_M_Barrier_SCADA_BarrierClose));
+    b1 := b1 AND (NOT("SCADA".dvar_M_Barrier_SCADA_BarrierStop));
+    b1 := b1 AND (NOT("SCADA".dvar_M_Barrier_SCADA_DownstreamTLRed));
+    b1 := b1 AND (NOT("SCADA".dvar_M_Barrier_SCADA_DownstreamTLGreen));
+    b1 := b1 AND (NOT("SCADA".dvar_M_Barrier_SCADA_UpstreamTLRed));
+    b1 := b1 AND (NOT("SCADA".dvar_M_Barrier_SCADA_UpstreamTLGreen));
+    IF b1 THEN
+        progress := TRUE;
+        state1 := "DB".state0;
+
+        state1.dvar_M_Barrier_SCADA := elit_Inactive;
+        IF (("DB".state0.dvar_M_sup_Barrier_Commands) = (elit_NoCommand)) THEN
+            state1.dvar_M_sup_Barrier_Commands := elit_NoCommand;
+        ELSIF (("DB".state0.dvar_M_sup_Barrier_Commands) = (elit_BarrierOpen)) THEN
+            state1.dvar_M_sup_Barrier_Commands := elit_NoCommand;
+        ELSIF (("DB".state0.dvar_M_sup_Barrier_Commands) = (elit_BarrierClose)) THEN
+            state1.dvar_M_sup_Barrier_Commands := elit_NoCommand;
+        ELSIF (("DB".state0.dvar_M_sup_Barrier_Commands) = (elit_BarrierStop)) THEN
+            state1.dvar_M_sup_Barrier_Commands := elit_NoCommand;
+        ELSIF (("DB".state0.dvar_M_sup_Barrier_Commands) = (elit_DownstreamTLRed)) THEN
+            state1.dvar_M_sup_Barrier_Commands := elit_NoCommand;
+        ELSIF (("DB".state0.dvar_M_sup_Barrier_Commands) = (elit_DownstreamTLGreen)) THEN
+            state1.dvar_M_sup_Barrier_Commands := elit_NoCommand;
+        ELSIF (("DB".state0.dvar_M_sup_Barrier_Commands) = (elit_UpstreamTLRed)) THEN
+            state1.dvar_M_sup_Barrier_Commands := elit_NoCommand;
+        ELSIF (("DB".state0.dvar_M_sup_Barrier_Commands) = (elit_UpstreamTLGreen)) THEN
+            state1.dvar_M_sup_Barrier_Commands := elit_NoCommand;
+        END_IF;
+
+        "DB".state0 := state1;
+    END_IF;
+END_IF;
+
+// Event "Barrier_Commands_DownstreamTLGreen_act".
+IF NOT progress THEN
+    b1 := ("DB".state0.dvar_M_Barrier_SCADA) = (elit_Inactive);
+    b1 := b1 AND ("SCADA".dvar_M_Barrier_SCADA_DownstreamTLGreen);
+    IF b1 THEN
+        progress := TRUE;
+        state1 := "DB".state0;
+
+        state1.dvar_M_Barrier_SCADA := elit_Active;
+        IF (("DB".state0.dvar_M_sup_Barrier_Commands) = (elit_NoCommand)) THEN
+            state1.dvar_M_sup_Barrier_Commands := elit_DownstreamTLGreen;
+        ELSIF (("DB".state0.dvar_M_sup_Barrier_Commands) = (elit_BarrierOpen)) THEN
+            state1.dvar_M_sup_Barrier_Commands := elit_BarrierOpen;
+        ELSIF (("DB".state0.dvar_M_sup_Barrier_Commands) = (elit_BarrierClose)) THEN
+            state1.dvar_M_sup_Barrier_Commands := elit_BarrierClose;
+        ELSIF (("DB".state0.dvar_M_sup_Barrier_Commands) = (elit_BarrierStop)) THEN
+            state1.dvar_M_sup_Barrier_Commands := elit_BarrierStop;
+        ELSIF (("DB".state0.dvar_M_sup_Barrier_Commands) = (elit_DownstreamTLRed)) THEN
+            state1.dvar_M_sup_Barrier_Commands := elit_DownstreamTLRed;
+        ELSIF (("DB".state0.dvar_M_sup_Barrier_Commands) = (elit_DownstreamTLGreen)) THEN
+            state1.dvar_M_sup_Barrier_Commands := elit_DownstreamTLGreen;
+        ELSIF (("DB".state0.dvar_M_sup_Barrier_Commands) = (elit_UpstreamTLRed)) THEN
+            state1.dvar_M_sup_Barrier_Commands := elit_UpstreamTLRed;
+        ELSIF (("DB".state0.dvar_M_sup_Barrier_Commands) = (elit_UpstreamTLGreen)) THEN
+            state1.dvar_M_sup_Barrier_Commands := elit_UpstreamTLGreen;
+        END_IF;
+
+        "DB".state0 := state1;
+    END_IF;
+END_IF;
+
+// Event "Barrier_Commands_DownstreamTLRed_act".
+IF NOT progress THEN
+    b1 := ("DB".state0.dvar_M_Barrier_SCADA) = (elit_Inactive);
+    b1 := b1 AND ("SCADA".dvar_M_Barrier_SCADA_DownstreamTLRed);
+    IF b1 THEN
+        progress := TRUE;
+        state1 := "DB".state0;
+
+        state1.dvar_M_Barrier_SCADA := elit_Active;
+        IF (("DB".state0.dvar_M_sup_Barrier_Commands) = (elit_NoCommand)) THEN
+            state1.dvar_M_sup_Barrier_Commands := elit_DownstreamTLRed;
+        ELSIF (("DB".state0.dvar_M_sup_Barrier_Commands) = (elit_BarrierOpen)) THEN
+            state1.dvar_M_sup_Barrier_Commands := elit_BarrierOpen;
+        ELSIF (("DB".state0.dvar_M_sup_Barrier_Commands) = (elit_BarrierClose)) THEN
+            state1.dvar_M_sup_Barrier_Commands := elit_BarrierClose;
+        ELSIF (("DB".state0.dvar_M_sup_Barrier_Commands) = (elit_BarrierStop)) THEN
+            state1.dvar_M_sup_Barrier_Commands := elit_BarrierStop;
+        ELSIF (("DB".state0.dvar_M_sup_Barrier_Commands) = (elit_DownstreamTLRed)) THEN
+            state1.dvar_M_sup_Barrier_Commands := elit_DownstreamTLRed;
+        ELSIF (("DB".state0.dvar_M_sup_Barrier_Commands) = (elit_DownstreamTLGreen)) THEN
+            state1.dvar_M_sup_Barrier_Commands := elit_DownstreamTLGreen;
+        ELSIF (("DB".state0.dvar_M_sup_Barrier_Commands) = (elit_UpstreamTLRed)) THEN
+            state1.dvar_M_sup_Barrier_Commands := elit_UpstreamTLRed;
+        ELSIF (("DB".state0.dvar_M_sup_Barrier_Commands) = (elit_UpstreamTLGreen)) THEN
+            state1.dvar_M_sup_Barrier_Commands := elit_UpstreamTLGreen;
+        END_IF;
+
+        "DB".state0 := state1;
+    END_IF;
+END_IF;
+
+// Event "Barrier_Commands_UpstreamTLGreen_act".
+IF NOT progress THEN
+    b1 := ("DB".state0.dvar_M_Barrier_SCADA) = (elit_Inactive);
+    b1 := b1 AND ("SCADA".dvar_M_Barrier_SCADA_UpstreamTLGreen);
+    IF b1 THEN
+        progress := TRUE;
+        state1 := "DB".state0;
+
+        state1.dvar_M_Barrier_SCADA := elit_Active;
+        IF (("DB".state0.dvar_M_sup_Barrier_Commands) = (elit_NoCommand)) THEN
+            state1.dvar_M_sup_Barrier_Commands := elit_UpstreamTLGreen;
+        ELSIF (("DB".state0.dvar_M_sup_Barrier_Commands) = (elit_BarrierOpen)) THEN
+            state1.dvar_M_sup_Barrier_Commands := elit_BarrierOpen;
+        ELSIF (("DB".state0.dvar_M_sup_Barrier_Commands) = (elit_BarrierClose)) THEN
+            state1.dvar_M_sup_Barrier_Commands := elit_BarrierClose;
+        ELSIF (("DB".state0.dvar_M_sup_Barrier_Commands) = (elit_BarrierStop)) THEN
+            state1.dvar_M_sup_Barrier_Commands := elit_BarrierStop;
+        ELSIF (("DB".state0.dvar_M_sup_Barrier_Commands) = (elit_DownstreamTLRed)) THEN
+            state1.dvar_M_sup_Barrier_Commands := elit_DownstreamTLRed;
+        ELSIF (("DB".state0.dvar_M_sup_Barrier_Commands) = (elit_DownstreamTLGreen)) THEN
+            state1.dvar_M_sup_Barrier_Commands := elit_DownstreamTLGreen;
+        ELSIF (("DB".state0.dvar_M_sup_Barrier_Commands) = (elit_UpstreamTLRed)) THEN
+            state1.dvar_M_sup_Barrier_Commands := elit_UpstreamTLRed;
+        ELSIF (("DB".state0.dvar_M_sup_Barrier_Commands) = (elit_UpstreamTLGreen)) THEN
+            state1.dvar_M_sup_Barrier_Commands := elit_UpstreamTLGreen;
+        END_IF;
+
+        "DB".state0 := state1;
+    END_IF;
+END_IF;
+
+// Event "Barrier_Commands_UpstreamTLRed_act".
+IF NOT progress THEN
+    b1 := ("DB".state0.dvar_M_Barrier_SCADA) = (elit_Inactive);
+    b1 := b1 AND ("SCADA".dvar_M_Barrier_SCADA_UpstreamTLRed);
+    IF b1 THEN
+        progress := TRUE;
+        state1 := "DB".state0;
+
+        state1.dvar_M_Barrier_SCADA := elit_Active;
+        IF (("DB".state0.dvar_M_sup_Barrier_Commands) = (elit_NoCommand)) THEN
+            state1.dvar_M_sup_Barrier_Commands := elit_UpstreamTLRed;
+        ELSIF (("DB".state0.dvar_M_sup_Barrier_Commands) = (elit_BarrierOpen)) THEN
+            state1.dvar_M_sup_Barrier_Commands := elit_BarrierOpen;
+        ELSIF (("DB".state0.dvar_M_sup_Barrier_Commands) = (elit_BarrierClose)) THEN
+            state1.dvar_M_sup_Barrier_Commands := elit_BarrierClose;
+        ELSIF (("DB".state0.dvar_M_sup_Barrier_Commands) = (elit_BarrierStop)) THEN
+            state1.dvar_M_sup_Barrier_Commands := elit_BarrierStop;
+        ELSIF (("DB".state0.dvar_M_sup_Barrier_Commands) = (elit_DownstreamTLRed)) THEN
+            state1.dvar_M_sup_Barrier_Commands := elit_DownstreamTLRed;
+        ELSIF (("DB".state0.dvar_M_sup_Barrier_Commands) = (elit_DownstreamTLGreen)) THEN
+            state1.dvar_M_sup_Barrier_Commands := elit_DownstreamTLGreen;
+        ELSIF (("DB".state0.dvar_M_sup_Barrier_Commands) = (elit_UpstreamTLRed)) THEN
+            state1.dvar_M_sup_Barrier_Commands := elit_UpstreamTLRed;
+        ELSIF (("DB".state0.dvar_M_sup_Barrier_Commands) = (elit_UpstreamTLGreen)) THEN
+            state1.dvar_M_sup_Barrier_Commands := elit_UpstreamTLGreen;
+        END_IF;
+
+        "DB".state0 := state1;
+    END_IF;
+END_IF;
+
+// Event "Barrier_Downstream_TLs_East_Actuator_c_g".
+IF NOT progress THEN
+    b1 := ("DB".state0.dvar_M_sup_Barrier_Downstream_TLs_East_Actuator) = (elit_Red);
+    b1 := b1 AND (("DB".state0.dvar_M_sup_Barrier_Barrier_Actuator) = (elit_Rest));
+    b1 := b1 AND (("DB".state0.dvar_M_sup_Barrier_Barrier_Sensor) = (elit_Open));
+    b1 := b1 AND (("DB".state0.dvar_M_sup_Barrier_Commands) = (elit_DownstreamTLGreen));
+    IF b1 THEN
+        progress := TRUE;
+        state1 := "DB".state0;
+
+        state1.dvar_M_Barrier_HW_TL_BNH_East_Q_Red := FALSE;
+        state1.dvar_M_Barrier_HW_TL_BNH_East_Q_Green := TRUE;
+        state1.dvar_M_sup_Barrier_Downstream_TLs_East_Actuator := elit_Green;
+
+        "DB".state0 := state1;
+    END_IF;
+END_IF;
+
+// Event "Barrier_Downstream_TLs_East_Actuator_c_r".
+IF NOT progress THEN
+    b1 := ("DB".state0.dvar_M_sup_Barrier_Downstream_TLs_East_Actuator) = (elit_Green);
+    b1 := b1 AND (("DB".state0.dvar_M_sup_Barrier_Commands) = (elit_DownstreamTLRed));
+    IF b1 THEN
+        progress := TRUE;
+        state1 := "DB".state0;
+
+        state1.dvar_M_Barrier_HW_TL_BNH_East_Q_Red := TRUE;
+        state1.dvar_M_Barrier_HW_TL_BNH_East_Q_Green := FALSE;
+        state1.dvar_M_sup_Barrier_Downstream_TLs_East_Actuator := elit_Red;
+
+        "DB".state0 := state1;
+    END_IF;
+END_IF;
+
+// Event "Barrier_Downstream_TLs_East_SensorG_u_off".
+IF NOT progress THEN
+    b1 := NOT(ivar_M_Barrier_HW_TL_BNH_East_Green);
+    b1 := b1 AND (("DB".state0.dvar_M_sup_Barrier_Downstream_TLs_East_Actuator) = (elit_Red));
+    b1 := b1 AND (("DB".state0.dvar_M_sup_Barrier_Downstream_TLs_East_SensorG) = (elit_On));
+    IF b1 THEN
+        progress := TRUE;
+        state1 := "DB".state0;
+
+        state1.dvar_M_sup_Barrier_Downstream_TLs_East_SensorG := elit_Off;
+
+        "DB".state0 := state1;
+    END_IF;
+END_IF;
+
+// Event "Barrier_Downstream_TLs_East_SensorG_u_on".
+IF NOT progress THEN
+    b1 := ivar_M_Barrier_HW_TL_BNH_East_Green;
+    b1 := b1 AND (("DB".state0.dvar_M_sup_Barrier_Downstream_TLs_East_Actuator) <> (elit_Red));
+    b1 := b1 AND (("DB".state0.dvar_M_sup_Barrier_Downstream_TLs_East_SensorG) = (elit_Off));
+    IF b1 THEN
+        progress := TRUE;
+        state1 := "DB".state0;
+
+        state1.dvar_M_sup_Barrier_Downstream_TLs_East_SensorG := elit_On;
+
+        "DB".state0 := state1;
+    END_IF;
+END_IF;
+
+// Event "Barrier_Downstream_TLs_East_SensorR_u_off".
+IF NOT progress THEN
+    b1 := NOT(ivar_M_Barrier_HW_TL_BNH_East_Red);
+    b1 := b1 AND (("DB".state0.dvar_M_sup_Barrier_Downstream_TLs_East_Actuator) = (elit_Green));
+    b1 := b1 AND (("DB".state0.dvar_M_sup_Barrier_Downstream_TLs_East_SensorR) = (elit_On));
+    IF b1 THEN
+        progress := TRUE;
+        state1 := "DB".state0;
+
+        state1.dvar_M_sup_Barrier_Downstream_TLs_East_SensorR := elit_Off;
+
+        "DB".state0 := state1;
+    END_IF;
+END_IF;
+
+// Event "Barrier_Downstream_TLs_East_SensorR_u_on".
+IF NOT progress THEN
+    b1 := ivar_M_Barrier_HW_TL_BNH_East_Red;
+    b1 := b1 AND (("DB".state0.dvar_M_sup_Barrier_Downstream_TLs_East_Actuator) <> (elit_Green));
+    b1 := b1 AND (("DB".state0.dvar_M_sup_Barrier_Downstream_TLs_East_SensorR) = (elit_Off));
+    IF b1 THEN
+        progress := TRUE;
+        state1 := "DB".state0;
+
+        state1.dvar_M_sup_Barrier_Downstream_TLs_East_SensorR := elit_On;
+
+        "DB".state0 := state1;
+    END_IF;
+END_IF;
+
+// Event "Barrier_Downstream_TLs_West_Actuator_c_g".
+IF NOT progress THEN
+    b1 := ("DB".state0.dvar_M_sup_Barrier_Downstream_TLs_West_Actuator) = (elit_Red);
+    b1 := b1 AND (("DB".state0.dvar_M_sup_Barrier_Barrier_Actuator) = (elit_Rest));
+    b1 := b1 AND (("DB".state0.dvar_M_sup_Barrier_Barrier_Sensor) = (elit_Open));
+    b1 := b1 AND (("DB".state0.dvar_M_sup_Barrier_Commands) = (elit_DownstreamTLGreen));
+    IF b1 THEN
+        progress := TRUE;
+        state1 := "DB".state0;
+
+        state1.dvar_M_Barrier_HW_TL_BNH_West_Q_Red := FALSE;
+        state1.dvar_M_Barrier_HW_TL_BNH_West_Q_Green := TRUE;
+        state1.dvar_M_sup_Barrier_Downstream_TLs_West_Actuator := elit_Green;
+
+        "DB".state0 := state1;
+    END_IF;
+END_IF;
+
+// Event "Barrier_Downstream_TLs_West_Actuator_c_r".
+IF NOT progress THEN
+    b1 := ("DB".state0.dvar_M_sup_Barrier_Downstream_TLs_West_Actuator) = (elit_Green);
+    b1 := b1 AND (("DB".state0.dvar_M_sup_Barrier_Commands) = (elit_DownstreamTLRed));
+    IF b1 THEN
+        progress := TRUE;
+        state1 := "DB".state0;
+
+        state1.dvar_M_Barrier_HW_TL_BNH_West_Q_Red := TRUE;
+        state1.dvar_M_Barrier_HW_TL_BNH_West_Q_Green := FALSE;
+        state1.dvar_M_sup_Barrier_Downstream_TLs_West_Actuator := elit_Red;
+
+        "DB".state0 := state1;
+    END_IF;
+END_IF;
+
+// Event "Barrier_Downstream_TLs_West_SensorG_u_off".
+IF NOT progress THEN
+    b1 := NOT(ivar_M_Barrier_HW_TL_BNH_West_Green);
+    b1 := b1 AND (("DB".state0.dvar_M_sup_Barrier_Downstream_TLs_West_Actuator) = (elit_Red));
+    b1 := b1 AND (("DB".state0.dvar_M_sup_Barrier_Downstream_TLs_West_SensorG) = (elit_On));
+    IF b1 THEN
+        progress := TRUE;
+        state1 := "DB".state0;
+
+        state1.dvar_M_sup_Barrier_Downstream_TLs_West_SensorG := elit_Off;
+
+        "DB".state0 := state1;
+    END_IF;
+END_IF;
+
+// Event "Barrier_Downstream_TLs_West_SensorG_u_on".
+IF NOT progress THEN
+    b1 := ivar_M_Barrier_HW_TL_BNH_West_Green;
+    b1 := b1 AND (("DB".state0.dvar_M_sup_Barrier_Downstream_TLs_West_Actuator) <> (elit_Red));
+    b1 := b1 AND (("DB".state0.dvar_M_sup_Barrier_Downstream_TLs_West_SensorG) = (elit_Off));
+    IF b1 THEN
+        progress := TRUE;
+        state1 := "DB".state0;
+
+        state1.dvar_M_sup_Barrier_Downstream_TLs_West_SensorG := elit_On;
+
+        "DB".state0 := state1;
+    END_IF;
+END_IF;
+
+// Event "Barrier_Downstream_TLs_West_SensorR_u_off".
+IF NOT progress THEN
+    b1 := NOT(ivar_M_Barrier_HW_TL_BNH_West_Red);
+    b1 := b1 AND (("DB".state0.dvar_M_sup_Barrier_Downstream_TLs_West_Actuator) = (elit_Green));
+    b1 := b1 AND (("DB".state0.dvar_M_sup_Barrier_Downstream_TLs_West_SensorR) = (elit_On));
+    IF b1 THEN
+        progress := TRUE;
+        state1 := "DB".state0;
+
+        state1.dvar_M_sup_Barrier_Downstream_TLs_West_SensorR := elit_Off;
+
+        "DB".state0 := state1;
+    END_IF;
+END_IF;
+
+// Event "Barrier_Downstream_TLs_West_SensorR_u_on".
+IF NOT progress THEN
+    b1 := ivar_M_Barrier_HW_TL_BNH_West_Red;
+    b1 := b1 AND (("DB".state0.dvar_M_sup_Barrier_Downstream_TLs_West_Actuator) <> (elit_Green));
+    b1 := b1 AND (("DB".state0.dvar_M_sup_Barrier_Downstream_TLs_West_SensorR) = (elit_Off));
+    IF b1 THEN
+        progress := TRUE;
+        state1 := "DB".state0;
+
+        state1.dvar_M_sup_Barrier_Downstream_TLs_West_SensorR := elit_On;
+
+        "DB".state0 := state1;
+    END_IF;
+END_IF;
+
+// Event "Barrier_EmergencyStop_u_activate".
+IF NOT progress THEN
+    b1 := ivar_M_Barrier_HW_EmergencyStop_Active;
+    b1 := b1 AND (("DB".state0.dvar_M_sup_Barrier_EmergencyStop) = (elit_Inactive));
+    IF b1 THEN
+        progress := TRUE;
+        state1 := "DB".state0;
+
+        state1.dvar_M_sup_Barrier_EmergencyStop := elit_Active;
+
+        "DB".state0 := state1;
+    END_IF;
+END_IF;
+
+// Event "Barrier_EmergencyStop_u_deactivate".
+IF NOT progress THEN
+    b1 := NOT(ivar_M_Barrier_HW_EmergencyStop_Active);
+    b1 := b1 AND (("DB".state0.dvar_M_sup_Barrier_EmergencyStop) = (elit_Active));
+    IF b1 THEN
+        progress := TRUE;
+        state1 := "DB".state0;
+
+        state1.dvar_M_sup_Barrier_EmergencyStop := elit_Inactive;
+
+        "DB".state0 := state1;
+    END_IF;
+END_IF;
+
+// Event "Barrier_Upstream_TLs_East_Actuator_c_g".
+IF NOT progress THEN
+    b1 := ("DB".state0.dvar_M_sup_Barrier_Upstream_TLs_East_Actuator) = (elit_Red);
+    b1 := b1 AND (("DB".state0.dvar_M_sup_Barrier_Barrier_Actuator) = (elit_Rest));
+    b1 := b1 AND (("DB".state0.dvar_M_sup_Barrier_Barrier_Sensor) = (elit_Open));
+    b1 := b1 AND (("DB".state0.dvar_M_sup_Barrier_Commands) = (elit_UpstreamTLGreen));
+    IF b1 THEN
+        progress := TRUE;
+        state1 := "DB".state0;
+
+        state1.dvar_M_Barrier_HW_TL_BVH_East_Q_Red := FALSE;
+        state1.dvar_M_Barrier_HW_TL_BVH_East_Q_Green := TRUE;
+        state1.dvar_M_sup_Barrier_Upstream_TLs_East_Actuator := elit_Green;
+
+        "DB".state0 := state1;
+    END_IF;
+END_IF;
+
+// Event "Barrier_Upstream_TLs_East_Actuator_c_r".
+IF NOT progress THEN
+    b1 := ("DB".state0.dvar_M_sup_Barrier_Upstream_TLs_East_Actuator) = (elit_Green);
+    b1 := b1 AND (("DB".state0.dvar_M_sup_Barrier_Commands) = (elit_UpstreamTLRed));
+    IF b1 THEN
+        progress := TRUE;
+        state1 := "DB".state0;
+
+        state1.dvar_M_Barrier_HW_TL_BVH_East_Q_Red := TRUE;
+        state1.dvar_M_Barrier_HW_TL_BVH_East_Q_Green := FALSE;
+        state1.dvar_M_sup_Barrier_Upstream_TLs_East_Actuator := elit_Red;
+
+        "DB".state0 := state1;
+    END_IF;
+END_IF;
+
+// Event "Barrier_Upstream_TLs_East_SensorG_u_off".
+IF NOT progress THEN
+    b1 := NOT(ivar_M_Barrier_HW_TL_BVH_East_Green);
+    b1 := b1 AND (("DB".state0.dvar_M_sup_Barrier_Upstream_TLs_East_Actuator) = (elit_Red));
+    b1 := b1 AND (("DB".state0.dvar_M_sup_Barrier_Upstream_TLs_East_SensorG) = (elit_On));
+    IF b1 THEN
+        progress := TRUE;
+        state1 := "DB".state0;
+
+        state1.dvar_M_sup_Barrier_Upstream_TLs_East_SensorG := elit_Off;
+
+        "DB".state0 := state1;
+    END_IF;
+END_IF;
+
+// Event "Barrier_Upstream_TLs_East_SensorG_u_on".
+IF NOT progress THEN
+    b1 := ivar_M_Barrier_HW_TL_BVH_East_Green;
+    b1 := b1 AND (("DB".state0.dvar_M_sup_Barrier_Upstream_TLs_East_Actuator) <> (elit_Red));
+    b1 := b1 AND (("DB".state0.dvar_M_sup_Barrier_Upstream_TLs_East_SensorG) = (elit_Off));
+    IF b1 THEN
+        progress := TRUE;
+        state1 := "DB".state0;
+
+        state1.dvar_M_sup_Barrier_Upstream_TLs_East_SensorG := elit_On;
+
+        "DB".state0 := state1;
+    END_IF;
+END_IF;
+
+// Event "Barrier_Upstream_TLs_East_SensorR_u_off".
+IF NOT progress THEN
+    b1 := NOT(ivar_M_Barrier_HW_TL_BVH_East_Red);
+    b1 := b1 AND (("DB".state0.dvar_M_sup_Barrier_Upstream_TLs_East_Actuator) = (elit_Green));
+    b1 := b1 AND (("DB".state0.dvar_M_sup_Barrier_Upstream_TLs_East_SensorR) = (elit_On));
+    IF b1 THEN
+        progress := TRUE;
+        state1 := "DB".state0;
+
+        state1.dvar_M_sup_Barrier_Upstream_TLs_East_SensorR := elit_Off;
+
+        "DB".state0 := state1;
+    END_IF;
+END_IF;
+
+// Event "Barrier_Upstream_TLs_East_SensorR_u_on".
+IF NOT progress THEN
+    b1 := ivar_M_Barrier_HW_TL_BVH_East_Red;
+    b1 := b1 AND (("DB".state0.dvar_M_sup_Barrier_Upstream_TLs_East_Actuator) <> (elit_Green));
+    b1 := b1 AND (("DB".state0.dvar_M_sup_Barrier_Upstream_TLs_East_SensorR) = (elit_Off));
+    IF b1 THEN
+        progress := TRUE;
+        state1 := "DB".state0;
+
+        state1.dvar_M_sup_Barrier_Upstream_TLs_East_SensorR := elit_On;
+
+        "DB".state0 := state1;
+    END_IF;
+END_IF;
+
+// Event "Barrier_Upstream_TLs_West_Actuator_c_g".
+IF NOT progress THEN
+    b1 := ("DB".state0.dvar_M_sup_Barrier_Upstream_TLs_West_Actuator) = (elit_Red);
+    b1 := b1 AND (("DB".state0.dvar_M_sup_Barrier_Barrier_Actuator) = (elit_Rest));
+    b1 := b1 AND (("DB".state0.dvar_M_sup_Barrier_Barrier_Sensor) = (elit_Open));
+    b1 := b1 AND (("DB".state0.dvar_M_sup_Barrier_Commands) = (elit_UpstreamTLGreen));
+    IF b1 THEN
+        progress := TRUE;
+        state1 := "DB".state0;
+
+        state1.dvar_M_Barrier_HW_TL_BVH_West_Q_Red := FALSE;
+        state1.dvar_M_Barrier_HW_TL_BVH_West_Q_Green := TRUE;
+        state1.dvar_M_sup_Barrier_Upstream_TLs_West_Actuator := elit_Green;
+
+        "DB".state0 := state1;
+    END_IF;
+END_IF;
+
+// Event "Barrier_Upstream_TLs_West_Actuator_c_r".
+IF NOT progress THEN
+    b1 := ("DB".state0.dvar_M_sup_Barrier_Upstream_TLs_West_Actuator) = (elit_Green);
+    b1 := b1 AND (("DB".state0.dvar_M_sup_Barrier_Commands) = (elit_UpstreamTLRed));
+    IF b1 THEN
+        progress := TRUE;
+        state1 := "DB".state0;
+
+        state1.dvar_M_Barrier_HW_TL_BVH_West_Q_Red := TRUE;
+        state1.dvar_M_Barrier_HW_TL_BVH_West_Q_Green := FALSE;
+        state1.dvar_M_sup_Barrier_Upstream_TLs_West_Actuator := elit_Red;
+
+        "DB".state0 := state1;
+    END_IF;
+END_IF;
+
+// Event "Barrier_Upstream_TLs_West_SensorG_u_off".
+IF NOT progress THEN
+    b1 := NOT(ivar_M_Barrier_HW_TL_BVH_West_Green);
+    b1 := b1 AND (("DB".state0.dvar_M_sup_Barrier_Upstream_TLs_West_Actuator) = (elit_Red));
+    b1 := b1 AND (("DB".state0.dvar_M_sup_Barrier_Upstream_TLs_West_SensorG) = (elit_On));
+    IF b1 THEN
+        progress := TRUE;
+        state1 := "DB".state0;
+
+        state1.dvar_M_sup_Barrier_Upstream_TLs_West_SensorG := elit_Off;
+
+        "DB".state0 := state1;
+    END_IF;
+END_IF;
+
+// Event "Barrier_Upstream_TLs_West_SensorG_u_on".
+IF NOT progress THEN
+    b1 := ivar_M_Barrier_HW_TL_BVH_West_Green;
+    b1 := b1 AND (("DB".state0.dvar_M_sup_Barrier_Upstream_TLs_West_Actuator) <> (elit_Red));
+    b1 := b1 AND (("DB".state0.dvar_M_sup_Barrier_Upstream_TLs_West_SensorG) = (elit_Off));
+    IF b1 THEN
+        progress := TRUE;
+        state1 := "DB".state0;
+
+        state1.dvar_M_sup_Barrier_Upstream_TLs_West_SensorG := elit_On;
+
+        "DB".state0 := state1;
+    END_IF;
+END_IF;
+
+// Event "Barrier_Upstream_TLs_West_SensorR_u_off".
+IF NOT progress THEN
+    b1 := NOT(ivar_M_Barrier_HW_TL_BVH_West_Red);
+    b1 := b1 AND (("DB".state0.dvar_M_sup_Barrier_Upstream_TLs_West_Actuator) = (elit_Green));
+    b1 := b1 AND (("DB".state0.dvar_M_sup_Barrier_Upstream_TLs_West_SensorR) = (elit_On));
+    IF b1 THEN
+        progress := TRUE;
+        state1 := "DB".state0;
+
+        state1.dvar_M_sup_Barrier_Upstream_TLs_West_SensorR := elit_Off;
+
+        "DB".state0 := state1;
+    END_IF;
+END_IF;
+
+// Event "Barrier_Upstream_TLs_West_SensorR_u_on".
+IF NOT progress THEN
+    b1 := ivar_M_Barrier_HW_TL_BVH_West_Red;
+    b1 := b1 AND (("DB".state0.dvar_M_sup_Barrier_Upstream_TLs_West_Actuator) <> (elit_Green));
+    b1 := b1 AND (("DB".state0.dvar_M_sup_Barrier_Upstream_TLs_West_SensorR) = (elit_Off));
+    IF b1 THEN
+        progress := TRUE;
+        state1 := "DB".state0;
+
+        state1.dvar_M_sup_Barrier_Upstream_TLs_West_SensorR := elit_On;
+
+        "DB".state0 := state1;
+    END_IF;
+END_IF;
+
+// Event "North_Commands_Deactivate".
+IF NOT progress THEN
+    b1 := ("DB".state0.dvar_M_North_SCADA) = (elit_Active);
+    b1 := b1 AND (NOT("SCADA".dvar_M_North_SCADA_DownstreamGateOpen));
+    b1 := b1 AND (NOT("SCADA".dvar_M_North_SCADA_DownstreamGateClose));
+    b1 := b1 AND (NOT("SCADA".dvar_M_North_SCADA_DownstreamGateStop));
+    b1 := b1 AND (NOT("SCADA".dvar_M_North_SCADA_DownstreamPaddleOpen));
+    b1 := b1 AND (NOT("SCADA".dvar_M_North_SCADA_DownstreamPaddleClose));
+    b1 := b1 AND (NOT("SCADA".dvar_M_North_SCADA_DownstreamPaddleStop));
+    b1 := b1 AND (NOT("SCADA".dvar_M_North_SCADA_DownstreamEnteringTLRedRed));
+    b1 := b1 AND (NOT("SCADA".dvar_M_North_SCADA_DownstreamEnteringTLRed));
+    b1 := b1 AND (NOT("SCADA".dvar_M_North_SCADA_DownstreamEnteringTLRedGreen));
+    b1 := b1 AND (NOT("SCADA".dvar_M_North_SCADA_DownstreamEnteringTLGreen));
+    b1 := b1 AND (NOT("SCADA".dvar_M_North_SCADA_DownstreamLeavingTLRed));
+    b1 := b1 AND (NOT("SCADA".dvar_M_North_SCADA_DownstreamLeavingTLGreen));
+    b1 := b1 AND (NOT("SCADA".dvar_M_North_SCADA_UpstreamGateOpen));
+    b1 := b1 AND (NOT("SCADA".dvar_M_North_SCADA_UpstreamGateClose));
+    b1 := b1 AND (NOT("SCADA".dvar_M_North_SCADA_UpstreamGateStop));
+    b1 := b1 AND (NOT("SCADA".dvar_M_North_SCADA_UpstreamPaddleOpen));
+    b1 := b1 AND (NOT("SCADA".dvar_M_North_SCADA_UpstreamPaddleClose));
+    b1 := b1 AND (NOT("SCADA".dvar_M_North_SCADA_UpstreamPaddleStop));
+    b1 := b1 AND (NOT("SCADA".dvar_M_North_SCADA_UpstreamEnteringTLRedRed));
+    b1 := b1 AND (NOT("SCADA".dvar_M_North_SCADA_UpstreamEnteringTLRed));
+    b1 := b1 AND (NOT("SCADA".dvar_M_North_SCADA_UpstreamEnteringTLRedGreen));
+    b1 := b1 AND (NOT("SCADA".dvar_M_North_SCADA_UpstreamEnteringTLGreen));
+    b1 := b1 AND (NOT("SCADA".dvar_M_North_SCADA_UpstreamLeavingTLRed));
+    b1 := b1 AND (NOT("SCADA".dvar_M_North_SCADA_UpstreamLeavingTLGreen));
+    IF b1 THEN
+        progress := TRUE;
+        state1 := "DB".state0;
+
+        state1.dvar_M_North_SCADA := elit_Inactive;
+        IF (("DB".state0.dvar_M_sup_North_Commands) = (elit_NoCommand)) THEN
+            state1.dvar_M_sup_North_Commands := elit_NoCommand;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamGateOpen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_NoCommand;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamGateClose)) THEN
+            state1.dvar_M_sup_North_Commands := elit_NoCommand;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamGateStop)) THEN
+            state1.dvar_M_sup_North_Commands := elit_NoCommand;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamPaddleOpen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_NoCommand;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamPaddleClose)) THEN
+            state1.dvar_M_sup_North_Commands := elit_NoCommand;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamPaddleStop)) THEN
+            state1.dvar_M_sup_North_Commands := elit_NoCommand;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamEnteringTLRedRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_NoCommand;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamEnteringTLRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_NoCommand;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamEnteringTLRedGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_NoCommand;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamEnteringTLGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_NoCommand;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamLeavingTLRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_NoCommand;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamLeavingTLGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_NoCommand;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamGateOpen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_NoCommand;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamGateClose)) THEN
+            state1.dvar_M_sup_North_Commands := elit_NoCommand;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamGateStop)) THEN
+            state1.dvar_M_sup_North_Commands := elit_NoCommand;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamPaddleOpen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_NoCommand;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamPaddleClose)) THEN
+            state1.dvar_M_sup_North_Commands := elit_NoCommand;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamPaddleStop)) THEN
+            state1.dvar_M_sup_North_Commands := elit_NoCommand;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamEnteringTLRedRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_NoCommand;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamEnteringTLRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_NoCommand;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamEnteringTLRedGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_NoCommand;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamEnteringTLGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_NoCommand;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamLeavingTLRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_NoCommand;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamLeavingTLGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_NoCommand;
+        END_IF;
+
+        "DB".state0 := state1;
+    END_IF;
+END_IF;
+
+// Event "North_Commands_DownstreamEnteringTLGreen_act".
+IF NOT progress THEN
+    b1 := ("DB".state0.dvar_M_North_SCADA) = (elit_Inactive);
+    b1 := b1 AND ("SCADA".dvar_M_North_SCADA_DownstreamEnteringTLGreen);
+    IF b1 THEN
+        progress := TRUE;
+        state1 := "DB".state0;
+
+        state1.dvar_M_North_SCADA := elit_Active;
+        IF (("DB".state0.dvar_M_sup_North_Commands) = (elit_NoCommand)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamEnteringTLGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamGateOpen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamGateOpen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamGateClose)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamGateClose;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamGateStop)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamGateStop;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamPaddleOpen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamPaddleOpen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamPaddleClose)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamPaddleClose;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamPaddleStop)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamPaddleStop;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamEnteringTLRedRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamEnteringTLRedRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamEnteringTLRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamEnteringTLRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamEnteringTLRedGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamEnteringTLRedGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamEnteringTLGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamEnteringTLGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamLeavingTLRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamLeavingTLRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamLeavingTLGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamLeavingTLGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamGateOpen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamGateOpen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamGateClose)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamGateClose;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamGateStop)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamGateStop;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamPaddleOpen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamPaddleOpen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamPaddleClose)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamPaddleClose;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamPaddleStop)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamPaddleStop;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamEnteringTLRedRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamEnteringTLRedRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamEnteringTLRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamEnteringTLRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamEnteringTLRedGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamEnteringTLRedGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamEnteringTLGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamEnteringTLGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamLeavingTLRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamLeavingTLRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamLeavingTLGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamLeavingTLGreen;
+        END_IF;
+
+        "DB".state0 := state1;
+    END_IF;
+END_IF;
+
+// Event "North_Commands_DownstreamEnteringTLRed_act".
+IF NOT progress THEN
+    b1 := ("DB".state0.dvar_M_North_SCADA) = (elit_Inactive);
+    b1 := b1 AND ("SCADA".dvar_M_North_SCADA_DownstreamEnteringTLRed);
+    IF b1 THEN
+        progress := TRUE;
+        state1 := "DB".state0;
+
+        state1.dvar_M_North_SCADA := elit_Active;
+        IF (("DB".state0.dvar_M_sup_North_Commands) = (elit_NoCommand)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamEnteringTLRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamGateOpen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamGateOpen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamGateClose)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamGateClose;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamGateStop)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamGateStop;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamPaddleOpen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamPaddleOpen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamPaddleClose)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamPaddleClose;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamPaddleStop)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamPaddleStop;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamEnteringTLRedRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamEnteringTLRedRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamEnteringTLRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamEnteringTLRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamEnteringTLRedGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamEnteringTLRedGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamEnteringTLGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamEnteringTLGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamLeavingTLRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamLeavingTLRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamLeavingTLGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamLeavingTLGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamGateOpen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamGateOpen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamGateClose)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamGateClose;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamGateStop)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamGateStop;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamPaddleOpen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamPaddleOpen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamPaddleClose)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamPaddleClose;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamPaddleStop)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamPaddleStop;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamEnteringTLRedRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamEnteringTLRedRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamEnteringTLRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamEnteringTLRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamEnteringTLRedGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamEnteringTLRedGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamEnteringTLGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamEnteringTLGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamLeavingTLRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamLeavingTLRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamLeavingTLGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamLeavingTLGreen;
+        END_IF;
+
+        "DB".state0 := state1;
+    END_IF;
+END_IF;
+
+// Event "North_Commands_DownstreamEnteringTLRedGreen_act".
+IF NOT progress THEN
+    b1 := ("DB".state0.dvar_M_North_SCADA) = (elit_Inactive);
+    b1 := b1 AND ("SCADA".dvar_M_North_SCADA_DownstreamEnteringTLRedGreen);
+    IF b1 THEN
+        progress := TRUE;
+        state1 := "DB".state0;
+
+        state1.dvar_M_North_SCADA := elit_Active;
+        IF (("DB".state0.dvar_M_sup_North_Commands) = (elit_NoCommand)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamEnteringTLRedGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamGateOpen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamGateOpen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamGateClose)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamGateClose;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamGateStop)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamGateStop;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamPaddleOpen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamPaddleOpen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamPaddleClose)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamPaddleClose;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamPaddleStop)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamPaddleStop;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamEnteringTLRedRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamEnteringTLRedRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamEnteringTLRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamEnteringTLRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamEnteringTLRedGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamEnteringTLRedGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamEnteringTLGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamEnteringTLGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamLeavingTLRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamLeavingTLRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamLeavingTLGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamLeavingTLGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamGateOpen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamGateOpen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamGateClose)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamGateClose;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamGateStop)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamGateStop;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamPaddleOpen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamPaddleOpen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamPaddleClose)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamPaddleClose;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamPaddleStop)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamPaddleStop;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamEnteringTLRedRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamEnteringTLRedRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamEnteringTLRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamEnteringTLRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamEnteringTLRedGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamEnteringTLRedGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamEnteringTLGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamEnteringTLGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamLeavingTLRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamLeavingTLRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamLeavingTLGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamLeavingTLGreen;
+        END_IF;
+
+        "DB".state0 := state1;
+    END_IF;
+END_IF;
+
+// Event "North_Commands_DownstreamEnteringTLRedRed_act".
+IF NOT progress THEN
+    b1 := ("DB".state0.dvar_M_North_SCADA) = (elit_Inactive);
+    b1 := b1 AND ("SCADA".dvar_M_North_SCADA_DownstreamEnteringTLRedRed);
+    IF b1 THEN
+        progress := TRUE;
+        state1 := "DB".state0;
+
+        state1.dvar_M_North_SCADA := elit_Active;
+        IF (("DB".state0.dvar_M_sup_North_Commands) = (elit_NoCommand)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamEnteringTLRedRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamGateOpen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamGateOpen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamGateClose)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamGateClose;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamGateStop)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamGateStop;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamPaddleOpen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamPaddleOpen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamPaddleClose)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamPaddleClose;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamPaddleStop)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamPaddleStop;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamEnteringTLRedRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamEnteringTLRedRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamEnteringTLRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamEnteringTLRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamEnteringTLRedGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamEnteringTLRedGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamEnteringTLGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamEnteringTLGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamLeavingTLRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamLeavingTLRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamLeavingTLGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamLeavingTLGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamGateOpen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamGateOpen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamGateClose)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamGateClose;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamGateStop)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamGateStop;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamPaddleOpen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamPaddleOpen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamPaddleClose)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamPaddleClose;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamPaddleStop)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamPaddleStop;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamEnteringTLRedRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamEnteringTLRedRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamEnteringTLRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamEnteringTLRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamEnteringTLRedGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamEnteringTLRedGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamEnteringTLGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamEnteringTLGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamLeavingTLRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamLeavingTLRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamLeavingTLGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamLeavingTLGreen;
+        END_IF;
+
+        "DB".state0 := state1;
+    END_IF;
+END_IF;
+
+// Event "North_Commands_DownstreamGateClose_act".
+IF NOT progress THEN
+    b1 := ("DB".state0.dvar_M_North_SCADA) = (elit_Inactive);
+    b1 := b1 AND ("SCADA".dvar_M_North_SCADA_DownstreamGateClose);
+    IF b1 THEN
+        progress := TRUE;
+        state1 := "DB".state0;
+
+        state1.dvar_M_North_SCADA := elit_Active;
+        IF (("DB".state0.dvar_M_sup_North_Commands) = (elit_NoCommand)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamGateClose;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamGateOpen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamGateOpen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamGateClose)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamGateClose;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamGateStop)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamGateStop;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamPaddleOpen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamPaddleOpen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamPaddleClose)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamPaddleClose;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamPaddleStop)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamPaddleStop;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamEnteringTLRedRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamEnteringTLRedRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamEnteringTLRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamEnteringTLRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamEnteringTLRedGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamEnteringTLRedGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamEnteringTLGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamEnteringTLGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamLeavingTLRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamLeavingTLRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamLeavingTLGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamLeavingTLGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamGateOpen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamGateOpen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamGateClose)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamGateClose;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamGateStop)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamGateStop;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamPaddleOpen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamPaddleOpen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamPaddleClose)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamPaddleClose;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamPaddleStop)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamPaddleStop;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamEnteringTLRedRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamEnteringTLRedRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamEnteringTLRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamEnteringTLRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamEnteringTLRedGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamEnteringTLRedGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamEnteringTLGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamEnteringTLGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamLeavingTLRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamLeavingTLRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamLeavingTLGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamLeavingTLGreen;
+        END_IF;
+
+        "DB".state0 := state1;
+    END_IF;
+END_IF;
+
+// Event "North_Commands_DownstreamGateOpen_act".
+IF NOT progress THEN
+    b1 := ("DB".state0.dvar_M_North_SCADA) = (elit_Inactive);
+    b1 := b1 AND ("SCADA".dvar_M_North_SCADA_DownstreamGateOpen);
+    IF b1 THEN
+        progress := TRUE;
+        state1 := "DB".state0;
+
+        state1.dvar_M_North_SCADA := elit_Active;
+        IF (("DB".state0.dvar_M_sup_North_Commands) = (elit_NoCommand)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamGateOpen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamGateOpen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamGateOpen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamGateClose)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamGateClose;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamGateStop)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamGateStop;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamPaddleOpen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamPaddleOpen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamPaddleClose)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamPaddleClose;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamPaddleStop)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamPaddleStop;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamEnteringTLRedRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamEnteringTLRedRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamEnteringTLRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamEnteringTLRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamEnteringTLRedGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamEnteringTLRedGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamEnteringTLGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamEnteringTLGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamLeavingTLRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamLeavingTLRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamLeavingTLGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamLeavingTLGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamGateOpen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamGateOpen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamGateClose)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamGateClose;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamGateStop)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamGateStop;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamPaddleOpen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamPaddleOpen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamPaddleClose)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamPaddleClose;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamPaddleStop)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamPaddleStop;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamEnteringTLRedRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamEnteringTLRedRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamEnteringTLRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamEnteringTLRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamEnteringTLRedGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamEnteringTLRedGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamEnteringTLGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamEnteringTLGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamLeavingTLRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamLeavingTLRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamLeavingTLGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamLeavingTLGreen;
+        END_IF;
+
+        "DB".state0 := state1;
+    END_IF;
+END_IF;
+
+// Event "North_Commands_DownstreamGateStop_act".
+IF NOT progress THEN
+    b1 := ("DB".state0.dvar_M_North_SCADA) = (elit_Inactive);
+    b1 := b1 AND ("SCADA".dvar_M_North_SCADA_DownstreamGateStop);
+    IF b1 THEN
+        progress := TRUE;
+        state1 := "DB".state0;
+
+        state1.dvar_M_North_SCADA := elit_Active;
+        IF (("DB".state0.dvar_M_sup_North_Commands) = (elit_NoCommand)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamGateStop;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamGateOpen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamGateOpen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamGateClose)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamGateClose;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamGateStop)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamGateStop;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamPaddleOpen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamPaddleOpen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamPaddleClose)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamPaddleClose;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamPaddleStop)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamPaddleStop;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamEnteringTLRedRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamEnteringTLRedRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamEnteringTLRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamEnteringTLRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamEnteringTLRedGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamEnteringTLRedGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamEnteringTLGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamEnteringTLGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamLeavingTLRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamLeavingTLRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamLeavingTLGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamLeavingTLGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamGateOpen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamGateOpen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamGateClose)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamGateClose;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamGateStop)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamGateStop;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamPaddleOpen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamPaddleOpen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamPaddleClose)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamPaddleClose;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamPaddleStop)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamPaddleStop;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamEnteringTLRedRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamEnteringTLRedRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamEnteringTLRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamEnteringTLRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamEnteringTLRedGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamEnteringTLRedGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamEnteringTLGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamEnteringTLGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamLeavingTLRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamLeavingTLRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamLeavingTLGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamLeavingTLGreen;
+        END_IF;
+
+        "DB".state0 := state1;
+    END_IF;
+END_IF;
+
+// Event "North_Commands_DownstreamLeavingTLGreen_act".
+IF NOT progress THEN
+    b1 := ("DB".state0.dvar_M_North_SCADA) = (elit_Inactive);
+    b1 := b1 AND ("SCADA".dvar_M_North_SCADA_DownstreamLeavingTLGreen);
+    IF b1 THEN
+        progress := TRUE;
+        state1 := "DB".state0;
+
+        state1.dvar_M_North_SCADA := elit_Active;
+        IF (("DB".state0.dvar_M_sup_North_Commands) = (elit_NoCommand)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamLeavingTLGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamGateOpen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamGateOpen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamGateClose)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamGateClose;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamGateStop)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamGateStop;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamPaddleOpen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamPaddleOpen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamPaddleClose)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamPaddleClose;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamPaddleStop)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamPaddleStop;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamEnteringTLRedRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamEnteringTLRedRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamEnteringTLRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamEnteringTLRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamEnteringTLRedGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamEnteringTLRedGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamEnteringTLGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamEnteringTLGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamLeavingTLRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamLeavingTLRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamLeavingTLGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamLeavingTLGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamGateOpen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamGateOpen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamGateClose)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamGateClose;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamGateStop)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamGateStop;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamPaddleOpen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamPaddleOpen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamPaddleClose)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamPaddleClose;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamPaddleStop)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamPaddleStop;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamEnteringTLRedRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamEnteringTLRedRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamEnteringTLRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamEnteringTLRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamEnteringTLRedGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamEnteringTLRedGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamEnteringTLGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamEnteringTLGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamLeavingTLRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamLeavingTLRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamLeavingTLGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamLeavingTLGreen;
+        END_IF;
+
+        "DB".state0 := state1;
+    END_IF;
+END_IF;
+
+// Event "North_Commands_DownstreamLeavingTLRed_act".
+IF NOT progress THEN
+    b1 := ("DB".state0.dvar_M_North_SCADA) = (elit_Inactive);
+    b1 := b1 AND ("SCADA".dvar_M_North_SCADA_DownstreamLeavingTLRed);
+    IF b1 THEN
+        progress := TRUE;
+        state1 := "DB".state0;
+
+        state1.dvar_M_North_SCADA := elit_Active;
+        IF (("DB".state0.dvar_M_sup_North_Commands) = (elit_NoCommand)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamLeavingTLRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamGateOpen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamGateOpen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamGateClose)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamGateClose;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamGateStop)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamGateStop;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamPaddleOpen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamPaddleOpen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamPaddleClose)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamPaddleClose;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamPaddleStop)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamPaddleStop;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamEnteringTLRedRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamEnteringTLRedRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamEnteringTLRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamEnteringTLRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamEnteringTLRedGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamEnteringTLRedGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamEnteringTLGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamEnteringTLGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamLeavingTLRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamLeavingTLRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamLeavingTLGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamLeavingTLGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamGateOpen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamGateOpen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamGateClose)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamGateClose;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamGateStop)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamGateStop;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamPaddleOpen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamPaddleOpen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamPaddleClose)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamPaddleClose;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamPaddleStop)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamPaddleStop;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamEnteringTLRedRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamEnteringTLRedRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamEnteringTLRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamEnteringTLRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamEnteringTLRedGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamEnteringTLRedGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamEnteringTLGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamEnteringTLGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamLeavingTLRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamLeavingTLRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamLeavingTLGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamLeavingTLGreen;
+        END_IF;
+
+        "DB".state0 := state1;
+    END_IF;
+END_IF;
+
+// Event "North_Commands_DownstreamPaddleClose_act".
+IF NOT progress THEN
+    b1 := ("DB".state0.dvar_M_North_SCADA) = (elit_Inactive);
+    b1 := b1 AND ("SCADA".dvar_M_North_SCADA_DownstreamPaddleClose);
+    IF b1 THEN
+        progress := TRUE;
+        state1 := "DB".state0;
+
+        state1.dvar_M_North_SCADA := elit_Active;
+        IF (("DB".state0.dvar_M_sup_North_Commands) = (elit_NoCommand)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamPaddleClose;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamGateOpen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamGateOpen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamGateClose)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamGateClose;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamGateStop)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamGateStop;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamPaddleOpen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamPaddleOpen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamPaddleClose)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamPaddleClose;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamPaddleStop)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamPaddleStop;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamEnteringTLRedRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamEnteringTLRedRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamEnteringTLRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamEnteringTLRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamEnteringTLRedGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamEnteringTLRedGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamEnteringTLGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamEnteringTLGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamLeavingTLRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamLeavingTLRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamLeavingTLGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamLeavingTLGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamGateOpen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamGateOpen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamGateClose)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamGateClose;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamGateStop)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamGateStop;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamPaddleOpen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamPaddleOpen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamPaddleClose)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamPaddleClose;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamPaddleStop)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamPaddleStop;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamEnteringTLRedRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamEnteringTLRedRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamEnteringTLRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamEnteringTLRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamEnteringTLRedGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamEnteringTLRedGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamEnteringTLGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamEnteringTLGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamLeavingTLRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamLeavingTLRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamLeavingTLGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamLeavingTLGreen;
+        END_IF;
+
+        "DB".state0 := state1;
+    END_IF;
+END_IF;
+
+// Event "North_Commands_DownstreamPaddleOpen_act".
+IF NOT progress THEN
+    b1 := ("DB".state0.dvar_M_North_SCADA) = (elit_Inactive);
+    b1 := b1 AND ("SCADA".dvar_M_North_SCADA_DownstreamPaddleOpen);
+    IF b1 THEN
+        progress := TRUE;
+        state1 := "DB".state0;
+
+        state1.dvar_M_North_SCADA := elit_Active;
+        IF (("DB".state0.dvar_M_sup_North_Commands) = (elit_NoCommand)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamPaddleOpen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamGateOpen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamGateOpen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamGateClose)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamGateClose;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamGateStop)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamGateStop;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamPaddleOpen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamPaddleOpen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamPaddleClose)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamPaddleClose;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamPaddleStop)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamPaddleStop;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamEnteringTLRedRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamEnteringTLRedRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamEnteringTLRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamEnteringTLRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamEnteringTLRedGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamEnteringTLRedGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamEnteringTLGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamEnteringTLGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamLeavingTLRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamLeavingTLRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamLeavingTLGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamLeavingTLGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamGateOpen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamGateOpen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamGateClose)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamGateClose;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamGateStop)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamGateStop;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamPaddleOpen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamPaddleOpen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamPaddleClose)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamPaddleClose;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamPaddleStop)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamPaddleStop;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamEnteringTLRedRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamEnteringTLRedRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamEnteringTLRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamEnteringTLRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamEnteringTLRedGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamEnteringTLRedGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamEnteringTLGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamEnteringTLGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamLeavingTLRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamLeavingTLRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamLeavingTLGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamLeavingTLGreen;
+        END_IF;
+
+        "DB".state0 := state1;
+    END_IF;
+END_IF;
+
+// Event "North_Commands_DownstreamPaddleStop_act".
+IF NOT progress THEN
+    b1 := ("DB".state0.dvar_M_North_SCADA) = (elit_Inactive);
+    b1 := b1 AND ("SCADA".dvar_M_North_SCADA_DownstreamPaddleStop);
+    IF b1 THEN
+        progress := TRUE;
+        state1 := "DB".state0;
+
+        state1.dvar_M_North_SCADA := elit_Active;
+        IF (("DB".state0.dvar_M_sup_North_Commands) = (elit_NoCommand)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamPaddleStop;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamGateOpen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamGateOpen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamGateClose)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamGateClose;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamGateStop)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamGateStop;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamPaddleOpen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamPaddleOpen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamPaddleClose)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamPaddleClose;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamPaddleStop)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamPaddleStop;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamEnteringTLRedRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamEnteringTLRedRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamEnteringTLRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamEnteringTLRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamEnteringTLRedGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamEnteringTLRedGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamEnteringTLGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamEnteringTLGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamLeavingTLRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamLeavingTLRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamLeavingTLGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamLeavingTLGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamGateOpen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamGateOpen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamGateClose)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamGateClose;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamGateStop)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamGateStop;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamPaddleOpen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamPaddleOpen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamPaddleClose)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamPaddleClose;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamPaddleStop)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamPaddleStop;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamEnteringTLRedRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamEnteringTLRedRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamEnteringTLRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamEnteringTLRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamEnteringTLRedGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamEnteringTLRedGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamEnteringTLGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamEnteringTLGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamLeavingTLRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamLeavingTLRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamLeavingTLGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamLeavingTLGreen;
+        END_IF;
+
+        "DB".state0 := state1;
+    END_IF;
+END_IF;
+
+// Event "North_Commands_UpstreamEnteringTLGreen_act".
+IF NOT progress THEN
+    b1 := ("DB".state0.dvar_M_North_SCADA) = (elit_Inactive);
+    b1 := b1 AND ("SCADA".dvar_M_North_SCADA_UpstreamEnteringTLGreen);
+    IF b1 THEN
+        progress := TRUE;
+        state1 := "DB".state0;
+
+        state1.dvar_M_North_SCADA := elit_Active;
+        IF (("DB".state0.dvar_M_sup_North_Commands) = (elit_NoCommand)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamEnteringTLGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamGateOpen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamGateOpen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamGateClose)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamGateClose;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamGateStop)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamGateStop;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamPaddleOpen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamPaddleOpen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamPaddleClose)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamPaddleClose;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamPaddleStop)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamPaddleStop;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamEnteringTLRedRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamEnteringTLRedRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamEnteringTLRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamEnteringTLRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamEnteringTLRedGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamEnteringTLRedGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamEnteringTLGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamEnteringTLGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamLeavingTLRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamLeavingTLRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamLeavingTLGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamLeavingTLGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamGateOpen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamGateOpen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamGateClose)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamGateClose;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamGateStop)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamGateStop;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamPaddleOpen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamPaddleOpen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamPaddleClose)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamPaddleClose;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamPaddleStop)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamPaddleStop;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamEnteringTLRedRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamEnteringTLRedRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamEnteringTLRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamEnteringTLRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamEnteringTLRedGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamEnteringTLRedGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamEnteringTLGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamEnteringTLGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamLeavingTLRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamLeavingTLRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamLeavingTLGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamLeavingTLGreen;
+        END_IF;
+
+        "DB".state0 := state1;
+    END_IF;
+END_IF;
+
+// Event "North_Commands_UpstreamEnteringTLRed_act".
+IF NOT progress THEN
+    b1 := ("DB".state0.dvar_M_North_SCADA) = (elit_Inactive);
+    b1 := b1 AND ("SCADA".dvar_M_North_SCADA_UpstreamEnteringTLRed);
+    IF b1 THEN
+        progress := TRUE;
+        state1 := "DB".state0;
+
+        state1.dvar_M_North_SCADA := elit_Active;
+        IF (("DB".state0.dvar_M_sup_North_Commands) = (elit_NoCommand)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamEnteringTLRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamGateOpen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamGateOpen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamGateClose)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamGateClose;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamGateStop)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamGateStop;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamPaddleOpen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamPaddleOpen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamPaddleClose)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamPaddleClose;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamPaddleStop)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamPaddleStop;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamEnteringTLRedRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamEnteringTLRedRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamEnteringTLRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamEnteringTLRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamEnteringTLRedGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamEnteringTLRedGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamEnteringTLGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamEnteringTLGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamLeavingTLRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamLeavingTLRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamLeavingTLGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamLeavingTLGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamGateOpen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamGateOpen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamGateClose)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamGateClose;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamGateStop)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamGateStop;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamPaddleOpen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamPaddleOpen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamPaddleClose)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamPaddleClose;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamPaddleStop)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamPaddleStop;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamEnteringTLRedRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamEnteringTLRedRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamEnteringTLRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamEnteringTLRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamEnteringTLRedGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamEnteringTLRedGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamEnteringTLGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamEnteringTLGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamLeavingTLRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamLeavingTLRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamLeavingTLGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamLeavingTLGreen;
+        END_IF;
+
+        "DB".state0 := state1;
+    END_IF;
+END_IF;
+
+// Event "North_Commands_UpstreamEnteringTLRedGreen_act".
+IF NOT progress THEN
+    b1 := ("DB".state0.dvar_M_North_SCADA) = (elit_Inactive);
+    b1 := b1 AND ("SCADA".dvar_M_North_SCADA_UpstreamEnteringTLRedGreen);
+    IF b1 THEN
+        progress := TRUE;
+        state1 := "DB".state0;
+
+        state1.dvar_M_North_SCADA := elit_Active;
+        IF (("DB".state0.dvar_M_sup_North_Commands) = (elit_NoCommand)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamEnteringTLRedGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamGateOpen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamGateOpen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamGateClose)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamGateClose;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamGateStop)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamGateStop;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamPaddleOpen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamPaddleOpen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamPaddleClose)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamPaddleClose;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamPaddleStop)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamPaddleStop;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamEnteringTLRedRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamEnteringTLRedRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamEnteringTLRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamEnteringTLRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamEnteringTLRedGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamEnteringTLRedGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamEnteringTLGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamEnteringTLGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamLeavingTLRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamLeavingTLRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamLeavingTLGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamLeavingTLGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamGateOpen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamGateOpen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamGateClose)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamGateClose;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamGateStop)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamGateStop;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamPaddleOpen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamPaddleOpen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamPaddleClose)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamPaddleClose;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamPaddleStop)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamPaddleStop;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamEnteringTLRedRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamEnteringTLRedRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamEnteringTLRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamEnteringTLRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamEnteringTLRedGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamEnteringTLRedGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamEnteringTLGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamEnteringTLGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamLeavingTLRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamLeavingTLRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamLeavingTLGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamLeavingTLGreen;
+        END_IF;
+
+        "DB".state0 := state1;
+    END_IF;
+END_IF;
+
+// Event "North_Commands_UpstreamEnteringTLRedRed_act".
+IF NOT progress THEN
+    b1 := ("DB".state0.dvar_M_North_SCADA) = (elit_Inactive);
+    b1 := b1 AND ("SCADA".dvar_M_North_SCADA_UpstreamEnteringTLRedRed);
+    IF b1 THEN
+        progress := TRUE;
+        state1 := "DB".state0;
+
+        state1.dvar_M_North_SCADA := elit_Active;
+        IF (("DB".state0.dvar_M_sup_North_Commands) = (elit_NoCommand)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamEnteringTLRedRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamGateOpen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamGateOpen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamGateClose)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamGateClose;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamGateStop)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamGateStop;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamPaddleOpen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamPaddleOpen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamPaddleClose)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamPaddleClose;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamPaddleStop)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamPaddleStop;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamEnteringTLRedRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamEnteringTLRedRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamEnteringTLRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamEnteringTLRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamEnteringTLRedGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamEnteringTLRedGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamEnteringTLGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamEnteringTLGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamLeavingTLRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamLeavingTLRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamLeavingTLGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamLeavingTLGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamGateOpen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamGateOpen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamGateClose)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamGateClose;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamGateStop)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamGateStop;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamPaddleOpen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamPaddleOpen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamPaddleClose)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamPaddleClose;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamPaddleStop)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamPaddleStop;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamEnteringTLRedRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamEnteringTLRedRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamEnteringTLRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamEnteringTLRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamEnteringTLRedGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamEnteringTLRedGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamEnteringTLGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamEnteringTLGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamLeavingTLRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamLeavingTLRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamLeavingTLGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamLeavingTLGreen;
+        END_IF;
+
+        "DB".state0 := state1;
+    END_IF;
+END_IF;
+
+// Event "North_Commands_UpstreamGateClose_act".
+IF NOT progress THEN
+    b1 := ("DB".state0.dvar_M_North_SCADA) = (elit_Inactive);
+    b1 := b1 AND ("SCADA".dvar_M_North_SCADA_UpstreamGateClose);
+    IF b1 THEN
+        progress := TRUE;
+        state1 := "DB".state0;
+
+        state1.dvar_M_North_SCADA := elit_Active;
+        IF (("DB".state0.dvar_M_sup_North_Commands) = (elit_NoCommand)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamGateClose;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamGateOpen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamGateOpen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamGateClose)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamGateClose;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamGateStop)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamGateStop;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamPaddleOpen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamPaddleOpen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamPaddleClose)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamPaddleClose;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamPaddleStop)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamPaddleStop;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamEnteringTLRedRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamEnteringTLRedRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamEnteringTLRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamEnteringTLRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamEnteringTLRedGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamEnteringTLRedGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamEnteringTLGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamEnteringTLGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamLeavingTLRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamLeavingTLRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamLeavingTLGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamLeavingTLGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamGateOpen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamGateOpen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamGateClose)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamGateClose;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamGateStop)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamGateStop;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamPaddleOpen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamPaddleOpen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamPaddleClose)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamPaddleClose;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamPaddleStop)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamPaddleStop;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamEnteringTLRedRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamEnteringTLRedRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamEnteringTLRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamEnteringTLRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamEnteringTLRedGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamEnteringTLRedGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamEnteringTLGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamEnteringTLGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamLeavingTLRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamLeavingTLRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamLeavingTLGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamLeavingTLGreen;
+        END_IF;
+
+        "DB".state0 := state1;
+    END_IF;
+END_IF;
+
+// Event "North_Commands_UpstreamGateOpen_act".
+IF NOT progress THEN
+    b1 := ("DB".state0.dvar_M_North_SCADA) = (elit_Inactive);
+    b1 := b1 AND ("SCADA".dvar_M_North_SCADA_UpstreamGateOpen);
+    IF b1 THEN
+        progress := TRUE;
+        state1 := "DB".state0;
+
+        state1.dvar_M_North_SCADA := elit_Active;
+        IF (("DB".state0.dvar_M_sup_North_Commands) = (elit_NoCommand)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamGateOpen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamGateOpen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamGateOpen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamGateClose)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamGateClose;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamGateStop)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamGateStop;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamPaddleOpen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamPaddleOpen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamPaddleClose)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamPaddleClose;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamPaddleStop)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamPaddleStop;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamEnteringTLRedRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamEnteringTLRedRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamEnteringTLRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamEnteringTLRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamEnteringTLRedGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamEnteringTLRedGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamEnteringTLGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamEnteringTLGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamLeavingTLRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamLeavingTLRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamLeavingTLGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamLeavingTLGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamGateOpen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamGateOpen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamGateClose)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamGateClose;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamGateStop)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamGateStop;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamPaddleOpen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamPaddleOpen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamPaddleClose)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamPaddleClose;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamPaddleStop)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamPaddleStop;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamEnteringTLRedRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamEnteringTLRedRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamEnteringTLRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamEnteringTLRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamEnteringTLRedGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamEnteringTLRedGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamEnteringTLGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamEnteringTLGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamLeavingTLRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamLeavingTLRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamLeavingTLGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamLeavingTLGreen;
+        END_IF;
+
+        "DB".state0 := state1;
+    END_IF;
+END_IF;
+
+// Event "North_Commands_UpstreamGateStop_act".
+IF NOT progress THEN
+    b1 := ("DB".state0.dvar_M_North_SCADA) = (elit_Inactive);
+    b1 := b1 AND ("SCADA".dvar_M_North_SCADA_UpstreamGateStop);
+    IF b1 THEN
+        progress := TRUE;
+        state1 := "DB".state0;
+
+        state1.dvar_M_North_SCADA := elit_Active;
+        IF (("DB".state0.dvar_M_sup_North_Commands) = (elit_NoCommand)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamGateStop;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamGateOpen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamGateOpen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamGateClose)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamGateClose;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamGateStop)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamGateStop;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamPaddleOpen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamPaddleOpen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamPaddleClose)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamPaddleClose;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamPaddleStop)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamPaddleStop;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamEnteringTLRedRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamEnteringTLRedRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamEnteringTLRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamEnteringTLRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamEnteringTLRedGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamEnteringTLRedGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamEnteringTLGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamEnteringTLGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamLeavingTLRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamLeavingTLRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamLeavingTLGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamLeavingTLGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamGateOpen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamGateOpen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamGateClose)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamGateClose;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamGateStop)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamGateStop;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamPaddleOpen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamPaddleOpen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamPaddleClose)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamPaddleClose;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamPaddleStop)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamPaddleStop;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamEnteringTLRedRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamEnteringTLRedRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamEnteringTLRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamEnteringTLRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamEnteringTLRedGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamEnteringTLRedGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamEnteringTLGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamEnteringTLGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamLeavingTLRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamLeavingTLRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamLeavingTLGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamLeavingTLGreen;
+        END_IF;
+
+        "DB".state0 := state1;
+    END_IF;
+END_IF;
+
+// Event "North_Commands_UpstreamLeavingTLGreen_act".
+IF NOT progress THEN
+    b1 := ("DB".state0.dvar_M_North_SCADA) = (elit_Inactive);
+    b1 := b1 AND ("SCADA".dvar_M_North_SCADA_UpstreamLeavingTLGreen);
+    IF b1 THEN
+        progress := TRUE;
+        state1 := "DB".state0;
+
+        state1.dvar_M_North_SCADA := elit_Active;
+        IF (("DB".state0.dvar_M_sup_North_Commands) = (elit_NoCommand)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamLeavingTLGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamGateOpen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamGateOpen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamGateClose)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamGateClose;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamGateStop)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamGateStop;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamPaddleOpen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamPaddleOpen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamPaddleClose)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamPaddleClose;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamPaddleStop)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamPaddleStop;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamEnteringTLRedRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamEnteringTLRedRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamEnteringTLRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamEnteringTLRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamEnteringTLRedGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamEnteringTLRedGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamEnteringTLGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamEnteringTLGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamLeavingTLRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamLeavingTLRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamLeavingTLGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamLeavingTLGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamGateOpen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamGateOpen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamGateClose)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamGateClose;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamGateStop)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamGateStop;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamPaddleOpen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamPaddleOpen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamPaddleClose)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamPaddleClose;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamPaddleStop)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamPaddleStop;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamEnteringTLRedRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamEnteringTLRedRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamEnteringTLRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamEnteringTLRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamEnteringTLRedGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamEnteringTLRedGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamEnteringTLGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamEnteringTLGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamLeavingTLRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamLeavingTLRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamLeavingTLGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamLeavingTLGreen;
+        END_IF;
+
+        "DB".state0 := state1;
+    END_IF;
+END_IF;
+
+// Event "North_Commands_UpstreamLeavingTLRed_act".
+IF NOT progress THEN
+    b1 := ("DB".state0.dvar_M_North_SCADA) = (elit_Inactive);
+    b1 := b1 AND ("SCADA".dvar_M_North_SCADA_UpstreamLeavingTLRed);
+    IF b1 THEN
+        progress := TRUE;
+        state1 := "DB".state0;
+
+        state1.dvar_M_North_SCADA := elit_Active;
+        IF (("DB".state0.dvar_M_sup_North_Commands) = (elit_NoCommand)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamLeavingTLRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamGateOpen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamGateOpen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamGateClose)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamGateClose;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamGateStop)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamGateStop;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamPaddleOpen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamPaddleOpen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamPaddleClose)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamPaddleClose;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamPaddleStop)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamPaddleStop;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamEnteringTLRedRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamEnteringTLRedRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamEnteringTLRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamEnteringTLRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamEnteringTLRedGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamEnteringTLRedGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamEnteringTLGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamEnteringTLGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamLeavingTLRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamLeavingTLRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamLeavingTLGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamLeavingTLGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamGateOpen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamGateOpen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamGateClose)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamGateClose;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamGateStop)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamGateStop;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamPaddleOpen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamPaddleOpen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamPaddleClose)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamPaddleClose;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamPaddleStop)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamPaddleStop;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamEnteringTLRedRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamEnteringTLRedRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamEnteringTLRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamEnteringTLRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamEnteringTLRedGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamEnteringTLRedGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamEnteringTLGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamEnteringTLGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamLeavingTLRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamLeavingTLRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamLeavingTLGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamLeavingTLGreen;
+        END_IF;
+
+        "DB".state0 := state1;
+    END_IF;
+END_IF;
+
+// Event "North_Commands_UpstreamPaddleClose_act".
+IF NOT progress THEN
+    b1 := ("DB".state0.dvar_M_North_SCADA) = (elit_Inactive);
+    b1 := b1 AND ("SCADA".dvar_M_North_SCADA_UpstreamPaddleClose);
+    IF b1 THEN
+        progress := TRUE;
+        state1 := "DB".state0;
+
+        state1.dvar_M_North_SCADA := elit_Active;
+        IF (("DB".state0.dvar_M_sup_North_Commands) = (elit_NoCommand)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamPaddleClose;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamGateOpen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamGateOpen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamGateClose)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamGateClose;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamGateStop)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamGateStop;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamPaddleOpen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamPaddleOpen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamPaddleClose)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamPaddleClose;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamPaddleStop)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamPaddleStop;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamEnteringTLRedRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamEnteringTLRedRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamEnteringTLRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamEnteringTLRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamEnteringTLRedGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamEnteringTLRedGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamEnteringTLGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamEnteringTLGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamLeavingTLRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamLeavingTLRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamLeavingTLGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamLeavingTLGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamGateOpen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamGateOpen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamGateClose)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamGateClose;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamGateStop)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamGateStop;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamPaddleOpen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamPaddleOpen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamPaddleClose)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamPaddleClose;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamPaddleStop)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamPaddleStop;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamEnteringTLRedRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamEnteringTLRedRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamEnteringTLRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamEnteringTLRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamEnteringTLRedGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamEnteringTLRedGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamEnteringTLGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamEnteringTLGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamLeavingTLRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamLeavingTLRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamLeavingTLGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamLeavingTLGreen;
+        END_IF;
+
+        "DB".state0 := state1;
+    END_IF;
+END_IF;
+
+// Event "North_Commands_UpstreamPaddleOpen_act".
+IF NOT progress THEN
+    b1 := ("DB".state0.dvar_M_North_SCADA) = (elit_Inactive);
+    b1 := b1 AND ("SCADA".dvar_M_North_SCADA_UpstreamPaddleOpen);
+    IF b1 THEN
+        progress := TRUE;
+        state1 := "DB".state0;
+
+        state1.dvar_M_North_SCADA := elit_Active;
+        IF (("DB".state0.dvar_M_sup_North_Commands) = (elit_NoCommand)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamPaddleOpen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamGateOpen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamGateOpen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamGateClose)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamGateClose;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamGateStop)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamGateStop;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamPaddleOpen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamPaddleOpen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamPaddleClose)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamPaddleClose;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamPaddleStop)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamPaddleStop;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamEnteringTLRedRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamEnteringTLRedRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamEnteringTLRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamEnteringTLRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamEnteringTLRedGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamEnteringTLRedGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamEnteringTLGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamEnteringTLGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamLeavingTLRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamLeavingTLRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamLeavingTLGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamLeavingTLGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamGateOpen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamGateOpen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamGateClose)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamGateClose;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamGateStop)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamGateStop;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamPaddleOpen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamPaddleOpen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamPaddleClose)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamPaddleClose;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamPaddleStop)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamPaddleStop;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamEnteringTLRedRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamEnteringTLRedRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamEnteringTLRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamEnteringTLRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamEnteringTLRedGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamEnteringTLRedGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamEnteringTLGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamEnteringTLGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamLeavingTLRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamLeavingTLRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamLeavingTLGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamLeavingTLGreen;
+        END_IF;
+
+        "DB".state0 := state1;
+    END_IF;
+END_IF;
+
+// Event "North_Commands_UpstreamPaddleStop_act".
+IF NOT progress THEN
+    b1 := ("DB".state0.dvar_M_North_SCADA) = (elit_Inactive);
+    b1 := b1 AND ("SCADA".dvar_M_North_SCADA_UpstreamPaddleStop);
+    IF b1 THEN
+        progress := TRUE;
+        state1 := "DB".state0;
+
+        state1.dvar_M_North_SCADA := elit_Active;
+        IF (("DB".state0.dvar_M_sup_North_Commands) = (elit_NoCommand)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamPaddleStop;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamGateOpen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamGateOpen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamGateClose)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamGateClose;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamGateStop)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamGateStop;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamPaddleOpen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamPaddleOpen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamPaddleClose)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamPaddleClose;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamPaddleStop)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamPaddleStop;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamEnteringTLRedRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamEnteringTLRedRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamEnteringTLRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamEnteringTLRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamEnteringTLRedGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamEnteringTLRedGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamEnteringTLGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamEnteringTLGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamLeavingTLRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamLeavingTLRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamLeavingTLGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_DownstreamLeavingTLGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamGateOpen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamGateOpen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamGateClose)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamGateClose;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamGateStop)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamGateStop;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamPaddleOpen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamPaddleOpen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamPaddleClose)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamPaddleClose;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamPaddleStop)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamPaddleStop;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamEnteringTLRedRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamEnteringTLRedRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamEnteringTLRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamEnteringTLRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamEnteringTLRedGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamEnteringTLRedGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamEnteringTLGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamEnteringTLGreen;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamLeavingTLRed)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamLeavingTLRed;
+        ELSIF (("DB".state0.dvar_M_sup_North_Commands) = (elit_UpstreamLeavingTLGreen)) THEN
+            state1.dvar_M_sup_North_Commands := elit_UpstreamLeavingTLGreen;
+        END_IF;
+
+        "DB".state0 := state1;
+    END_IF;
+END_IF;
+
+// Event "North_Downstream_EnteringTLs_East_Actuator_c_g".
+IF NOT progress THEN
+    b1 := ("DB".state0.dvar_M_sup_North_Downstream_EnteringTLs_East_Actuator) = (elit_RedGreen);
+    b1 := b1 AND (("DB".state0.dvar_M_sup_North_Downstream_LeavingTLs_East_Actuator) = (elit_Red));
+    b1 := b1 AND (("DB".state0.dvar_M_sup_North_Downstream_LeavingTLs_East_SensorR) = (elit_On));
+    b1 := b1 AND (("DB".state0.dvar_M_sup_North_Downstream_LeavingTLs_East_SensorG) = (elit_Off));
+    b1 := b1 AND (("DB".state0.dvar_M_sup_North_Downstream_LeavingTLs_West_Actuator) = (elit_Red));
+    b1 := b1 AND (("DB".state0.dvar_M_sup_North_Downstream_LeavingTLs_West_SensorR) = (elit_On));
+    b1 := b1 AND (("DB".state0.dvar_M_sup_North_Downstream_LeavingTLs_West_SensorG) = (elit_Off));
+    b1 := b1 AND (("DB".state0.dvar_M_sup_North_Downstream_Gates_East_Actuator) = (elit_Rest));
+    b1 := b1 AND (("DB".state0.dvar_M_sup_North_Downstream_Gates_East_Sensor) = (elit_Open));
+    b1 := b1 AND (("DB".state0.dvar_M_sup_North_Downstream_Gates_West_Actuator) = (elit_Rest));
+    b1 := b1 AND (("DB".state0.dvar_M_sup_North_Downstream_Gates_West_Sensor) = (elit_Open));
+    b1 := b1 AND (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamEnteringTLGreen));
+    IF b1 THEN
+        progress := TRUE;
+        state1 := "DB".state0;
+
+        state1.dvar_M_North_HW_EnteringTL_BNH_East_Q_Green := TRUE;
+        state1.dvar_M_sup_North_Downstream_EnteringTLs_East_Actuator := elit_Green;
+
+        "DB".state0 := state1;
+    END_IF;
+END_IF;
+
+// Event "North_Downstream_EnteringTLs_East_Actuator_c_r".
+IF NOT progress THEN
+    b2 := ("DB".state0.dvar_M_sup_North_Downstream_EnteringTLs_East_Actuator) = (elit_RedRed);
+    b2 := b2 OR (("DB".state0.dvar_M_sup_North_Downstream_EnteringTLs_East_Actuator) = (elit_RedGreen));
+    b2 := b2 OR (("DB".state0.dvar_M_sup_North_Downstream_EnteringTLs_East_Actuator) = (elit_Green));
+    b1 := b2;
+    b1 := b1 AND (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamEnteringTLRed));
+    IF b1 THEN
+        progress := TRUE;
+        state1 := "DB".state0;
+
+        state1.dvar_M_North_HW_EnteringTL_BNH_East_Q_Red := TRUE;
+        state1.dvar_M_North_HW_EnteringTL_BNH_East_Q_Green := FALSE;
+        state1.dvar_M_North_HW_EnteringTL_BNH_East_Q_RedRed := FALSE;
+        IF (("DB".state0.dvar_M_sup_North_Downstream_EnteringTLs_East_Actuator) = (elit_RedRed)) THEN
+            state1.dvar_M_sup_North_Downstream_EnteringTLs_East_Actuator := elit_Red;
+        ELSIF (("DB".state0.dvar_M_sup_North_Downstream_EnteringTLs_East_Actuator) = (elit_RedGreen)) THEN
+            state1.dvar_M_sup_North_Downstream_EnteringTLs_East_Actuator := elit_Red;
+        ELSIF (("DB".state0.dvar_M_sup_North_Downstream_EnteringTLs_East_Actuator) = (elit_Green)) THEN
+            state1.dvar_M_sup_North_Downstream_EnteringTLs_East_Actuator := elit_Red;
+        END_IF;
+
+        "DB".state0 := state1;
+    END_IF;
+END_IF;
+
+// Event "North_Downstream_EnteringTLs_East_Actuator_c_rg".
+IF NOT progress THEN
+    b1 := ("DB".state0.dvar_M_sup_North_Downstream_EnteringTLs_East_Actuator) = (elit_Red);
+    b1 := b1 AND (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamEnteringTLRedGreen));
+    IF b1 THEN
+        progress := TRUE;
+        state1 := "DB".state0;
+
+        state1.dvar_M_North_HW_EnteringTL_BNH_East_Q_Red := TRUE;
+        state1.dvar_M_North_HW_EnteringTL_BNH_East_Q_Green := TRUE;
+        state1.dvar_M_sup_North_Downstream_EnteringTLs_East_Actuator := elit_RedGreen;
+
+        "DB".state0 := state1;
+    END_IF;
+END_IF;
+
+// Event "North_Downstream_EnteringTLs_East_Actuator_c_rr".
+IF NOT progress THEN
+    b1 := ("DB".state0.dvar_M_sup_North_Downstream_EnteringTLs_East_Actuator) = (elit_Red);
+    b1 := b1 AND (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamEnteringTLRedRed));
+    IF b1 THEN
+        progress := TRUE;
+        state1 := "DB".state0;
+
+        state1.dvar_M_North_HW_EnteringTL_BNH_East_Q_RedRed := TRUE;
+        state1.dvar_M_sup_North_Downstream_EnteringTLs_East_Actuator := elit_RedRed;
+
+        "DB".state0 := state1;
+    END_IF;
+END_IF;
+
+// Event "North_Downstream_EnteringTLs_East_SensorG_u_off".
+IF NOT progress THEN
+    b1 := NOT(ivar_M_North_HW_EnteringTL_BNH_East_Green);
+    IF b1 THEN
+        b2 := ("DB".state0.dvar_M_sup_North_Downstream_EnteringTLs_East_Actuator) = (elit_Red);
+        b2 := b2 OR (("DB".state0.dvar_M_sup_North_Downstream_EnteringTLs_East_Actuator) = (elit_RedRed));
+        b1 := b1 AND (b2);
+    END_IF;
+    b1 := b1 AND (("DB".state0.dvar_M_sup_North_Downstream_EnteringTLs_East_SensorG) = (elit_On));
+    IF b1 THEN
+        progress := TRUE;
+        state1 := "DB".state0;
+
+        state1.dvar_M_sup_North_Downstream_EnteringTLs_East_SensorG := elit_Off;
+
+        "DB".state0 := state1;
+    END_IF;
+END_IF;
+
+// Event "North_Downstream_EnteringTLs_East_SensorG_u_on".
+IF NOT progress THEN
+    b1 := ivar_M_North_HW_EnteringTL_BNH_East_Green;
+    IF b1 THEN
+        b2 := ("DB".state0.dvar_M_sup_North_Downstream_EnteringTLs_East_Actuator) = (elit_Green);
+        b2 := b2 OR (("DB".state0.dvar_M_sup_North_Downstream_EnteringTLs_East_Actuator) = (elit_RedGreen));
+        b1 := b1 AND (b2);
+    END_IF;
+    b1 := b1 AND (("DB".state0.dvar_M_sup_North_Downstream_EnteringTLs_East_SensorG) = (elit_Off));
+    IF b1 THEN
+        progress := TRUE;
+        state1 := "DB".state0;
+
+        state1.dvar_M_sup_North_Downstream_EnteringTLs_East_SensorG := elit_On;
+
+        "DB".state0 := state1;
+    END_IF;
+END_IF;
+
+// Event "North_Downstream_EnteringTLs_East_SensorR1_u_off".
+IF NOT progress THEN
+    b1 := NOT(ivar_M_North_HW_EnteringTL_BNH_East_Red);
+    b1 := b1 AND (("DB".state0.dvar_M_sup_North_Downstream_EnteringTLs_East_Actuator) = (elit_Green));
+    b1 := b1 AND (("DB".state0.dvar_M_sup_North_Downstream_EnteringTLs_East_SensorR1) = (elit_On));
+    IF b1 THEN
+        progress := TRUE;
+        state1 := "DB".state0;
+
+        state1.dvar_M_sup_North_Downstream_EnteringTLs_East_SensorR1 := elit_Off;
+
+        "DB".state0 := state1;
+    END_IF;
+END_IF;
+
+// Event "North_Downstream_EnteringTLs_East_SensorR1_u_on".
+IF NOT progress THEN
+    b1 := ivar_M_North_HW_EnteringTL_BNH_East_Red;
+    b1 := b1 AND (("DB".state0.dvar_M_sup_North_Downstream_EnteringTLs_East_Actuator) <> (elit_Green));
+    b1 := b1 AND (("DB".state0.dvar_M_sup_North_Downstream_EnteringTLs_East_SensorR1) = (elit_Off));
+    IF b1 THEN
+        progress := TRUE;
+        state1 := "DB".state0;
+
+        state1.dvar_M_sup_North_Downstream_EnteringTLs_East_SensorR1 := elit_On;
+
+        "DB".state0 := state1;
+    END_IF;
+END_IF;
+
+// Event "North_Downstream_EnteringTLs_East_SensorR2_u_off".
+IF NOT progress THEN
+    b1 := NOT(ivar_M_North_HW_EnteringTL_BNH_East_RedRed);
+    b1 := b1 AND (("DB".state0.dvar_M_sup_North_Downstream_EnteringTLs_East_Actuator) <> (elit_RedRed));
+    b1 := b1 AND (("DB".state0.dvar_M_sup_North_Downstream_EnteringTLs_East_SensorR2) = (elit_On));
+    IF b1 THEN
+        progress := TRUE;
+        state1 := "DB".state0;
+
+        state1.dvar_M_sup_North_Downstream_EnteringTLs_East_SensorR2 := elit_Off;
+
+        "DB".state0 := state1;
+    END_IF;
+END_IF;
+
+// Event "North_Downstream_EnteringTLs_East_SensorR2_u_on".
+IF NOT progress THEN
+    b1 := ivar_M_North_HW_EnteringTL_BNH_East_RedRed;
+    b1 := b1 AND (("DB".state0.dvar_M_sup_North_Downstream_EnteringTLs_East_Actuator) = (elit_RedRed));
+    b1 := b1 AND (("DB".state0.dvar_M_sup_North_Downstream_EnteringTLs_East_SensorR2) = (elit_Off));
+    IF b1 THEN
+        progress := TRUE;
+        state1 := "DB".state0;
+
+        state1.dvar_M_sup_North_Downstream_EnteringTLs_East_SensorR2 := elit_On;
+
+        "DB".state0 := state1;
+    END_IF;
+END_IF;
+
+// Event "North_Downstream_EnteringTLs_West_Actuator_c_g".
+IF NOT progress THEN
+    b1 := ("DB".state0.dvar_M_sup_North_Downstream_EnteringTLs_West_Actuator) = (elit_RedGreen);
+    b1 := b1 AND (("DB".state0.dvar_M_sup_North_Downstream_LeavingTLs_East_Actuator) = (elit_Red));
+    b1 := b1 AND (("DB".state0.dvar_M_sup_North_Downstream_LeavingTLs_East_SensorR) = (elit_On));
+    b1 := b1 AND (("DB".state0.dvar_M_sup_North_Downstream_LeavingTLs_East_SensorG) = (elit_Off));
+    b1 := b1 AND (("DB".state0.dvar_M_sup_North_Downstream_LeavingTLs_West_Actuator) = (elit_Red));
+    b1 := b1 AND (("DB".state0.dvar_M_sup_North_Downstream_LeavingTLs_West_SensorR) = (elit_On));
+    b1 := b1 AND (("DB".state0.dvar_M_sup_North_Downstream_LeavingTLs_West_SensorG) = (elit_Off));
+    b1 := b1 AND (("DB".state0.dvar_M_sup_North_Downstream_Gates_East_Actuator) = (elit_Rest));
+    b1 := b1 AND (("DB".state0.dvar_M_sup_North_Downstream_Gates_East_Sensor) = (elit_Open));
+    b1 := b1 AND (("DB".state0.dvar_M_sup_North_Downstream_Gates_West_Actuator) = (elit_Rest));
+    b1 := b1 AND (("DB".state0.dvar_M_sup_North_Downstream_Gates_West_Sensor) = (elit_Open));
+    b1 := b1 AND (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamEnteringTLGreen));
+    IF b1 THEN
+        progress := TRUE;
+        state1 := "DB".state0;
+
+        state1.dvar_M_North_HW_EnteringTL_BNH_West_Q_Green := TRUE;
+        state1.dvar_M_sup_North_Downstream_EnteringTLs_West_Actuator := elit_Green;
+
+        "DB".state0 := state1;
+    END_IF;
+END_IF;
+
+// Event "North_Downstream_EnteringTLs_West_Actuator_c_r".
+IF NOT progress THEN
+    b2 := ("DB".state0.dvar_M_sup_North_Downstream_EnteringTLs_West_Actuator) = (elit_RedRed);
+    b2 := b2 OR (("DB".state0.dvar_M_sup_North_Downstream_EnteringTLs_West_Actuator) = (elit_RedGreen));
+    b2 := b2 OR (("DB".state0.dvar_M_sup_North_Downstream_EnteringTLs_West_Actuator) = (elit_Green));
+    b1 := b2;
+    b1 := b1 AND (("DB".state0.dvar_M_sup_North_Commands) = (elit_DownstreamEnteringTLRed));
+    IF b1 THEN
+        progress := TRUE;
+        state1 := "DB".state0;
+
+        state1.dvar_M_North_HW_EnteringTL_BNH_West_Q_Red := TRUE;
+        state1.dvar_M_North_HW_EnteringTL_BNH_West_Q_Green := FALSE;
+        state1.dvar_M_North_HW_EnteringTL_BNH_West_Q_RedRed := FALSE;
+        IF (("DB".state0.dvar_M_sup_North_Downstream_EnteringTLs_West_Actuator) = (elit_RedRed)) THEN
+            state1.dvar_M_sup_North_Downstream_EnteringTLs_West_Actuator := elit_Red;
+        ELSIF (("DB".state0.dvar_M_sup_North_Downstream_EnteringTLs_West_Actuator) = (elit_RedGreen)) THEN
+            state1.dvar_M_sup_North_Downstream_EnteringTLs_West_Actuator := elit_Red;
+        ELSIF (("DB".state0.dvar_M_sup_North_Downstream_EnteringTLs_West_Actuator) = (elit_Green)) THEN
+            state1.dvar_M_sup_North_Downstream_EnteringTLs_West_Actuator := elit_Red;
+        END_IF;
+
+        "DB".state0 := state1;
+    END_IF;
+END_IF;
+END_FUNCTION

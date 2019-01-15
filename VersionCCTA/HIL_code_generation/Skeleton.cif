@@ -1,0 +1,103 @@
+import "../Templates/SkelTemplates.cif";
+
+group Wh:
+  event high, low;
+end
+
+group North:
+  group Upstream:
+    group Gates:
+      East: Gate();
+      West: Gate();
+    end
+    group Paddles:
+      East: Paddle();
+      West: Paddle();
+    end
+    group EnteringTLs:
+      East: EnteringTL();
+      West: EnteringTL();
+    end
+    group LeavingTLs:
+      East: LeavingTL();
+      West: LeavingTL();
+    end
+    EqualWaterSensor: Sensor();
+  end
+  group Downstream:
+    group Gates:
+      East: Gate();
+      West: Gate();
+    end
+    group Paddles:
+      East: Paddle();
+      West: Paddle();
+    end
+    group EnteringTLs:
+      East: EnteringTL();
+      West: EnteringTL();
+    end
+    group LeavingTLs:
+      East: LeavingTL();
+      West: LeavingTL();
+    end
+    EqualWaterSensor: Sensor();
+  end
+end
+
+group South:
+  group Upstream:
+    group Gates:
+      East: Gate();
+      West: Gate();
+    end
+    group Paddles:
+      East: Paddle();
+      West: Paddle();
+    end
+    group EnteringTLs:
+      East: EnteringTL();
+      West: EnteringTL();
+    end
+    group LeavingTLs:
+      East: LeavingTL();
+      West: LeavingTL();
+    end
+    EqualWaterSensor: Sensor();
+  end
+  group Downstream:
+    group Gates:
+      East: Gate();
+      West: Gate();
+    end
+    group Paddles:
+      East: Paddle();
+      West: Paddle();
+    end
+    group EnteringTLs:
+      East: EnteringTL();
+      West: EnteringTL();
+    end
+    group LeavingTLs:
+      East: LeavingTL();
+      West: LeavingTL();
+    end
+    EqualWaterSensor: Sensor();
+  end
+end
+
+group Barrier:
+  group Downstream:
+    group TLs:
+      East: LeavingTL();
+      West: LeavingTL();
+    end
+  end
+  group Upstream:
+    group TLs:
+      East: LeavingTL();
+      West: LeavingTL();
+    end
+  end
+  Barrier : .Paddle();
+end

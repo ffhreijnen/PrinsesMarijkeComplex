@@ -1,0 +1,31 @@
+from system import tag
+def readTag(tagName):
+  CertValue = tag.read(tagName)
+  return CertValue.value
+  
+
+ActuatorPath  = "[default]QR/"
+BrokenActPath = "[Client]Broken/QR/"
+SensorPath    = "[default]IR/"
+BrokenSenPath = "[Client]Broken/IR/"
+StatePath     = readTag("[Client]StatePath")
+
+def valueOf(tagName):
+  Actuator = tag.read(ActuatorPath + tagName)
+  if not readTag(BrokenActPath + tagName):
+    if not Actuator.quality.isGood():
+      print("ERROR: Quality of " + tagName + " is bad(" + str(Actuator.quality.getIntValue()) + ").")
+    return Actuator.value
+
+    
+def writeTo(tagName, newValue):
+  if tag.exists(SensorPath + tagName):
+    broken   = readTag(BrokenSenPath + tagName)
+    curValue = readTag(SensorPath    + tagName)
+    if not broken and curValue != newValue:
+      tag.write(SensorPath + tagName, newValue)
+  else:
+    print("ERROR: Tag " + tagName + " Does not exist")
+    
+def writeToState(tagName, value):
+  tag.write(StatePath + tagName, value)
