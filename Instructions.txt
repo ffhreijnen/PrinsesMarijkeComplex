@@ -10,7 +10,7 @@ User instructions
     - CIF 3 can be downloaded from: http://update.se.wtb.tue.nl/documentation/install/bundled-ide.html
     - Install and open CIF via Eclipse.exe.
     - Click on "File", "Import...", "General", "Existing Projects into Workspace", "Next".
-    - Select the "CIF Models" directory downloaded from GitHub as the root directory via "Browse".
+    - Select the "PrinsesMarijkeComplex-master" directory downloaded from GitHub as the root directory via "Browse".
     - Select "VersionCCTA" and click "Finish".
     - In the Package Explorer window the project will now be visible.
     
