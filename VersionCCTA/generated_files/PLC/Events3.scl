@@ -408,6 +408,10 @@ IF NOT progress THEN
     b1 := b1 AND (("DB".state0.dvar_M_sup_South_Upstream_Paddles_East_Sensor) = (elit_Closed));
     b1 := b1 AND (("DB".state0.dvar_M_sup_South_Upstream_Paddles_West_Actuator) = (elit_Rest));
     b1 := b1 AND (("DB".state0.dvar_M_sup_South_Upstream_Paddles_West_Sensor) = (elit_Closed));
+    b1 := b1 AND (("DB".state0.dvar_M_sup_South_Upstream_Gates_East_Actuator) = (elit_Rest));
+    b1 := b1 AND (("DB".state0.dvar_M_sup_South_Upstream_Gates_East_Sensor) = (elit_Closed));
+    b1 := b1 AND (("DB".state0.dvar_M_sup_South_Upstream_Gates_West_Actuator) = (elit_Rest));
+    b1 := b1 AND (("DB".state0.dvar_M_sup_South_Upstream_Gates_West_Sensor) = (elit_Closed));
     b1 := b1 AND (("DB".state0.dvar_M_sup_South_EmergencyStop) <> (elit_Active));
     b1 := b1 AND (("DB".state0.dvar_M_sup_South_Commands) = (elit_DownstreamGateOpen));
     IF b1 THEN
@@ -592,6 +596,10 @@ IF NOT progress THEN
     b1 := b1 AND (("DB".state0.dvar_M_sup_South_Upstream_Paddles_East_Sensor) = (elit_Closed));
     b1 := b1 AND (("DB".state0.dvar_M_sup_South_Upstream_Paddles_West_Actuator) = (elit_Rest));
     b1 := b1 AND (("DB".state0.dvar_M_sup_South_Upstream_Paddles_West_Sensor) = (elit_Closed));
+    b1 := b1 AND (("DB".state0.dvar_M_sup_South_Upstream_Gates_East_Actuator) = (elit_Rest));
+    b1 := b1 AND (("DB".state0.dvar_M_sup_South_Upstream_Gates_East_Sensor) = (elit_Closed));
+    b1 := b1 AND (("DB".state0.dvar_M_sup_South_Upstream_Gates_West_Actuator) = (elit_Rest));
+    b1 := b1 AND (("DB".state0.dvar_M_sup_South_Upstream_Gates_West_Sensor) = (elit_Closed));
     b1 := b1 AND (("DB".state0.dvar_M_sup_South_EmergencyStop) <> (elit_Active));
     b1 := b1 AND (("DB".state0.dvar_M_sup_South_Commands) = (elit_DownstreamGateOpen));
     IF b1 THEN
@@ -988,10 +996,6 @@ IF NOT progress THEN
     b1 := b1 AND (("DB".state0.dvar_M_sup_South_Upstream_Gates_East_Sensor) = (elit_Closed));
     b1 := b1 AND (("DB".state0.dvar_M_sup_South_Upstream_Gates_West_Actuator) = (elit_Rest));
     b1 := b1 AND (("DB".state0.dvar_M_sup_South_Upstream_Gates_West_Sensor) = (elit_Closed));
-    b1 := b1 AND (("DB".state0.dvar_M_sup_South_Upstream_Gates_East_Actuator) = (elit_Rest));
-    b1 := b1 AND (("DB".state0.dvar_M_sup_South_Upstream_Gates_East_Sensor) = (elit_Closed));
-    b1 := b1 AND (("DB".state0.dvar_M_sup_South_Upstream_Gates_West_Actuator) = (elit_Rest));
-    b1 := b1 AND (("DB".state0.dvar_M_sup_South_Upstream_Gates_West_Sensor) = (elit_Closed));
     b1 := b1 AND (("DB".state0.dvar_M_sup_South_EmergencyStop) <> (elit_Active));
     b1 := b1 AND (("DB".state0.dvar_M_sup_South_Commands) = (elit_DownstreamPaddleOpen));
     IF b1 THEN
@@ -1146,10 +1150,6 @@ IF NOT progress THEN
     b1 := b1 AND (("DB".state0.dvar_M_sup_South_Upstream_Paddles_East_Sensor) = (elit_Closed));
     b1 := b1 AND (("DB".state0.dvar_M_sup_South_Upstream_Paddles_West_Actuator) = (elit_Rest));
     b1 := b1 AND (("DB".state0.dvar_M_sup_South_Upstream_Paddles_West_Sensor) = (elit_Closed));
-    b1 := b1 AND (("DB".state0.dvar_M_sup_South_Upstream_Gates_East_Actuator) = (elit_Rest));
-    b1 := b1 AND (("DB".state0.dvar_M_sup_South_Upstream_Gates_East_Sensor) = (elit_Closed));
-    b1 := b1 AND (("DB".state0.dvar_M_sup_South_Upstream_Gates_West_Actuator) = (elit_Rest));
-    b1 := b1 AND (("DB".state0.dvar_M_sup_South_Upstream_Gates_West_Sensor) = (elit_Closed));
     b1 := b1 AND (("DB".state0.dvar_M_sup_South_Upstream_Gates_East_Actuator) = (elit_Rest));
     b1 := b1 AND (("DB".state0.dvar_M_sup_South_Upstream_Gates_East_Sensor) = (elit_Closed));
     b1 := b1 AND (("DB".state0.dvar_M_sup_South_Upstream_Gates_West_Actuator) = (elit_Rest));

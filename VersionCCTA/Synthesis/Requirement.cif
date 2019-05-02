@@ -41,12 +41,12 @@ group North:
 
     //{V Indien een Gate op het andere hoofd Open is mag een Gate niet Open worden.}
     requirement not North.Downstream.Gates.Closed disables
-    {North.Upstream.Paddles.East.Actuator.c_open,
-     North.Upstream.Paddles.West.Actuator.c_open};
+    {North.Upstream.Gates.East.Actuator.c_open,
+     North.Upstream.Gates.West.Actuator.c_open};
 
     requirement not North.Upstream.Gates.Closed   disables
-    {North.Downstream.Paddles.East.Actuator.c_open,
-     North.Downstream.Paddles.West.Actuator.c_open};
+    {North.Downstream.Gates.East.Actuator.c_open,
+     North.Downstream.Gates.West.Actuator.c_open};
 
     //{VI Indien een LeavingTL op hetzelfde hoofd het seinbeeld Green toont mag het EnteringTL niet het seinbeeld Green tonen.}
     requirement not North.Downstream.LeavingTLs.Red disables
@@ -315,12 +315,12 @@ group South:
 
     //{V Indien een Gate op het andere hoofd Open is mag een Gate niet Open worden.}
     requirement not South.Downstream.Gates.Closed disables
-    {South.Upstream.Paddles.East.Actuator.c_open,
-     South.Upstream.Paddles.West.Actuator.c_open};
+    {South.Upstream.Gates.East.Actuator.c_open,
+     South.Upstream.Gates.West.Actuator.c_open};
 
     requirement not South.Upstream.Gates.Closed   disables
-    {South.Downstream.Paddles.East.Actuator.c_open,
-     South.Downstream.Paddles.West.Actuator.c_open};
+    {South.Downstream.Gates.East.Actuator.c_open,
+     South.Downstream.Gates.West.Actuator.c_open};
 
     //{VI Indien een LeavingTL op hetzelfde hoofd het seinbeeld Green toont mag het EnteringTL niet het seinbeeld Green tonen.}
     requirement not South.Downstream.LeavingTLs.Red disables
