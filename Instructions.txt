@@ -15,7 +15,7 @@ User instructions
     - In the Package Explorer window the project will now be visible.
     
 3. Synthesize a supervisor.
-    - Open "X1_Synthesis.tooldef2.tooldef2".
+    - Open "X1_Synthesis.tooldef2".
     - Right click in the file, select "Execute ToolDef..."
     - In the option Window click on Finish.
     - If the synthesis is successful the created supervisor can be found at "generated_files/1_Supervisor.cif.cif".
