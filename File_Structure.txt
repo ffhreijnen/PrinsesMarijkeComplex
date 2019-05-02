@@ -1,0 +1,50 @@
+Input files:
+[Templates/PlantTemplates.cif] Templates for the plant model.
+[Templates/SimTemplates.cif]   Templates for the simulation model.
+[Templates/SkelTemplates.cif]  Templates for the skeleton files.
+
+[Synthesis/Plant.cif]        EFSA model of the bridge plant.
+[Synthesis/Requirements.cif] State-based requirement model for the bridge.
+
+[Simulation/Simu.cif] Hybrid EFSA model of the plant.
+[Simulation/UI.cif]   Hybridg EFSA model of the User Interface.
+[Simulation/Visu.cif] Mapping of hybridg plant to visualization.
+[Simulation.visu.svg] The svg visualization of the simulation.
+
+[PLC_code_generation/HardwareMap.cif] Mapping between physical I/O and the events in the plant.
+[PLC_code_generation/Sekelton.cif]    Skeleton file of the supervisor, that contains all events.
+
+[HIL_code_generation/HardwareMap.cif] Mapping between physical I/O and the events in the simulation.
+[HIL_code_generation/Skeleton.cif]    Skeleton file of the plant, excluding the UI, that contains all events.
+
+Tooldef settings:
+[Tooldefs/Config.tooldef2]    Contains all settings, such as input and output file paths.
+[Tooldefs/myToolbox.tooldef2] Contains tooldef2 functions.
+
+Executable files:
+[X1_Synthesis.tooldef2]      Execute to synthesise [generated_files/1_Supervisor.cif] from [Synthesis/Plant.cif] and [Synthesis/Requirement.cif].
+[X2_Simulation.tooldef2]     Execute to generate and simulate [generated_files/2_Supervisor_Hybrid.cif] 
+                             from [generated_files/1_Supervisor.cif] and the simulation files in [Simulation].
+[X3_Generate_SCL.tooldef2]   Execute to generate PLC code [generated_files/PLC] from [generated_files/1_Supervisor.cif] and [PLC_code_generation/HardwareMap.cif]. 
+							               Cif version r9682 does not support SCL generation, alternatively, IEC code can be generated and manually be implemented.
+[X4_Generate_java.tooldef2]  Execute to generate java code [generated_files/Java] from [Simulation] and [HIL_code_generation/HardwareMap].
+[X6_Compile_Java.tooldef2]   Execute to generate compiled java code [generated_files/myPackage] from [generated_files/Java].
+
+Output files:
+[generated_files/1_Supervisor.cif]          The synthesized supervisor.
+[generated_files/2_Supervisor_Hybrid.cif]   The synthesized supervisor combined with the hybrid plant model.
+[generated_files/3_Supervisor_Hardware.cif] The synthesized supervisor combined with the hardware mapping.
+[generated_files/3_PLC_Model.cif]           A transformed version of Supervisor_Hardware, for code generation.
+[generated_files/PLC]					              Generated SCL PLC code.
+	* DB.db		        The datablock that contains all variables
+	* EventsX.scl     A function that consists of 100 events.
+	* Main.scl	      The main SCL program.
+	* PLCTags_ign.xml The Ignition tags.
+	* PLCTags.xml     The PLC Tags.
+	* SCADA.db		    The variables used for communication with the UI.
+	* State.udt       The data type that represents the state of the system.
+[generated_files/Java]						          Generated Java HIL code.
+	* c2j.cif   Intermediate file used for the java code generation.
+	* c2j.java	The generated java code.
+	* c2j.py		The mapping between the java code and the Ignition tags.
+[generated_files/myPackage]                 Compiled java HIL code.
