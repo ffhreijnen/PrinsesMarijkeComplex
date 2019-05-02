@@ -1,0 +1,32 @@
+User instructions
+
+1. Download repository from GitHub.
+    - Go to https://github.com/ffhreijnen/PrinsesMarijkeComplex
+    - Click on "Clone or download"
+    - Click on "Download ZIP"
+    - Unzip the contents of the package
+
+2. Import the model in CIF 3.
+    - CIF 3 can be downloaded from: http://update.se.wtb.tue.nl/documentation/install/bundled-ide.html
+    - Install and open CIF via Eclipse.exe.
+    - Click on "File", "Import...", "General", "Existing Projects into Workspace", "Next".
+    - Select the "CIF Models" directory downloaded from GitHub as the root directory via "Browse".
+    - Select "PrinsesMarijkeComplex" and click "Finish".
+    - In the Package Explorer window the project will now be visible.
+    
+3. Synthesize a supervisor.
+    - Open "X1_Synthesis.tooldef2.tooldef2".
+    - Right click in the file, select "Execute ToolDef..."
+    - In the option Window click on Finish.
+    - If the synthesis is successful the created supervisor can be found at "generated_files/1_Supervisor.cif.cif".
+    - Details for the synthesis algorithm are provided at: http://cif.se.wtb.tue.nl/tools/datasynth.html.
+    
+4. Simulate a supervisor.
+    - Open "X2_Simulation.tooldef2"
+    - Right click in the file, select "Execute ToolDef..."
+    - In the option Window click on Finish.
+    - The simulation will start, clicking on the buttons will generate commands.
+    - Details for the simulation are provided at: http://cif.se.wtb.tue.nl/tools/cif3sim/index.html.
+	
+5. Generate HIL set-update
+	  - See HILGuide.pdf
