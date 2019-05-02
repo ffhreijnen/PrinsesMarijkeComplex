@@ -11,7 +11,7 @@ User instructions
     - Install and open CIF via Eclipse.exe.
     - Click on "File", "Import...", "General", "Existing Projects into Workspace", "Next".
     - Select the "CIF Models" directory downloaded from GitHub as the root directory via "Browse".
-    - Select "PrinsesMarijkeComplex" and click "Finish".
+    - Select "VersionCCTA" and click "Finish".
     - In the Package Explorer window the project will now be visible.
     
 3. Synthesize a supervisor.
