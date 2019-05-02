@@ -175,7 +175,7 @@ rmfile(py_plugin(), force = true);
 
 // Make a nice header.
 write(py_plugin(), c, fmt("# Generated for use with %s in ignition.", java_class()));
-write(py_plugin(), c, "from project.myFuns import valueOf, writeTo, writeToState");
+write(py_plugin(), c, "from project.myFuns import *");
 
 // Connection for the boolean input vars, from PLC to Sim (Actuators).
 write(py_plugin(), c, "# input all actuator signals");

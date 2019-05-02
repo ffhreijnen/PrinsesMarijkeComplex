@@ -1,0 +1,17 @@
+from system import tag
+
+def valueOf(tagName):
+  """Function that returns the value of a PLC tag."""
+  Actuator = tag.read(tagName)
+  if not Actuator.quality.isGood():
+      print("ERROR: Quality of " + tagName + " is bad.")
+  return Actuator.value
+
+def writeTo(tagName, newValue):
+  """Function that write a value to a PLC tag."""
+  if tag.exists(tagName):
+    curValue = readTag(tagName)
+    if curValue != newValue:
+      tag.write(tagName, newValue)
+  else:
+    print("ERROR: Tag " + tagName + " Does not exist")

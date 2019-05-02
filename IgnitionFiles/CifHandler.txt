@@ -1,0 +1,39 @@
+## imports
+import sys
+import threading
+from project.myFuns import *
+import project.c2j as myIO
+
+# Enter the location of the HIL java folder (myPackage) below
+sys.path.append(" ")
+
+from myPackage import c2j
+
+def runModel():
+  """Function that executes the Java model."""
+  model = CifHandler()
+  print "async started"
+  try:
+    model.execInfinite(30)
+  except SystemExit:
+    print "async finished"
+
+## Java model handler class
+class CifHandler(c2j):
+
+  def updateInputs(self):
+    """This function is called from the Java model before the model is executed
+    to update the inputs."""
+    myIO.readTags(self)
+
+  def preExec(self):
+    """This function is called from the Java model before the model is executed.
+    here, we check if the simulation termination is requested."""
+    runValue = system.tag.read("SimulationRunning")
+    if not runValue.value or not runValue.quality.isGood():
+      raise SystemExit('Thread terminated')
+
+  def postExec(self):
+    """This function is called from the Java model after one model cycle is executed.
+    Here, we write all the simulation sensor values to the PLC tags."""
+    myIO.writeTags(self)
